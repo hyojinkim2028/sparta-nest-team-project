@@ -1,0 +1,10 @@
+### 회원가입
+POST http://localhost:3001/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "사용자이름",
+  "email": "사용자이메일3@example.com",
+  "password": "123123",
+  "passwordConfirm": "123123"
+}
