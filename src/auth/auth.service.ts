@@ -1,3 +1,4 @@
+import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RegisterDto } from './dtos/register.dto';
 import { BadRequestException, Injectable } from '@nestjs/common';
@@ -11,6 +12,7 @@ import { LoginDto } from './dtos/login.dto';
 export class AuthService {
   constructor(
     private readonly configService: ConfigService,
+    private readonly jwtService: JwtService,
     @InjectRepository(User) private readonly userRepository: Repository<User>,
   ) {}
   /**회원가입 */
@@ -33,15 +35,18 @@ export class AuthService {
       email,
       password: hashedPassword,
     });
-    delete user.password;
-    return user;
-  }
 
-  async login(userId: string) {
-    /**jwt토큰 생성 */
+    return this.login(user.id);
   }
-
   /**로그인 */
+  login(userId: number) {
+    const payload = { id: userId };
+    const accessToken = this.jwtService.sign(payload);
+
+    return { accessToken };
+  }
+
+  /**유저 확인 */
   async validateUser({ email, password }: LoginDto) {
     const user = await this.userRepository.findOne({
       where: { email },
