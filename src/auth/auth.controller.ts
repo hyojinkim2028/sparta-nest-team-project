@@ -2,6 +2,7 @@ import { AuthGuard } from '@nestjs/passport';
 import {
   Body,
   Controller,
+  HttpCode,
   HttpStatus,
   Post,
   Request,
@@ -37,9 +38,16 @@ export class AuthController {
    * @param loginDto
    * @returns
    */
+  @HttpCode(HttpStatus.OK)
   @UseGuards(AuthGuard('local'))
   @Post('/login')
   async login(@Request() req, @Body() loginDto: LoginDto) {
-    return req.user;
+    const data = this.authService.login(req.user.id);
+
+    return {
+      statusCode: HttpStatus.OK,
+      message: '로그인에 성공했습니다.',
+      data,
+    };
   }
 }
