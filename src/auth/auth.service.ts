@@ -37,7 +37,7 @@ export class AuthService {
     return user;
   }
 
-  async login(userUd: string) {
+  async login(userId: string) {
     /**jwt토큰 생성 */
   }
 
