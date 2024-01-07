@@ -1,10 +1,43 @@
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEsImlhdCI6MTcwNDYzMTA4MSwiZXhwIjoxNzA0Njc0MjgxfQ.ioqg2krvsNYFDVheXcGFzeLDvLxfANqT6Vln34eJcwE
+
 ### 회원가입
 POST http://localhost:3001/api/auth/register
 Content-Type: application/json
 
 {
   "name": "사용자이름",
-  "email": "사용자이메일3@example.com",
+  "email": "사용자이메일4@example.com",
   "password": "123123",
   "passwordConfirm": "123123"
 }
+
+### 로그인
+POST http://localhost:3001/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "사용자이메일4@example.com",
+	"password":"456456"
+}
+
+### 회원정보조회
+GET http://localhost:3001/api/users/info
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+
+### 비밀번호 변경
+PUT  http://localhost:3001/api/users/info
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "password": "123123",
+  "newPassword": "456456",
+  "passwordConfirm": "456456"
+}
+
+### 회원탈퇴
+PUT  http://localhost:3001/api/users/delete
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
