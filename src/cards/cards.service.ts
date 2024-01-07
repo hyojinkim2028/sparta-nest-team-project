@@ -121,21 +121,21 @@ export class CardsService {
     orderChangeCardDto: OrderChangeCardDto,
   ): Promise<CreateCard | CreateCardFail> {
     try {
-      const { order, columnId } = orderChangeCardDto;
-      const findCard = await this.cardRepository.findOne({
-        where: { id: cardId },
-      });
-      const sameColumnId = findCard.columnId === columnId;
-      const sameCardOrderId = findCard.order === order;
+      // const { order, columnId } = orderChangeCardDto;
+      // const findCard = await this.cardRepository.findOne({
+      //   where: { id: cardId },
+      // });
+      // const sameColumnId = findCard.columnId === columnId;
+      // const sameCardOrderId = findCard.order === order;
 
-      if (sameColumnId && sameCardOrderId) {
-        //변경사항이 없음
-      } else if (sameColumnId && !sameCardOrderId) {
-        //컬럼은 그대로, 카드순서만 변경되었음.
-      } else {
-        //컬럼이 변경되었음.
-        //해당 컬럼에 들어있는 카드의 길이-1번을 order필드에 삽입.
-      }
+      // if (sameColumnId && sameCardOrderId) {
+      //   //변경사항이 없음
+      // } else if (sameColumnId && !sameCardOrderId) {
+      //   //컬럼은 그대로, 카드순서만 변경되었음.
+      // } else {
+      //   //컬럼이 변경되었음.
+      //   //해당 컬럼에 들어있는 카드의 길이-1번을 order필드에 삽입.
+      // }
 
       return;
     } catch (err) {

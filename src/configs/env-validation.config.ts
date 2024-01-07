@@ -1,11 +1,13 @@
 import Joi from 'joi';
 
 export const configModuleValidationSchema = Joi.object({
-  SERVER_PORT: Joi.number().required().default(3000),
+  SERVER_PORT: Joi.number().required().default(3001),
   DB_HOST: Joi.string().required(),
   DB_PORT: Joi.string().required().default(3306),
-  DB_UERNAME: Joi.string().required(),
+  DB_USERNAME: Joi.string().required(),
   DB_PASSWORD: Joi.string().required(),
   DB_NAME: Joi.string().required(),
   DB_SYNC: Joi.boolean().required().default(true),
+  PASSWORD_HASH_ROUNDS: Joi.number().required().default(10),
+  JWT_SECRET: Joi.string().required(),
 });

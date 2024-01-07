@@ -1,10 +1,12 @@
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModuleAsyncOptions } from '@nestjs/typeorm';
 
 export const typeOrmModuleAsyncOptions: TypeOrmModuleAsyncOptions = {
   imports: [ConfigModule],
   inject: [ConfigService],
-  useFactory: (configService: ConfigService): {} => ({
+  useFactory: (configService: ConfigService) => ({
+    namingStrategy: new SnakeNamingStrategy(),
     type: 'mysql',
     host: configService.get<string>('DB_HOST'),
     port: configService.get<number>('DB_PORT'),

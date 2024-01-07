@@ -42,14 +42,14 @@ export class CardsController {
     return this.cardsService.findOne(+id);
   }
 
-  //카드 수정하기
-  @Patch(':id') //cardId
-  async update(
-    @Param('id') id: string,
-    @Body() updateCardDto: UpdateCardDto,
-  ): Promise<CreateCard | CreateCardFail> {
-    return await this.cardsService.update(+id, updateCardDto);
-  }
+  // //카드 수정하기
+  // @Patch(':id') //cardId
+  // async update(
+  //   @Param('id') id: string,
+  //   @Body() updateCardDto: UpdateCardDto,
+  // ): Promise<CreateCard | CreateCardFail> {
+  //   return await this.cardsService.update(+id, updateCardDto);
+  // }
 
   //카드 이동하기(동일컬럼 내부, 다른 컬럼)
   @Patch('/move-card/:id') //cardId
