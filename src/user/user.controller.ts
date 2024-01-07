@@ -60,16 +60,16 @@ export class UserController {
     };
   }
 
-  // @ApiBearerAuth()
-  // @UseGuards(AuthGuard('jwt'))
-  // @Put('delete')
-  // async deleteUser(@Request() req) {
-  //   const userId = req.user.id;
-  //   const data = await this.userService.deleteUser(userId);
-  //   return {
-  //     statusCode: HttpStatus.ACCEPTED,
-  //     message: '비밀번호가 수정되었습니다.',
-  //     data,
-  //   };
-  // }
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard('jwt'))
+  @Put('delete')
+  async deleteUser(@Request() req) {
+    const userId = req.user.id;
+    const data = await this.userService.deleteUser(userId);
+    return {
+      statusCode: HttpStatus.ACCEPTED,
+      message: '회원삭제되었습니다.',
+      data,
+    };
+  }
 }

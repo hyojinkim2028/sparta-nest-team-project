@@ -1,3 +1,4 @@
+import { JwtService } from '@nestjs/jwt';
 import {
   BadRequestException,
   Injectable,
@@ -14,6 +15,7 @@ import { ConfigService } from '@nestjs/config';
 export class UserService {
   constructor(
     private readonly configService: ConfigService,
+    private readonly jwtService: JwtService,
     @InjectRepository(User) private readonly userRepository: Repository<User>,
   ) {}
 
@@ -32,12 +34,6 @@ export class UserService {
     { password, newPassword, passwordConfirm }: ChangePasswordDto,
     id: number,
   ) {
-    /**
-1. 토큰에서 유저 조회
-2. 유저 정보에서 패스워드 가져오기 - 비번 확인
-3. 새 비번 일치 확인
-4. 변경
- */
     const user = await this.userRepository.findOne({
       where: { id: id },
       select: { id: true, password: true },
@@ -71,5 +67,11 @@ export class UserService {
     });
 
     return { message: '비밀번호 수정 완료' };
+  }
+
+  /**회원 탈퇴 */
+  async deleteUser(id: number) {
+    await this.findOneById(id);
+    await this.userRepository.softDelete({ id });
   }
 }
