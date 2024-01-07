@@ -1,3 +1,4 @@
+import { User } from 'src/user/entities/user.entity';
 import {
   Column,
   Entity,
@@ -9,7 +10,7 @@ import {
 
 @Entity('cards')
 export class Card {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ unsigned: true })
   id: number;
 
   @Column({ type: 'varchar', nullable: false, unique: true })
@@ -45,12 +46,12 @@ export class Card {
   // comment: Comment[];
 
   // TODO req.user에 담기는데 굳이 user.name을 가져와야 할까?
-  //// User 테이블과 연결
-  // @ManyToOne(()=> User, (user)=>user.card, { onDelete: 'CASCADE'})
-  // @JoinColumn()
-  // user: UserActivation;
-  // @Column({type: 'int', unsigned: true})
-  // userId: number;
+  // User 테이블과 연결
+  @ManyToOne(() => User, (user) => user.card, { onDelete: 'CASCADE' })
+  @JoinColumn()
+  user: User;
+  @Column({ type: 'int', unsigned: true })
+  userId: number;
 
   //// Column 테이블과 연결
   // @ManyToOne(()=> Column, (column)=>column.card, { onDelete: 'CASCADE'})

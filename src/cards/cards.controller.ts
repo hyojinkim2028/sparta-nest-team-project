@@ -15,18 +15,23 @@ import { UpdateCardDto } from './dto/update-card.dto';
 import { Card } from './entities/card.entity';
 import { UserInfo } from 'src/utils/userInfo.decorator';
 import { CreateCard, CreateCardFail, DeleteCard } from './types/res.types';
+import { User } from 'src/user/entities/user.entity';
 
 @Controller('card')
 export class CardsController {
   constructor(private readonly cardsService: CardsService) {}
 
-  @Post('column/:id') //columnId
+  @Post('column/:columnId') //columnId가 들어갑니다.
   async create(
     @Body() createCardDto: CreateCardDto,
-    @Param() id: number,
-    @UserInfo() user: object, //추후 타입 :User로 변경 예정
+    @Param() columnId: number,
+    @UserInfo() user: User,
   ): Promise<CreateCard | CreateCardFail> {
-    const createCard = await this.cardsService.create(createCardDto, id, user);
+    const createCard = await this.cardsService.create(
+      createCardDto,
+      columnId,
+      user,
+    );
     return createCard;
   }
 
@@ -42,14 +47,14 @@ export class CardsController {
     return this.cardsService.findOne(+id);
   }
 
-  // //카드 수정하기
-  // @Patch(':id') //cardId
-  // async update(
-  //   @Param('id') id: string,
-  //   @Body() updateCardDto: UpdateCardDto,
-  // ): Promise<CreateCard | CreateCardFail> {
-  //   return await this.cardsService.update(+id, updateCardDto);
-  // }
+  //카드 수정하기
+  @Patch(':id') //cardId
+  async update(
+    @Param('id') id: string,
+    @Body() updateCardDto: UpdateCardDto,
+  ): Promise<CreateCard | CreateCardFail> {
+    return await this.cardsService.update(+id, updateCardDto);
+  }
 
   //카드 이동하기(동일컬럼 내부, 다른 컬럼)
   @Patch('/move-card/:id') //cardId

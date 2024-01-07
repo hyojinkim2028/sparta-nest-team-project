@@ -1,50 +1,75 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateCardDto } from './dto/create-card.dto';
 import { OrderChangeCardDto } from './dto/order-change-card.dto';
 import { UpdateCardDto } from './dto/update-card.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Card } from './entities/card.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { userInfo } from 'os';
 import { CreateCard, CreateCardFail, DeleteCard } from './types/res.types';
+import { User } from 'src/user/entities/user.entity';
 
 @Injectable()
 export class CardsService {
   constructor(
     @InjectRepository(Card)
     private cardRepository: Repository<Card>,
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
+    // @InjectRepository(Column)
+    // private columnRepository: Repository<Column>,
   ) {}
 
   //카드 생성하기
   async create(
     createCardDto: CreateCardDto,
     columnId: number,
-    user: object,
+    user: User,
   ): Promise<CreateCard | CreateCardFail> {
-    //user타입 추후 User로 변경 예정
-
     try {
+      const { allowMembers, cardName } = createCardDto;
+      const findCardName = await this.cardRepository.find({
+        where: { cardName },
+      });
+      if (findCardName) {
+        throw new BadRequestException('이미 존재하는 카드의 이름입니다.');
+      }
       //컬럼 레포지토리에서 컬럼 아이디에 해당하는 데이터 목록 불러온 후,
       //그것의 길이 -1 을 order의 값으로 넣어주기.
-
-      // const createCard = await this.cardRepository.save({
-      //   ...createCardDto,
-      //   order: findCardArr.length - 1,
-      //   writer: user.name,
-      //   userId: user.id,
-      //   columnId,
+      // const findColumnData = await this.columnRepository.find({
+      //   where: { id: columnId },
       // });
+      // if (!findColumnData) {
+      //   throw new BadRequestException(
+      //     '존재하지 않는 컬럼에 카드를 생성할 수 없습니다.',
+      //   );
+      // }
+      // const order = findColumnData.length -1
 
-      const { allowMembers } = createCardDto;
-
-      for (let member of allowMembers) {
-        //user 테이블에서 존재하는 사용자 인지 조회하기
-        //만약 없다면 에러 발생하고 break처리로 반복문 끝내기.
+      //user 테이블에서 존재하는 사용자 인지 조회하기
+      const test = await this.userRepository
+        .createQueryBuilder('user')
+        .select('user.id')
+        .andWhere('user.id IN (:...ids)', { ids: allowMembers })
+        .getMany();
+      console.log('test', test);
+      if (test.length !== allowMembers.length) {
+        throw new BadRequestException('지정하신 사용자는 없는 사용자 입니다.');
       }
 
+      //실제로 작동하게 될 crard 생성 코드입니다.
+      // const createCard = await this.cardRepository.save({
+      //   ...createCardDto,
+      //   order,
+      //   writer: user.name,
+      //   userId: user.id,
+      //   columnId: findColumnData.id,
+      // });
+
+      //이것은 임시 데이터 생성용 코드입니다.
       const createCard = await this.cardRepository.save({
         ...createCardDto,
-        order: 1,
+        order: 1, //순서는 해당 컬
         writer: '김동동',
         userId: 1,
         columnId,
@@ -57,11 +82,7 @@ export class CardsService {
       };
     } catch (err) {
       console.log(err);
-      return {
-        success: false,
-        status: 500,
-        message: '카드 생성을 다시 시도해주세요.',
-      };
+      return err.response;
     }
   }
 
@@ -107,11 +128,7 @@ export class CardsService {
       };
     } catch (err) {
       console.log(err);
-      return {
-        success: false,
-        status: 500,
-        message: '카드 수정을 다시 시도해주세요.',
-      };
+      return err.response;
     }
   }
 
@@ -152,11 +169,7 @@ export class CardsService {
       };
     } catch (err) {
       console.log(err);
-      return {
-        success: false,
-        status: 400,
-        message: '카드삭제를 다시 시도해주세요.',
-      };
+      return err.response;
     }
   }
 }

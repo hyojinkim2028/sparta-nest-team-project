@@ -7,9 +7,9 @@ export type CreateCard = {
 };
 
 export type CreateCardFail = {
-  success: boolean;
-  status: number;
   message: string;
+  error: string;
+  statusCode: number;
 };
 
 export type DeleteCard = {

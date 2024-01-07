@@ -1,0 +1,16 @@
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzA0NjUzNTkwLCJleHAiOjE3MDQ2OTY3OTB9.HoPQcB9GxX6n6Ikhaz1vxW8xW18hvsNeaHCDfTSC2OU
+
+### 카드 생성하기
+POST http://localhost:3001/api/card/column/1
+Content-Type: application/json
+
+{
+  "cardName": "카드 이름2",
+  "cardDescription": "카드 상세내용",
+  "allowMembers": [1, 4],
+  "cardColor": "red",
+  "startDate": "2024-03-28",
+  "endDate": "2024-05-30",
+  "endTime": "17:00"
+}
+

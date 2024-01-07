@@ -6,7 +6,7 @@ Content-Type: application/json
 
 {
   "name": "사용자이름",
-  "email": "1사용자이메일4@example.com",
+  "email": "2사용자이메일4@example.com",
   "password": "123123",
   "passwordConfirm": "123123"
 }

@@ -5,6 +5,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Card } from './entities/card.entity';
+import { User } from 'src/user/entities/user.entity';
 
 @Module({
   imports: [
@@ -14,7 +15,7 @@ import { Card } from './entities/card.entity';
       }),
       inject: [ConfigService],
     }),
-    TypeOrmModule.forFeature([Card]),
+    TypeOrmModule.forFeature([Card, User]),
   ],
   controllers: [CardsController],
   providers: [CardsService],
