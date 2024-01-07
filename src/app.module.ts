@@ -6,13 +6,17 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { configModuleValidationSchema } from './configs/env-validation.config';
 import { typeOrmModuleAsyncOptions } from './configs/database.config';
 import { AuthModule } from './auth/auth.module';
+import { CardsModule } from './cards/cards.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({isGlobal: true, validationSchema: configModuleValidationSchema
+    ConfigModule.forRoot({
+      isGlobal: true,
+      validationSchema: configModuleValidationSchema,
     }),
     TypeOrmModule.forRootAsync(typeOrmModuleAsyncOptions),
-    AuthModule
+    AuthModule,
+    CardsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
