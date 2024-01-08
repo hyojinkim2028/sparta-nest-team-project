@@ -1,0 +1,100 @@
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.sideBar {
+  position: fixed;
+}
+.sidebar-back {
+  width: 280px;
+}
+
+.Ilrello {
+  color: #ffc107;
+  font-size: 32px;
+}
+
+/* 보드 */
+.kanban {
+  display: flex;
+  padding: 30px;
+  width: 100%;
+  height: 100vh;
+  background: #ffc107;
+}
+
+.kanban__board {
+  flex: 1;
+  flex-direction: row;
+}
+
+.kanban__board:not(:last-child) {
+  margin-right: 30px;
+}
+
+.kanban__board-title {
+  margin-bottom: 20px;
+  font-size: 30px;
+  color: black;
+  user-select: none;
+}
+
+.kanban_list {
+  background: rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  width: 400px;
+  margin: 15px;
+}
+.kanban__list-title {
+  margin-bottom: 10px;
+  font-size: 25px;
+  color: black;
+}
+.kanban_card {
+  padding: 10px 15px;
+  box-sizing: border-box;
+  background: white;
+  border-radius: 5px;
+  margin: 15px 0;
+}
+
+.kanban__card-input {
+  padding: 10px 15px;
+  box-sizing: border-box;
+  background: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.kanban__dropzone {
+  height: 10px;
+  transition:
+    background 0.15s,
+    height 0.15s;
+}
+.kanban__dropzone--active {
+  height: 20px;
+  background: rgba(0, 0, 0, 0.25);
+}
+.kanban__add-card {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  color: white;
+  background: rgba(0, 0, 0, 0.1);
+  border: none;
+  border-radius: 5px;
+}
