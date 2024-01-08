@@ -21,13 +21,13 @@ Content-Type: application/json
 }
 
 ### 회원정보조회
-GET http://localhost:3001/api/users/info
+GET http://localhost:3001/api/user/info
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
 
 ### 비밀번호 변경
-PUT  http://localhost:3001/api/users/info
+PUT  http://localhost:3001/api/user/info
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
@@ -38,6 +38,6 @@ Authorization: Bearer {{accessToken}}
 }
 
 ### 회원탈퇴
-PUT  http://localhost:3001/api/users/delete
+PUT  http://localhost:3001/api/user/delete
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
