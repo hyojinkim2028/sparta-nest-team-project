@@ -50,38 +50,70 @@ export class BoardsController {
   @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))
   @Get()
-  findAllBoards(@Request() req) {
+  async findAllBoards(@Request() req) {
     const userId = req.user.id;
-    return this.boardsService.findAll(userId);
+    const data = await this.boardsService.findAll(userId);
+    return {
+      statusCode: HttpStatus.FOUND,
+      message: '보드 전체조회에 성공했습니다!',
+      data,
+    };
   }
 
-  // /**
-  //  *
-  //  * @param 보드 상세 조회
-  //  * @returns
-  //  */
-  // @Get(':id')
-  // findOneBoard(@Param('id') id: string) {
-  //   return this.boardsService.findOne(+id);
-  // }
+  /**
+   *
+   * @param 보드 상세 조회
+   * @returns
+   */
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard('jwt'))
+  @Get(':id')
+  async findOneBoard(@Param('id') id) {
+    const data = await this.boardsService.findOne(+id);
+    return {
+      statusCode: HttpStatus.FOUND,
+      message: '보드 상세조회에 성공했습니다!',
+      data,
+    };
+  }
 
-  // /**
-  //  *
-  //  * @param 보드 수정
-  //  * @returns
-  //  */
-  // @Patch(':id')
-  // updateBoard(@Param('id') id: string, @Body() updateBoardDto: UpdateBoardDto) {
-  //   return this.boardsService.update(+id, updateBoardDto);
-  // }
+  /**
+   *
+   * @param 보드 수정
+   * @returns
+   */
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard('jwt'))
+  @Patch(':id')
+  async updateBoard(
+    @Request() req,
+    @Param('id') id,
+    @Body() updateBoardDto: UpdateBoardDto,
+  ) {
+    const userId = req.user.id;
+    const data = await this.boardsService.update(userId, +id, updateBoardDto);
+    return {
+      statusCode: HttpStatus.OK,
+      message: '보드 수정에 성공했습니다!',
+      data,
+    };
+  }
 
-  // /**
-  //  *
-  //  * @param 보드 삭제
-  //  * @returns
-  //  */
-  // @Delete(':id')
-  // removeBoard(@Param('id') id: string) {
-  //   return this.boardsService.remove(+id);
-  // }
+  /**
+   *
+   * @param 보드 삭제
+   * @returns
+   */
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard('jwt'))
+  @Delete(':id')
+  async removeBoard(@Request() req, @Param('id') id) {
+    const userId = req.user.id;
+    const data = await this.boardsService.remove(userId, +id);
+    return {
+      statusCode: HttpStatus.OK,
+      message: '보드 삭제에 성공했습니다!',
+      data,
+    };
+  }
 }

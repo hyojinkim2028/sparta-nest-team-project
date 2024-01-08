@@ -16,6 +16,15 @@ export class Board {
   id: number;
 
   /**
+   * 보드 관리자
+   * @example 1
+   */
+  @IsNotEmpty({ message: '보드 생성자를 입력해주세요.' })
+  @IsString()
+  @Column()
+  boardOwner: number;
+
+  /**
    * 보드 이름
    * @example "todo"
    */
@@ -41,6 +50,13 @@ export class Board {
   @IsString()
   @Column()
   backgroundColor: string;
+
+  /**
+   * 리스트 배열
+   * @example [1,2,3]
+   */
+  @Column({ type: 'json' })
+  orderList: string[];
 
   @CreateDateColumn()
   createdAt: Date;
