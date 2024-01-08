@@ -1,12 +1,14 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
+import { Page } from './decorators/page.decorator';
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @Page('main')
+  async hello() {
+    return { message: '프론트!!!!!!!!!' };
   }
 }
