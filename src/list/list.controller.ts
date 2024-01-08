@@ -15,6 +15,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { CreateListDto } from './dtos/create-list.dto';
 
 @ApiTags('리스트')
+// @UseGuards(AuthGuard('jwt'))
 @Controller('list')
 export class ListController {
   constructor(private readonly listService: ListService) {}
@@ -24,10 +25,12 @@ export class ListController {
    * @param CreateListDto
    * @returns
    */
-  // @UseGuards(AuthGuard('jwt'))
-  @Post()
-  async create(@Body() createListDto: CreateListDto) {
-    const data = await this.listService.create(createListDto);
+  @Post('/:boardId')
+  async create(
+    @Param('boardId') boardId: number,
+    @Body() createListDto: CreateListDto,
+  ) {
+    const data = await this.listService.create(boardId, createListDto);
     return {
       statusCode: HttpStatus.CREATED,
       message: '리스트 생성에 성공했습니다.',
@@ -39,9 +42,9 @@ export class ListController {
    * 리스트 조회
    * @returns
    */
-  @Get()
-  async findAll() {
-    const data = await this.listService.findAll();
+  @Get('/:boardId')
+  async findAll(@Param('boardId') boardId: number) {
+    const data = await this.listService.findAll(boardId);
 
     return {
       statusCode: HttpStatus.OK,
@@ -54,10 +57,13 @@ export class ListController {
    * 리스트 이름 수정
    * @returns
    */
-  // @UseGuards(AuthGuard('jwt'))
-  @Patch(':id')
-  async update(@Param('id') id: number) {
-    const data = await this.listService.update(id);
+  @Patch('/:boardId/:id')
+  async update(
+    @Param('boardId') boardId: number,
+    @Param('id') id: number,
+    @Body() createListDto: CreateListDto,
+  ) {
+    const data = await this.listService.update(boardId, id, createListDto);
 
     return {
       statusCode: HttpStatus.OK,
@@ -70,10 +76,9 @@ export class ListController {
    * 리스트 삭제
    * @returns
    */
-  // @UseGuards(AuthGuard('jwt'))
-  @Delete(':id')
-  async delete(@Param('id') id: number) {
-    const data = await this.listService.delete(id);
+  @Delete('/boardId/:id')
+  async delete(@Param('boardId') boardId: number, @Param('id') id: number) {
+    const data = await this.listService.delete(boardId, id);
 
     return {
       statusCode: HttpStatus.OK,

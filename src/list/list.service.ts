@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { List } from './entities/list.entity';
@@ -10,11 +10,40 @@ export class ListService {
     @InjectRepository(List) private readonly listRepository: Repository<List>,
   ) {}
 
-  async create(createListDto: CreateListDto) {}
+  async create(boardId: number, { listTitle }: CreateListDto) {
+    const newList = await this.listRepository.save({
+      boardId,
+      listTitle,
+    });
 
-  async findAll() {}
+    return newList;
+  }
 
-  async update(id: number) {}
+  async findAll(boardId: number) {
+    const lists = await this.listRepository.find({
+      where: {
+        boardId,
+      },
+    });
 
-  async delete(id: number) {}
+    return lists;
+  }
+
+  async update(boardId: number, id: number, { listTitle }: CreateListDto) {
+    if (!listTitle) {
+      throw new BadRequestException('수정할 리스트명을 작성해 주세요.');
+    }
+    console.log(listTitle);
+
+    const updateList = await this.listRepository.update(
+      { boardId, id },
+      { listTitle },
+    );
+  }
+
+  async delete(boardId: number, id: number) {
+    const deleteList = await this.listRepository.softDelete({ boardId, id });
+    console.log(deleteList);
+    return deleteList;
+  }
 }
