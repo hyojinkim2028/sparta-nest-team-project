@@ -1,5 +1,6 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 import { Invite } from 'src/invite/entities/invite.entity';
+import { List } from 'src/list/entities/list.entity';
 import { User } from 'src/user/entities/user.entity';
 import {
   Column,
@@ -75,4 +76,7 @@ export class Board {
 
   @OneToMany(() => Invite, (invite) => invite.board)
   invite: Invite[];
+  
+  @OneToMany((type) => List, (list) => list.board, {})
+  lists: List[];
 }
