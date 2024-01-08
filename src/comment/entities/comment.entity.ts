@@ -29,7 +29,7 @@ export class Comment {
 
   @IsString()
   @Column()
-  comment: string;
+  content: string;
 
   @CreateDateColumn()
   createdAt: Date;
