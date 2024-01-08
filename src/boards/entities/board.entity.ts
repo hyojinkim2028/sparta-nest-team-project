@@ -1,4 +1,5 @@
 import { IsNotEmpty, IsString } from 'class-validator';
+import { Invite } from 'src/invite/entities/invite.entity';
 import { User } from 'src/user/entities/user.entity';
 import {
   Column,
@@ -6,6 +7,7 @@ import {
   DeleteDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -70,4 +72,7 @@ export class Board {
   // N : 1
   @ManyToOne(() => User)
   user: User;
+
+  @OneToMany(() => Invite, (invite) => invite.board)
+  invite: Invite[];
 }

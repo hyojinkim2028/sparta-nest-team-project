@@ -116,4 +116,33 @@ export class BoardsController {
       data,
     };
   }
+
+  // 유저 초대
+  @Post('/:boardId/invite')
+  async inviteUser(@Body('email') email, @Param('boardId') boardId) {
+    const data = await this.boardsService.createInvite(email, boardId);
+    return {
+      statusCode: HttpStatus.CREATED,
+      message: '유저 초대 완료했습니다!',
+      data,
+    };
+  }
+
+  /**
+   *
+   * @param 해당 보드에서 초대한 유저 조회(승락후 조인중인 유저) -> 관리자와 조인한 유저만 조회 가능
+   * @returns
+   */
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard('jwt'))
+  @Get('/:boardId/invite')
+  async findAllInviteOnPending(@Request() req, @Param('boardId') boardId) {
+    const userId = req.user.id;
+    const data = await this.boardsService.findAllInvite(userId, boardId);
+    return {
+      statusCode: HttpStatus.FOUND,
+      message: '초대된 내역 전체 조회에 성공했습니다!',
+      data,
+    };
+  }
 }

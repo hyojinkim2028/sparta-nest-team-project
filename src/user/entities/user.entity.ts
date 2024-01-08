@@ -9,6 +9,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
+// import { Invite } from 'src/invite/entities/invite.entity';
 
 @Index('email', ['email'], { unique: true })
 @Entity({
