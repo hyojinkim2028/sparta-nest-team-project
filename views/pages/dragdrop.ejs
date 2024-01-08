@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .list {
+        width: 200px;
+        height: 200px;
+        padding: 10px;
+        border: 1px solid #aaaaaa;
+      }
+      .card {
+        width: 180px;
+        height: 30px;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #aaaaaa;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="list" draggable="true">
+      <div class="card" draggable="true">Card 1</div>
+      <div class="card" draggable="true">Card 2</div>
+    </div>
+    <div class="list" draggable="true">
+      <div class="card" draggable="true">Card 3</div>
+      <div class="card" draggable="true">Card 4</div>
+    </div>
+    <div class="list" draggable="true">
+      <div class="card" draggable="true">Card 5</div>
+      <div class="card" draggable="true">Card 6</div>
+    </div>
+    <div class="list" draggable="true">
+      <div class="card" draggable="true">Card 7</div>
+    </div>
+  </body>
+  <script>
+    // 페이지가 로드되면 실행되는 함수
+    window.onload = function () {
+      // 클래스 이름이 'list'인 요소들과 'card'인 요소들을 모두 가져옵니다.
+      var lists = document.getElementsByClassName('list');
+      var cards = document.getElementsByClassName('card');
+
+      // 드래그 중인 항목을 저장할 변수입니다.
+      var draggedItem = null;
+
+      // 모든 list에 대하여
+      for (let i = 0; i < lists.length; i++) {
+        // list 위로 드래그하는 동안 발생하는 이벤트입니다. 기본 동작을 막아서 드롭을 허용합니다.
+        lists[i].addEventListener('dragover', function (event) {
+          event.preventDefault();
+        });
+
+        // 드래그한 항목을 list에 드롭할 때 발생하는 이벤트입니다.
+        lists[i].addEventListener('drop', function (event) {
+          event.preventDefault();
+          if (draggedItem.classList.contains('list')) {
+            // 드래그한 항목이 list인 경우
+            // 드래그한 list를 드롭한 위치에 삽입합니다.
+            this.parentNode.insertBefore(draggedItem, this);
+            // list의 순서를 업데이트합니다.
+            updateOrder('list', this.parentNode);
+          } else {
+            // 드래그한 항목이 card인 경우
+            // 드래그한 card를 드롭한 list에 추가합니다.
+            this.appendChild(draggedItem);
+            // card의 순서를 업데이트합니다.
+            updateOrder('card', this);
+          }
+        });
+      }
+
+      // 모든 card에 대하여
+      for (let i = 0; i < cards.length; i++) {
+        // card를 드래그 시작할 때 발생하는 이벤트입니다. 드래그하는 card를 draggedItem에 저장합니다.
+        cards[i].addEventListener('dragstart', function (event) {
+          draggedItem = this;
+        });
+
+        // card를 드래그 끝냈을 때 발생하는 이벤트입니다. draggedItem를 null로 초기화합니다.
+        cards[i].addEventListener('dragend', function (event) {
+          draggedItem = null;
+        });
+      }
+    };
+
+    // 순서를 업데이트하고 서버에 PUT 요청을 보내는 함수입니다.
+    function updateOrder(type, parent) {
+      // parent 요소 내의 type에 해당하는 요소들을 순회하면서 각 요소의 id를 가져와서 order 배열을 만듭니다.
+      var items = parent.getElementsByClassName(type);
+      var order = Array.from(items).map(function (item) {
+        return item.id; // list_id 또는 card_id
+      });
+
+      var url;
+      // 타입에 따라 요청을 보낼 URL을 결정합니다.
+      if (type === 'list') {
+        url = `http://your-server.com/api/boards/${parent.id}/listOrder`; // parent.id는 board_id
+      } else {
+        // type === 'card'
+        url = `http://your-server.com/api/lists/${parent.id}/cardOrder`; // parent.id는 list_id
+      }
+
+      // 서버에 PUT 요청을 보냅니다.
+      axios
+        .put(url, { order: order })
+        .then(function (response) {
+          // 요청이 성공하면 콘솔에 응답을 출력합니다.
+          console.log(response);
+        })
+        .catch(function (error) {
+          // 요청이 실패하면 콘솔에 에러를 출력합니다.
+          console.error(error);
+        });
+    }
+  </script>
+</html>

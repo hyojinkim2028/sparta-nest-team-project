@@ -1,3 +1,6 @@
+*::-webkit-scrollbar {
+  display: none;
+}
 header {
   position: fixed;
   top: 0;
@@ -55,9 +58,10 @@ footer {
   background: rgba(0, 0, 0, 0.1);
   padding: 20px;
   box-sizing: border-box;
-  border-radius: 5px;
+  border-radius: 15px;
   width: 400px;
   margin: 15px;
+  cursor: move;
 }
 .kanban__list-title {
   margin-bottom: 10px;
@@ -68,15 +72,16 @@ footer {
   padding: 10px 15px;
   box-sizing: border-box;
   background: white;
-  border-radius: 5px;
+  border-radius: 10px;
   margin: 15px 0;
+  cursor: move;
 }
 
 .kanban__card-input {
   padding: 10px 15px;
   box-sizing: border-box;
   background: white;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
 }
 .kanban__dropzone {
@@ -96,5 +101,5 @@ footer {
   color: white;
   background: rgba(0, 0, 0, 0.1);
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
 }
