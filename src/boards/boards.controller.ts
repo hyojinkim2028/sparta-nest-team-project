@@ -28,7 +28,7 @@ export class BoardsController {
     const data = await this.boardsService.create(createBoardDto);
     return {
       statusCode: HttpStatus.CREATED,
-      message: '보드 생성에 성공했습니다.',
+      message: '보드 생성에 성공했습니다!',
       data,
     };
   }
