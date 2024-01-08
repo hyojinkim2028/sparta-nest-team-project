@@ -1,37 +1,33 @@
-@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwiaWF0IjoxNzA0NjkwNzY4LCJleHAiOjE3MDQ3MzM5Njh9.rEUooSCCLoMA_6hd3gJnlcmB2eN6ByIOecrTo31tduc
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEsImlhdCI6MTcwNDYzMTA4MSwiZXhwIjoxNzA0Njc0MjgxfQ.ioqg2krvsNYFDVheXcGFzeLDvLxfANqT6Vln34eJcwE
 
-# eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzA0Njg2NDkxLCJleHAiOjE3MDQ3Mjk2OTF9.0q9fE_f0OW4NddLf6TUAifGCG8QGCyY1d_jlHYLI2IY
 ### 회원가입
 POST http://localhost:3001/api/auth/register
 Content-Type: application/json
 
 {
-  "name": "사용자이름",
-  "email": "사용자이메일@example.com",
+  "name": "사용자",
+  "email": "example@example.com",
   "password": "123123",
   "passwordConfirm": "123123"
 }
 
-
 ### 로그인
 POST http://localhost:3001/api/auth/login
 Content-Type: application/json
-# Authorization: Bearer {{accessToken}}
 
 {
-  "email": "4사용자이메일4@example.com",
+  "email": "사용자이메일4@example.com",
 	"password":"456456"
 }
 
-
 ### 회원정보조회
-GET http://localhost:3001/api/users/info
+GET http://localhost:3001/api/user/info
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
 
 ### 비밀번호 변경
-PUT  http://localhost:3001/api/users/info
+PUT  http://localhost:3001/api/user/info
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
@@ -42,6 +38,6 @@ Authorization: Bearer {{accessToken}}
 }
 
 ### 회원탈퇴
-PUT  http://localhost:3001/api/users/delete
+PUT  http://localhost:3001/api/user/delete
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}

@@ -8,6 +8,7 @@ import { typeOrmModuleAsyncOptions } from './configs/database.config';
 import { AuthModule } from './auth/auth.module';
 import { CardsModule } from './cards/cards.module';
 import { UserModule } from './user/user.module';
+import { BoardsModule } from './boards/boards.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { UserModule } from './user/user.module';
     AuthModule,
     CardsModule,
     UserModule,
+    BoardsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
