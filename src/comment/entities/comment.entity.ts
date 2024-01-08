@@ -6,45 +6,45 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  //   JoinColumn,
-  //   ManyToOne,
+  // JoinColumn,
+  // ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 @Entity({
-  name: 'comment',
+  name: 'comments',
 })
 export class Comment {
   @PrimaryGeneratedColumn()
   id: number;
 
   @IsNumber()
-  @Column()
+  @Column({ nullable: false })
   card_id: number;
 
   @IsNumber()
-  @Column()
+  @Column({ nullable: false })
   user_id: number;
 
   @IsString()
-  @Column()
+  @Column('varchar', { length: 255, nullable: false })
   content: string;
 
   @CreateDateColumn()
-  createdAt: Date;
+  created_at: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updated_at: Date;
 
   @DeleteDateColumn()
-  deletedAt: Date;
+  deleted_at: Date;
 
-  //   @ManyToOne(() => Card, (card) => card.comments)
-  //   @JoinColumn({ name: 'card_id', referencedColumnName: 'id' })
-  //   card: Card;
+  // @ManyToOne(() => Card, (card) => card.comments)
+  // @JoinColumn({ name: 'card_id', referencedColumnName: 'id' })
+  // card: Card;
 
-  //   @ManyToOne(() => User, (user) => user.comments)
-  //   @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
-  //   user: User;
+  // @ManyToOne(() => User, (user) => user.comments)
+  // @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
+  // user: User;
 }

@@ -11,23 +11,36 @@ export class CommentService {
     @InjectRepository(Comment) private commentRepository: Repository<Comment>,
   ) {}
 
-  create(createCommentDto: CreateCommentDto, cardId: number, userId: number) {
-    return 'This action adds a new comment';
+  async create(cardId: number, createCommentDto: CreateCommentDto) {
+    const { content } = createCommentDto;
+    return await this.commentRepository.save({ content, card_id: cardId });
   }
 
-  findAll(cardId: number) {
-    return `This action returns all comment`;
+  async findAll(cardId: number) {
+    return await this.commentRepository.find({
+      where: { card_id: cardId, deleted_at: null },
+      order: {
+        created_at: 'DESC',
+      },
+    });
   }
 
-  findOne(id: number, cardId: number) {
-    return `This action returns a #${id} comment`;
+  async findOne(cardId: number, commentId: number) {
+    return await this.commentRepository.find({
+      where: { card_id: cardId, id: commentId, deleted_at: null },
+    });
   }
 
-  update(id: number, updateCommentDto: UpdateCommentDto, cardId: number) {
-    return `This action updates a #${id} comment`;
+  async update(
+    cardId: number,
+    commentId: number,
+    updateCommentDto: UpdateCommentDto,
+  ) {
+    const { content } = updateCommentDto;
+    return await this.commentRepository.update({ id: commentId }, { content });
   }
 
-  remove(id: number, cardId: number) {
-    return `This action removes a #${id} comment`;
+  remove(cardId: number, commentId: number) {
+    return `This action removes a #${commentId} commentof #${cardId} card`;
   }
 }
