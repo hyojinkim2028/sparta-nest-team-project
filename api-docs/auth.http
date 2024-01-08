@@ -5,8 +5,8 @@ POST http://localhost:3001/api/auth/register
 Content-Type: application/json
 
 {
-  "name": "사용자이름",
-  "email": "사용자이메일4@example.com",
+  "name": "사용자",
+  "email": "example@example.com",
   "password": "123123",
   "passwordConfirm": "123123"
 }
