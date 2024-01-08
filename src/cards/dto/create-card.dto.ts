@@ -20,6 +20,13 @@ export class CreateCardDto {
   @IsArray()
   allowMembers: number[];
 
+  @ApiProperty({
+    example: '작업할 맴버를 입력해 주세요. ex) [1,2]',
+  })
+  @IsNotEmpty({ message: '작업할 멤버를 입력해주세요.' })
+  @IsArray()
+  workers: number[];
+
   @ApiProperty({ required: true, example: '카드 색상' })
   @IsNotEmpty({ message: '카드 색상을 입력해주세요.' })
   @IsString({ message: '문자를 입력해 주세요.' })

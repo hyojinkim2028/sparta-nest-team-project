@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { CardsService } from './cards.service';
 import { CreateCardDto } from './dto/create-card.dto';
@@ -16,7 +17,9 @@ import { Card } from './entities/card.entity';
 import { UserInfo } from 'src/utils/userInfo.decorator';
 import { CreateCard, CreateCardFail, DeleteCard } from './types/res.types';
 import { User } from 'src/user/entities/user.entity';
+import { AuthGuard } from '@nestjs/passport';
 
+@UseGuards(AuthGuard('jwt'))
 @Controller('card')
 export class CardsController {
   constructor(private readonly cardsService: CardsService) {}
@@ -50,26 +53,27 @@ export class CardsController {
   //카드 수정하기
   @Patch(':id') //cardId
   async update(
-    @Param('id') id: string,
+    @Param('id') cardId: string,
     @Body() updateCardDto: UpdateCardDto,
   ): Promise<CreateCard | CreateCardFail> {
-    return await this.cardsService.update(+id, updateCardDto);
+    console.log('통과중 컨트롤러');
+    return await this.cardsService.update(+cardId, updateCardDto);
   }
 
-  //카드 이동하기(동일컬럼 내부, 다른 컬럼)
-  @Patch('/move-card/:id') //cardId
-  async moveCard(
-    @Param('id') id: string,
-    @Body() orderChangeCardDto: OrderChangeCardDto,
-  ): Promise<CreateCard | CreateCardFail> {
-    return await this.cardsService.moveCard(+id, orderChangeCardDto);
-  }
+  // //카드 이동하기(동일컬럼 내부, 다른 컬럼)
+  // @Patch('/move-card/:id') //cardId
+  // async moveCard(
+  //   @Param('id') id: string,
+  //   @Body() orderChangeCardDto: OrderChangeCardDto,
+  // ): Promise<CreateCard | CreateCardFail> {
+  //   return await this.cardsService.moveCard(+id, orderChangeCardDto);
+  // }
 
   @Delete(':id') //cardId
   async remove(
-    @Param('id') id: string,
-    @UserInfo() user: object, //: User로 타입 변경 예정.
+    @Param('id') cardId: string,
+    @UserInfo() user: User, //: User로 타입 변경 예정.
   ): Promise<DeleteCard | CreateCardFail> {
-    return await this.cardsService.remove(+id);
+    return await this.cardsService.remove(+cardId, user);
   }
 }

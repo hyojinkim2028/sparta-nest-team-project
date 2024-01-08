@@ -22,6 +22,9 @@ export class Card {
   @Column({ type: 'simple-array', nullable: true })
   allowMembers: number[];
 
+  @Column({ type: 'simple-array', nullable: false })
+  workers: number[];
+
   @Column({ type: 'varchar', nullable: false })
   cardColor: string;
 
@@ -34,8 +37,8 @@ export class Card {
   @Column({ type: 'varchar', nullable: false })
   endTime: string;
 
-  @Column({ type: 'int', nullable: false, unsigned: true })
-  order: number;
+  // @Column({ type: 'varchar', nullable: false, unique: true })
+  // order: string;
 
   //외래키 가져오는 부분 실제 user 테이블과 테스트
   @Column()
@@ -47,7 +50,7 @@ export class Card {
 
   // TODO req.user에 담기는데 굳이 user.name을 가져와야 할까?
   // User 테이블과 연결
-  @ManyToOne(() => User, (user) => user.card, { onDelete: 'CASCADE' })
+  @ManyToOne(() => User, (user) => user.card)
   @JoinColumn()
   user: User;
   @Column({ type: 'int', unsigned: true })

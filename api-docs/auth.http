@@ -1,24 +1,28 @@
-@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzA0NjUzNTkwLCJleHAiOjE3MDQ2OTY3OTB9.HoPQcB9GxX6n6Ikhaz1vxW8xW18hvsNeaHCDfTSC2OU
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwiaWF0IjoxNzA0NjkwNzY4LCJleHAiOjE3MDQ3MzM5Njh9.rEUooSCCLoMA_6hd3gJnlcmB2eN6ByIOecrTo31tduc
 
+# eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzA0Njg2NDkxLCJleHAiOjE3MDQ3Mjk2OTF9.0q9fE_f0OW4NddLf6TUAifGCG8QGCyY1d_jlHYLI2IY
 ### 회원가입
 POST http://localhost:3001/api/auth/register
 Content-Type: application/json
 
 {
   "name": "사용자이름",
-  "email": "2사용자이메일4@example.com",
+  "email": "사용자이메일@example.com",
   "password": "123123",
   "passwordConfirm": "123123"
 }
 
+
 ### 로그인
 POST http://localhost:3001/api/auth/login
 Content-Type: application/json
+# Authorization: Bearer {{accessToken}}
 
 {
-  "email": "1사용자이메일4@example.com",
+  "email": "4사용자이메일4@example.com",
 	"password":"456456"
 }
+
 
 ### 회원정보조회
 GET http://localhost:3001/api/users/info
