@@ -1,6 +1,6 @@
-@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwiaWF0IjoxNzA0NzAxOTg1LCJleHAiOjE3MDQ3NDUxODV9.JMhhvPNI3u7aARWdRqvVuBcLoPvmlxs3tXVp59eB_QA
-# @accessToken =  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImlhdCI6MTcwNDcwMjAzMiwiZXhwIjoxNzA0NzQ1MjMyfQ.9Z85-g2YGokEg9BtKd93_SwE-FISTuq-ABfRak_-c1A
-
+# @accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwiaWF0IjoxNzA0NzAxOTg1LCJleHAiOjE3MDQ3NDUxODV9.JMhhvPNI3u7aARWdRqvVuBcLoPvmlxs3tXVp59eB_QA
+@accessToken =  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImlhdCI6MTcwNDcwMjAzMiwiZXhwIjoxNzA0NzQ1MjMyfQ.9Z85-g2YGokEg9BtKd93_SwE-FISTuq-ABfRak_-c1A
+# @accessToken =  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiaWF0IjoxNzA0NzAzNDAwLCJleHAiOjE3MDQ3NDY2MDB9.5HJJ4HUFMYEstyw6RbKOV9RXyKCNkoJ5kyX_wGxm7MM
 
 ### 카드 생성하기
 POST http://localhost:3001/api/card/column/1
@@ -8,7 +8,7 @@ Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
 {
-  "cardName": "카드 이름3",
+  "cardName": "카드 이름4",
   "cardDescription": "카드 상세내용",
   "allowMembers": [8,9,10],
   "workers": [8,9],
@@ -21,7 +21,7 @@ Authorization: Bearer {{accessToken}}
 #
 
 ### 카드 수정하기
-PATCH http://localhost:3001/api/card/21
+PATCH http://localhost:3001/api/card/28
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
@@ -39,11 +39,17 @@ Authorization: Bearer {{accessToken}}
 #
 
 ### 카드 삭제하기
-DELETE http://localhost:3001/api/card/26
+DELETE http://localhost:3001/api/card/28
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
 
+#
+
+### 카드 상세정보 보기
+GET http://localhost:3001/api/card/28
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
 
 
 

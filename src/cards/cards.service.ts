@@ -110,14 +110,39 @@ export class CardsService {
     return `This action returns all cards`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} card`;
+  async cardDetail(
+    cardId: number,
+    user: User,
+  ): Promise<CreateCard | CreateCardFail> {
+    try {
+      const findCardDetail = await this.cardRepository.findOne({
+        where: { id: +cardId },
+      });
+      if (!findCardDetail) {
+        throw new BadRequestException('존재하지 않는 카드입니다.');
+      }
+      const allowMembers = findCardDetail.allowMembers
+        .map((e) => +e)
+        .includes(user.id);
+      if (!allowMembers) {
+        throw new UnauthorizedException('접근 권한이 없습니다. ');
+      }
+      return {
+        success: true,
+        message: '카드 상세정보 조회를 완료했습니다.',
+        data: findCardDetail,
+      };
+    } catch (err) {
+      console.log(err);
+      return err.response;
+    }
   }
 
-  //카드 수정하기
+  //카드 수정하기 __ 작업자만 수정이 가능합니다.
   async update(
     cardId: number, //cardId
     updateCardDto: UpdateCardDto,
+    user: User,
   ): Promise<CreateCard | CreateCardFail> {
     const {
       cardName,
@@ -139,6 +164,11 @@ export class CardsService {
       });
       if (!findCard) {
         throw new BadRequestException('존재하지 않는 카드입니다.');
+      }
+      const availableUser = findCard.workers.map((e) => +e).includes(user.id);
+
+      if (!availableUser) {
+        throw new UnauthorizedException('수정 권한이 주어지지 않았습니다.');
       }
 
       //user 테이블에서 존재하는 사용자 인지 조회하기 _ allowMembers
@@ -219,34 +249,6 @@ export class CardsService {
     }
   }
 
-  // //카드 순서 변경하기
-  // async moveCard(
-  //   cardId: number,
-  //   orderChangeCardDto: OrderChangeCardDto,
-  // ): Promise<CreateCard | CreateCardFail> {
-  //   try {
-  //     // const { order, columnId } = orderChangeCardDto;
-  //     // const findCard = await this.cardRepository.findOne({
-  //     //   where: { id: cardId },
-  //     // });
-  //     // const sameColumnId = findCard.columnId === columnId;
-  //     // const sameCardOrderId = findCard.order === order;
-
-  //     // if (sameColumnId && sameCardOrderId) {
-  //     //   //변경사항이 없음
-  //     // } else if (sameColumnId && !sameCardOrderId) {
-  //     //   //컬럼은 그대로, 카드순서만 변경되었음.
-  //     // } else {
-  //     //   //컬럼이 변경되었음.
-  //     //   //해당 컬럼에 들어있는 카드의 길이-1번을 order필드에 삽입.
-  //     // }
-
-  //     return;
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
-
   //카드 삭제하기_ 작성자만 카드 삭제가 가능합니다.
   async remove(
     cardId: number,
@@ -275,4 +277,32 @@ export class CardsService {
       return err.response;
     }
   }
+
+  // //카드 순서 변경하기
+  // async moveCard(
+  //   cardId: number,
+  //   orderChangeCardDto: OrderChangeCardDto,
+  // ): Promise<CreateCard | CreateCardFail> {
+  //   try {
+  //     // const { order, columnId } = orderChangeCardDto;
+  //     // const findCard = await this.cardRepository.findOne({
+  //     //   where: { id: cardId },
+  //     // });
+  //     // const sameColumnId = findCard.columnId === columnId;
+  //     // const sameCardOrderId = findCard.order === order;
+
+  //     // if (sameColumnId && sameCardOrderId) {
+  //     //   //변경사항이 없음
+  //     // } else if (sameColumnId && !sameCardOrderId) {
+  //     //   //컬럼은 그대로, 카드순서만 변경되었음.
+  //     // } else {
+  //     //   //컬럼이 변경되었음.
+  //     //   //해당 컬럼에 들어있는 카드의 길이-1번을 order필드에 삽입.
+  //     // }
+
+  //     return;
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
 }

@@ -24,6 +24,7 @@ import { AuthGuard } from '@nestjs/passport';
 export class CardsController {
   constructor(private readonly cardsService: CardsService) {}
 
+  //카드 생성하기
   @Post('column/:columnId') //columnId가 들어갑니다.
   async create(
     @Body() createCardDto: CreateCardDto,
@@ -38,26 +39,37 @@ export class CardsController {
     return createCard;
   }
 
-  //전체 카드 조회
-  @Get()
-  findAll() {
-    return this.cardsService.findAll();
-  }
+  // //전체 카드 조회
+  // @Get()
+  // async findAllCard_() {
+  //   await return this.cardsService.findAll();
+  // }
 
   //특정 카드 조회
   @Get(':id') //cardId
-  findOne(@Param('id') id: string) {
-    return this.cardsService.findOne(+id);
+  async cardDetail(
+    @Param('id') cardId: number,
+    @UserInfo() user: User,
+  ): Promise<CreateCard | CreateCardFail> {
+    return await this.cardsService.cardDetail(+cardId, user);
   }
 
   //카드 수정하기
   @Patch(':id') //cardId
   async update(
-    @Param('id') cardId: string,
+    @Param('id') cardId: number,
     @Body() updateCardDto: UpdateCardDto,
+    @UserInfo() user: User,
   ): Promise<CreateCard | CreateCardFail> {
-    console.log('통과중 컨트롤러');
-    return await this.cardsService.update(+cardId, updateCardDto);
+    return await this.cardsService.update(+cardId, updateCardDto, user);
+  }
+
+  @Delete(':id') //cardId
+  async remove(
+    @Param('id') cardId: number,
+    @UserInfo() user: User, //: User로 타입 변경 예정.
+  ): Promise<DeleteCard | CreateCardFail> {
+    return await this.cardsService.remove(+cardId, user);
   }
 
   // //카드 이동하기(동일컬럼 내부, 다른 컬럼)
@@ -68,12 +80,4 @@ export class CardsController {
   // ): Promise<CreateCard | CreateCardFail> {
   //   return await this.cardsService.moveCard(+id, orderChangeCardDto);
   // }
-
-  @Delete(':id') //cardId
-  async remove(
-    @Param('id') cardId: string,
-    @UserInfo() user: User, //: User로 타입 변경 예정.
-  ): Promise<DeleteCard | CreateCardFail> {
-    return await this.cardsService.remove(+cardId, user);
-  }
 }
