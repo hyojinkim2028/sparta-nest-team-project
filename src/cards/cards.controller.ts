@@ -33,9 +33,10 @@ export class CardsController {
   @Post('list/:listId') //listId가 들어갑니다.
   async create(
     @Body() createCardDto: CreateCardDto,
-    @Param() listId: number,
+    @Param('listId') listId: number,
     @UserInfo() user: User,
   ): Promise<CreateCard | CreateCardFail> {
+    console.log('listId', listId);
     const createCard = await this.cardsService.create(
       createCardDto,
       listId,
@@ -44,15 +45,14 @@ export class CardsController {
     return createCard;
   }
 
-  TODO;
-  // // 해당 리스트에 속하는 모든 카드 조회하기.
-  // @Get('list/:listId') //listId
-  // async allCardsInOneList(
-  //   @Param() listId: number,
-  //   @UserInfo() user: User,
-  // ): Promise<AllCardsInOneList | CreateCardFail> {
-  //   return await this.cardsService.allCardsInOneList(+listId, user);
-  // }
+  // 해당 리스트에 속하는 모든 카드 조회하기.
+  @Get('list/:listsId') //listsId
+  async allCardsInOneList(
+    @Param('listsId') listsId: number,
+    @UserInfo() user: User,
+  ): Promise<AllCardsInOneList | CreateCardFail> {
+    return await this.cardsService.allCardsInOneList(+listsId, user);
+  }
 
   //특정 카드 조회
   @Get(':id') //cardId
@@ -80,13 +80,4 @@ export class CardsController {
   ): Promise<DeleteCard | CreateCardFail> {
     return await this.cardsService.remove(+cardId, user);
   }
-
-  // //카드 이동하기(동일컬럼 내부, 다른 컬럼)
-  // @Patch('/move-card/:id') //cardId
-  // async moveCard(
-  //   @Param('id') id: string,
-  //   @Body() orderChangeCardDto: OrderChangeCardDto,
-  // ): Promise<CreateCard | CreateCardFail> {
-  //   return await this.cardsService.moveCard(+id, orderChangeCardDto);
-  // }
 }
