@@ -1,34 +1,87 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  HttpStatus,
+  UseGuards,
+  Request,
+} from '@nestjs/common';
 import { BoardsService } from './boards.service';
-import { CreateBoardDto } from './dto/create-board.dto';
-import { UpdateBoardDto } from './dto/update-board.dto';
+import { CreateBoardDto } from './dtos/create-board.dto';
+import { UpdateBoardDto } from './dtos/update-board.dto';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
+@ApiTags('보드')
 @Controller('boards')
 export class BoardsController {
   constructor(private readonly boardsService: BoardsService) {}
 
+  /**
+   *
+   * @param 보드 생성
+   * @returns
+   */
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard('jwt'))
   @Post()
-  create(@Body() createBoardDto: CreateBoardDto) {
-    return this.boardsService.create(createBoardDto);
+  async createBoard(
+    @Request() req, //
+    @Body() createBoardDto: CreateBoardDto, //
+  ) {
+    const userId = req.user.id;
+    const data = await this.boardsService.create(userId, createBoardDto);
+    return {
+      statusCode: HttpStatus.CREATED,
+      message: '보드 생성에 성공했습니다!',
+      data,
+    };
   }
 
+  /**
+   *
+   * @param 보드 전체 조회
+   * @returns
+   */
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard('jwt'))
   @Get()
-  findAll() {
-    return this.boardsService.findAll();
+  findAllBoards(@Request() req) {
+    const userId = req.user.id;
+    return this.boardsService.findAll(userId);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.boardsService.findOne(+id);
-  }
+  // /**
+  //  *
+  //  * @param 보드 상세 조회
+  //  * @returns
+  //  */
+  // @Get(':id')
+  // findOneBoard(@Param('id') id: string) {
+  //   return this.boardsService.findOne(+id);
+  // }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBoardDto: UpdateBoardDto) {
-    return this.boardsService.update(+id, updateBoardDto);
-  }
+  // /**
+  //  *
+  //  * @param 보드 수정
+  //  * @returns
+  //  */
+  // @Patch(':id')
+  // updateBoard(@Param('id') id: string, @Body() updateBoardDto: UpdateBoardDto) {
+  //   return this.boardsService.update(+id, updateBoardDto);
+  // }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.boardsService.remove(+id);
-  }
+  // /**
+  //  *
+  //  * @param 보드 삭제
+  //  * @returns
+  //  */
+  // @Delete(':id')
+  // removeBoard(@Param('id') id: string) {
+  //   return this.boardsService.remove(+id);
+  // }
 }

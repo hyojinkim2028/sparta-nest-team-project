@@ -1,9 +1,11 @@
-import { IsArray, IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
+import { User } from 'src/user/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -40,14 +42,6 @@ export class Board {
   @Column()
   backgroundColor: string;
 
-  /**
-   * 보드 사용자 리스트(본인+초대된 사용자들)
-   * @example "['rizzy']"
-   */
-  @IsArray()
-  @Column({ type: 'json' })
-  userList: string[];
-
   @CreateDateColumn()
   createdAt: Date;
 
@@ -56,4 +50,8 @@ export class Board {
 
   @DeleteDateColumn()
   deletedAt: Date;
+
+  // N : 1
+  @ManyToOne(() => User)
+  user: User;
 }
