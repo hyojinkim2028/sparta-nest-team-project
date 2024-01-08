@@ -56,10 +56,10 @@ export class Card {
   @Column({ type: 'int', unsigned: true })
   userId: number;
 
-  //// Column 테이블과 연결
-  // @ManyToOne(()=> Column, (column)=>column.card, { onDelete: 'CASCADE'})
+  //// List 테이블과 연결
+  // @ManyToOne(()=> List, (list)=>list.card, { onDelete: 'CASCADE'})
   // @JoinColumn()
-  // column: Column;
+  // list: List;
   // @Column({type: 'int', unsigned: true})
-  // columnId: number;
+  // listId: number;
 }

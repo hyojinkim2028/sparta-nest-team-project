@@ -10,8 +10,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Card } from './entities/card.entity';
 import { In, Repository } from 'typeorm';
 import { userInfo } from 'os';
-import { CreateCard, CreateCardFail, DeleteCard } from './types/res.types';
+import {
+  AllCardsInOneList,
+  CreateCard,
+  CreateCardFail,
+  DeleteCard,
+} from './types/res.types';
 import { User } from 'src/user/entities/user.entity';
+import { todo } from 'node:test';
 
 @Injectable()
 export class CardsService {
@@ -20,14 +26,14 @@ export class CardsService {
     private cardRepository: Repository<Card>,
     @InjectRepository(User)
     private userRepository: Repository<User>,
-    // @InjectRepository(Column)
-    // private columnRepository: Repository<Column>,
+    // @InjectRepository(List)
+    // private listRepository: Repository<List>,
   ) {}
 
   //카드 생성하기
   async create(
     createCardDto: CreateCardDto,
-    columnId: number,
+    listId: number,
     user: User,
   ): Promise<CreateCard | CreateCardFail> {
     try {
@@ -66,7 +72,7 @@ export class CardsService {
       }
 
       //어차피 allowMembers에 있는 사람들 중에 worker가 있을테니까 workers에 유저들이 실제 존재하는 유저인지 검증은 필요 없는 과정.
-      //그렇지만 꼼꼼히 처리하는게 좋다고 생각해서 넣었습니다.
+      //그렇지만 꼼꼼히 처리하는게 좋다고 생각해서 넣었습니다
       //user 테이블에서 존재하는 사용자 인지 조회하기 _ workers
       const findWorkers = await this.userRepository
         .createQueryBuilder('user')
@@ -92,7 +98,7 @@ export class CardsService {
         ...createCardDto,
         writer: user.name,
         userId: user.id,
-        columnId,
+        listId,
       });
 
       return {
@@ -106,10 +112,41 @@ export class CardsService {
     }
   }
 
-  findAll() {
-    return `This action returns all cards`;
-  }
+  TODO;
+  // //해당 컬럼에 속하는 모든 카드 보기
+  // async allCardsInOneList(
+  //   listId: number,
+  //   user: User,
+  // ): Promise<AllCardsInOneList | CreateCardFail> {
+  //   try {
+  //     //해당 컬럼 아이디가 존재하는지 검증.
+  //     //List 서비스에서 함수 불러와서 사용하기.
 
+  //     TODO;
+  //     //현재 접근하는 유저가 allowMember중 한명인가?
+  //     //각 카드마다 허용하는 유저가 다름
+  //     //board의 members에 속한 유저인지 확인.
+  //     //board서비스에서 데이터 가져오기
+
+  //     const allCardsInOneList = await this.cardRepository.find({
+  //       where: { listId },
+  //     });
+
+  //     const filterCardList = allCardsInOneList.filter((data) => {
+  //       data.allowMembers.map((e) => +e).includes(user.id);
+  //     });
+  //     return {
+  //       success: true,
+  //       message: '리스트에 속한 모든 카드조회를 완료했습니다.',
+  //       data: allCardsInOneList,
+  //     };
+  //   } catch (err) {
+  //     console.log(err);
+  //     return err.response;
+  //   }
+  // }
+
+  //카드 상세보기
   async cardDetail(
     cardId: number,
     user: User,

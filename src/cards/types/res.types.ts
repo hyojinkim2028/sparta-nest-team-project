@@ -16,3 +16,9 @@ export type DeleteCard = {
   success: boolean;
   message: string;
 };
+
+export type AllCardsInOneList = {
+  success: boolean;
+  message: string;
+  data: Card[];
+};

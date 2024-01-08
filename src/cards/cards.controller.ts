@@ -15,7 +15,12 @@ import { UpdateCardDto } from './dto/update-card.dto';
 
 import { Card } from './entities/card.entity';
 import { UserInfo } from 'src/utils/userInfo.decorator';
-import { CreateCard, CreateCardFail, DeleteCard } from './types/res.types';
+import {
+  AllCardsInOneList,
+  CreateCard,
+  CreateCardFail,
+  DeleteCard,
+} from './types/res.types';
 import { User } from 'src/user/entities/user.entity';
 import { AuthGuard } from '@nestjs/passport';
 
@@ -25,24 +30,28 @@ export class CardsController {
   constructor(private readonly cardsService: CardsService) {}
 
   //카드 생성하기
-  @Post('column/:columnId') //columnId가 들어갑니다.
+  @Post('list/:listId') //listId가 들어갑니다.
   async create(
     @Body() createCardDto: CreateCardDto,
-    @Param() columnId: number,
+    @Param() listId: number,
     @UserInfo() user: User,
   ): Promise<CreateCard | CreateCardFail> {
     const createCard = await this.cardsService.create(
       createCardDto,
-      columnId,
+      listId,
       user,
     );
     return createCard;
   }
 
-  // //전체 카드 조회
-  // @Get()
-  // async findAllCard_() {
-  //   await return this.cardsService.findAll();
+  TODO;
+  // // 해당 리스트에 속하는 모든 카드 조회하기.
+  // @Get('list/:listId') //listId
+  // async allCardsInOneList(
+  //   @Param() listId: number,
+  //   @UserInfo() user: User,
+  // ): Promise<AllCardsInOneList | CreateCardFail> {
+  //   return await this.cardsService.allCardsInOneList(+listId, user);
   // }
 
   //특정 카드 조회
