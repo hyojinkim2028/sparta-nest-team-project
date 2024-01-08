@@ -57,7 +57,7 @@ export class CardsService {
         throw new BadRequestException('이미 존재하는 카드의 이름입니다.');
       }
 
-      //컬럼 레포지토리에서 컬럼 아이디에 해당하는 데이터 목록 불러온 후,
+      //컬럼 레포지토리에서 컬럼 아이디에 해당하는 데이터 목록 불러온 후
       const findListData = await this.listService.findOneListData(+listsId);
       if (!findListData) {
         throw new BadRequestException(
@@ -73,7 +73,7 @@ export class CardsService {
         .getMany();
       console.log('findAllowMembers', findAllowMembers);
       if (findAllowMembers.length !== allowMembers.length) {
-        throw new BadRequestException('지정하신 사용자는 없는 사용자 입니다.');
+        throw new BadRequestException('지정하신 사용자는 없는 사용자 입니다. ');
       }
 
       //workers에 유저들이 실제 존재하는 유저인지 검증_ 꼼꼼히 처리하는게 좋다고 생각해서 넣었습니다.
