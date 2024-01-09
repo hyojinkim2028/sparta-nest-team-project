@@ -9,6 +9,7 @@ import {
   HttpStatus,
   UseGuards,
   Request,
+  Render,
 } from '@nestjs/common';
 import { BoardsService } from './boards.service';
 import { CreateBoardDto } from './dtos/create-board.dto';
@@ -50,6 +51,7 @@ export class BoardsController {
   @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))
   @Get()
+  @Render('boardList')
   async findAllBoards(@Request() req) {
     const userId = req.user.id;
     const data = await this.boardsService.findAll(userId);
