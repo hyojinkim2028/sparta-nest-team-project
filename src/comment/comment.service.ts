@@ -11,17 +11,23 @@ export class CommentService {
     @InjectRepository(Comment) private commentRepository: Repository<Comment>,
   ) {}
 
-  async create(cardId: number, createCommentDto: CreateCommentDto) {
+  async create(
+    cardId: number,
+    userId: number,
+    createCommentDto: CreateCommentDto,
+  ) {
     const { content } = createCommentDto;
-    return await this.commentRepository.save({ content, card_id: cardId });
+    return await this.commentRepository.save({
+      card_id: cardId,
+      user_id: userId,
+      content,
+    });
   }
 
   async findAll(cardId: number) {
     return await this.commentRepository.find({
       where: { card_id: cardId, deleted_at: null },
-      order: {
-        created_at: 'DESC',
-      },
+      select: ['id', 'user_id', 'content'],
     });
   }
 
@@ -34,13 +40,27 @@ export class CommentService {
   async update(
     cardId: number,
     commentId: number,
+    userId: number,
     updateCommentDto: UpdateCommentDto,
   ) {
     const { content } = updateCommentDto;
-    return await this.commentRepository.update({ id: commentId }, { content });
+    const updatedComment = await this.commentRepository.update(
+      {
+        id: commentId,
+        card_id: cardId,
+        user_id: userId,
+      },
+      { content },
+    );
+    return updatedComment.affected;
   }
 
-  remove(cardId: number, commentId: number) {
-    return `This action removes a #${commentId} commentof #${cardId} card`;
+  async remove(cardId: number, commentId: number, userId: number) {
+    const deletedComment = await this.commentRepository.softDelete({
+      id: commentId,
+      card_id: cardId,
+      user_id: userId,
+    });
+    return deletedComment.affected;
   }
 }
