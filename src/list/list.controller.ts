@@ -15,7 +15,6 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CreateListDto } from './dtos/create-list.dto';
 
 @ApiTags('리스트')
-// @UseGuards(AuthGuard('jwt'))
 @Controller('list')
 export class ListController {
   constructor(private readonly listService: ListService) {}
@@ -33,7 +32,7 @@ export class ListController {
   ) {
     const data = await this.listService.create(boardId, createListDto);
     return {
-      statusCode: HttpStatus.CREATED,
+      success: true,
       message: '리스트 생성에 성공했습니다.',
       data,
     };
@@ -46,13 +45,7 @@ export class ListController {
   @ApiBearerAuth()
   @Get('/:boardId')
   async findAll(@Param('boardId') boardId: number) {
-    const data = await this.listService.findAll(boardId);
-
-    return {
-      statusCode: HttpStatus.OK,
-      message: '리스트 조회에 성공했습니다.',
-      data,
-    };
+    return await this.listService.findAll(boardId);
   }
 
   /**
@@ -69,7 +62,7 @@ export class ListController {
     const data = await this.listService.update(boardId, id, createListDto);
 
     return {
-      statusCode: HttpStatus.OK,
+      success: true,
       message: '리스트 수정에 성공했습니다.',
       data,
     };
@@ -85,7 +78,7 @@ export class ListController {
     const data = await this.listService.delete(boardId, id);
 
     return {
-      statusCode: HttpStatus.OK,
+      success: true,
       message: '리스트 삭제에 성공했습니다.',
       data,
     };
