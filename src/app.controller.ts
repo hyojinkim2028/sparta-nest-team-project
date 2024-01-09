@@ -12,8 +12,8 @@ export class AppController {
     return { message: '프론트!!!!!!!!!' };
   }
 
-  @Get('/dd')
-  @Page('dragdrop')
+  @Get('/boardList')
+  @Page('mainBoardList')
   async hihi() {
     return { message: '프론트!!!!!!!!!' };
   }

@@ -103,3 +103,57 @@ footer {
   border: none;
   border-radius: 10px;
 }
+/* 보드 리스트용 */
+.boardListBack {
+  display: flex;
+  padding: 30px;
+  width: 100%;
+  height: 100vh;
+  background: #ffc107;
+}
+.boardsBack {
+  flex: 1;
+  flex-direction: row;
+}
+
+.boardList:not(:last-child) {
+  margin-right: 30px;
+}
+
+.board-title {
+  margin-bottom: 20px;
+  font-size: 30px;
+  color: black;
+  user-select: none;
+}
+
+.boardOne {
+  background: rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 15px;
+  width: 400px;
+  margin: 15px;
+  cursor: move;
+}
+.boardOne-title {
+  margin-bottom: 10px;
+  font-size: 25px;
+  color: black;
+}
+
+.addBoardBTN {
+  background: rgba(255, 255, 255, 0.5);
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 15px;
+  width: 400px;
+  margin: 15px;
+  cursor: pointer;
+}
+
+.addBoardBTN-title {
+  margin-bottom: 10px;
+  font-size: 25px;
+  color: black;
+}

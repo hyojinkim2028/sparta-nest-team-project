@@ -1,0 +1,30 @@
+.boardsBack {
+  flex: 1;
+  flex-direction: row;
+}
+
+.boardList:not(:last-child) {
+  margin-right: 30px;
+}
+
+.board-title {
+  margin-bottom: 20px;
+  font-size: 30px;
+  color: black;
+  user-select: none;
+}
+
+.boardOne {
+  background: rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 15px;
+  width: 400px;
+  margin: 15px;
+  cursor: move;
+}
+.boardOne-title {
+  margin-bottom: 10px;
+  font-size: 25px;
+  color: black;
+}
