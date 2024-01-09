@@ -1,0 +1,97 @@
+@accessToken =  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzA0NzY3MjA1LCJleHAiOjE3MDQ4MTA0MDV9.2s9OB2bSoMTvRDOJBfrB4MjFtqOnnNJPXsopN-RwJTE
+
+### 회원가입
+POST http://localhost:3001/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "홍길동",
+  "email": "abc123@naver.com",
+  "password": "123123",
+  "passwordConfirm": "123123"
+}
+
+### 로그인
+POST http://localhost:3001/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "example@example.com",
+	"password":"123123"
+}
+
+### 보드 생성하기
+POST http://localhost:3001/api/boards
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "boardTitle": "일렐로 만들기2",
+  "description": "칸반보드 비슷한 일렐로 사이트2",
+  "backgroundColor": "Red"
+}
+
+### 보드 전체 조회
+### 보드 전체 조회(본인이 생성한 보드 + 조인중인 보드)
+GET  http://localhost:3001/api/boards
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+### 보드 상세 조회
+GET  http://localhost:3001/api/boards/1
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+### 보드 수정
+### boardOwner(유저아이디),boardTitle(string),description(string),backgroundColor(string),orderList(array) 
+PATCH  http://localhost:3001/api/boards/8
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "boardTitle" : "done"
+}
+
+### 보드 삭제
+DELETE  http://localhost:3001/api/boards/9
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+### 유저 초대
+### 이미 조인되어 있는(초대상태코드가 Accepted)유저인 경우 초대 불가
+POST  http://localhost:3001/api/boards/8/invite
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "email" : "abc123@naver.com"
+}
+
+### 초대중인 유저 조회
+### 해당 보드에서 초대한 유저 조회(초대후 승락 대기중인 유저)
+GET  http://localhost:3001/api/boards/5/invite
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+### 받은 초대 리스트 조회
+### 아직 승락하지 않은 초대리스트(상태코드 pending)
+GET  http://localhost:3001/api/invite
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+### 받은 초대 거절/승락하는 경우
+### 아직 승락하지 않은 초대리스트(상태코드 pending)
+### "Accepted" 입력 시 수락, 아닌 경우 거절로 간주 및 초대내용 삭제
+PATCH  http://localhost:3001/api/invite/26
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "invitationStatus" : "Accepted"
+}
+
+### 초대 취소
+### 본인이 한 초대 취소
+DELETE  http://localhost:3001/api/invite/35
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
