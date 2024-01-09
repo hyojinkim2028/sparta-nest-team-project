@@ -46,4 +46,11 @@ export class ListService {
     console.log(deleteList);
     return deleteList;
   }
+
+  //카드 생성 삭제시 필요해서 추가해요!
+  async findOneListData(listsId) {
+    return await this.listRepository.findOne({
+      where: { id: +listsId },
+    });
+  }
 }
