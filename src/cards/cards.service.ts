@@ -113,7 +113,7 @@ export class CardsService {
     }
   }
 
-  //해당 컬럼에 속하는 모든 카드 보기
+  //해당 컬럼에 속하는 모든 카드 보기 + 리스트이름 데이터 추가.
   async allCardsInOneList(
     listsId: number,
     user: User,
@@ -132,11 +132,15 @@ export class CardsService {
         return data.allowMembers.map((e) => +e).includes(user.id);
       });
 
+      const findListData = await this.listService.findOneListData(+listsId);
       return {
         success: true,
         message:
           '리스트에 속한 모든 카드 중 유저에게 허용된 모든 카드조회를 완료했습니다.',
-        data: filterCardList,
+        data: {
+          listTitle: findListData.listTitle,
+          cardList: filterCardList,
+        },
       };
     } catch (err) {
       console.log(err);

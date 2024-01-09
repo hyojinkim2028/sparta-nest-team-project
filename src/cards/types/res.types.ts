@@ -20,5 +20,5 @@ export type DeleteCard = {
 export type AllCardsInOneList = {
   success: boolean;
   message: string;
-  data: Card[];
+  data: { listTitle: string; cardList: Card[] };
 };
