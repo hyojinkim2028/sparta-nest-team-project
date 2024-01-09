@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
 import bcrypt from 'bcrypt';
 import { LoginDto } from './dtos/login.dto';
+import { response } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -42,6 +43,8 @@ export class AuthService {
   login(userId: number) {
     const payload = { id: userId };
     const accessToken = this.jwtService.sign(payload);
+
+    // 쿠키로 나가라
 
     return { accessToken };
   }
