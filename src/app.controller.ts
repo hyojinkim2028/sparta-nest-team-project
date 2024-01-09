@@ -18,6 +18,12 @@ export class AppController {
     return { message: '프론트!!!!!!!!!' };
   }
 
+  @Get('/dd')
+  @Page('dragdrop')
+  async ddd() {
+    return { message: '프론트!!!!!!!!!' };
+  }
+
   @Get('/register')
   @Page('register')
   async regs() {
