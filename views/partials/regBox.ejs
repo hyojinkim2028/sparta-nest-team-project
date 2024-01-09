@@ -1,0 +1,43 @@
+<form class="regForm" method="post" action="/api/auth/register">
+  <p>이름</p>
+  <input
+    class="input-group-text"
+    type="text"
+    name="name"
+    placeholder="이름을 입력해주세요."
+    value="example"
+    required
+  />
+  <br />
+  <p>email</p>
+  <input
+    class="input-group-text"
+    type="email"
+    name="email"
+    placeholder="이메일을 입력해주세요."
+    value="example@example.com"
+    required
+  />
+  <br />
+  <p>비밀번호</p>
+  <input
+    class="input-group-text"
+    type="password"
+    name="password"
+    value="123123"
+    required
+  />
+  <br />
+  <p>비밀번호 확인</p>
+  <input
+    class="input-group-text"
+    type="password"
+    name="passwordConfirm"
+    value="123123"
+    required
+  />
+  <br />
+  <button class="btn btn-secondary btn-sm input-group-text" type="submit">
+    회원가입
+  </button>
+</form>

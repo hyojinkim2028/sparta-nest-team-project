@@ -17,4 +17,16 @@ export class AppController {
   async hihi() {
     return { message: '프론트!!!!!!!!!' };
   }
+
+  @Get('/dd')
+  @Page('dragdrop')
+  async ddd() {
+    return { message: '프론트!!!!!!!!!' };
+  }
+
+  @Get('/register')
+  @Page('register')
+  async regs() {
+    return { message: '프론트!!!!!!!!!' };
+  }
 }

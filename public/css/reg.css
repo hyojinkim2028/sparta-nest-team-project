@@ -1,0 +1,25 @@
+.regBackgreound {
+  display: flex;
+  padding: 30px;
+  width: 100%;
+  height: 100vh;
+  background: #ffc107;
+}
+.regBoard {
+  flex: 1;
+  flex-direction: row;
+}
+.regTitle {
+  margin-bottom: 20px;
+  font-size: 30px;
+  color: black;
+  user-select: none;
+}
+.regBox {
+  background: rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 15px;
+  width: 800px;
+  margin: 15px;
+}
