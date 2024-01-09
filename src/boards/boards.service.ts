@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ForbiddenException,
   Injectable,
   NotFoundException,
@@ -112,6 +113,21 @@ export class BoardsService {
   async createInvite(email: string, boardId: number) {
     const user = await this.userRepository.findOne({ where: { email } });
     if (!user) throw new NotFoundException('존재하지 않는 유저입니다.');
+
+    const invitedList = await this.inviteRepository.find({
+      where: {
+        board: {
+          id: boardId,
+        },
+        invitationStatus: InvitationStatus.Accepted,
+      },
+      relations: ['user'],
+    });
+
+    const invitedEmailList = invitedList.map((invited) => invited.user.email);
+
+    if (invitedEmailList.includes(email))
+      throw new BadRequestException('이미 조인중인 유저입니다.');
 
     const invite = await this.inviteRepository.save({
       user: {

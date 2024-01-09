@@ -25,12 +25,11 @@ export class InviteService {
     return invitedList;
   }
 
+  // 초대 승락 또는 거부
   async update(inviteId: number, invitationStatus: string) {
     const invite = await this.inviteRepository.findOne({
       where: { id: inviteId },
     });
-    // console.log(invitationStatus);
-    console.log(invite);
 
     let updatedStatus: InvitationStatus;
     if (invitationStatus === 'Accepted') {
@@ -47,6 +46,7 @@ export class InviteService {
     return updatedInvite;
   }
 
+  // 초대 취소 
   async remove(inviteId: number) {
     const invite = await this.inviteRepository.findOne({
       where: { id: inviteId },
