@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { ListService } from './list.service';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CreateListDto } from './dtos/create-list.dto';
 
 @ApiTags('리스트')
@@ -25,6 +25,7 @@ export class ListController {
    * @param CreateListDto
    * @returns
    */
+  @ApiBearerAuth()
   @Post('/:boardId')
   async create(
     @Param('boardId') boardId: number,
@@ -42,6 +43,7 @@ export class ListController {
    * 리스트 조회
    * @returns
    */
+  @ApiBearerAuth()
   @Get('/:boardId')
   async findAll(@Param('boardId') boardId: number) {
     const data = await this.listService.findAll(boardId);
@@ -57,6 +59,7 @@ export class ListController {
    * 리스트 이름 수정
    * @returns
    */
+  @ApiBearerAuth()
   @Patch('/:boardId/:id')
   async update(
     @Param('boardId') boardId: number,
@@ -76,6 +79,7 @@ export class ListController {
    * 리스트 삭제
    * @returns
    */
+  @ApiBearerAuth()
   @Delete('/boardId/:id')
   async delete(@Param('boardId') boardId: number, @Param('id') id: number) {
     const data = await this.listService.delete(boardId, id);
