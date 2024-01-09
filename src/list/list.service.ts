@@ -1,22 +1,56 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { List } from './entities/list.entity';
 import { CreateListDto } from './dtos/create-list.dto';
+import { Board } from 'src/boards/entities/board.entity';
 
 @Injectable()
 export class ListService {
   constructor(
     @InjectRepository(List) private readonly listRepository: Repository<List>,
+    @InjectRepository(Board)
+    private readonly boardRepository: Repository<Board>,
+    private readonly dataSource: DataSource,
   ) {}
 
   async create(boardId: number, { listTitle }: CreateListDto) {
-    const newList = await this.listRepository.save({
-      boardId,
-      listTitle,
-    });
+    const queryRunner = this.dataSource.createQueryRunner();
 
-    return newList;
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      const newList = await queryRunner.manager.save(List, {
+        boardId,
+        listTitle,
+      });
+
+      const createdList = await queryRunner.manager.save(List, newList);
+
+      // 기존 보드 가져오기
+      const board = await queryRunner.manager.findOneBy(Board, { id: boardId });
+
+      // 보드의 orderList 업데이트
+      if (board) {
+        const updatedOrderList = board.orderList
+          ? [...board.orderList, createdList.id]
+          : [createdList.id];
+
+        board.orderList = updatedOrderList;
+        await queryRunner.manager.save(Board, board);
+      }
+
+      await queryRunner.commitTransaction();
+      return createdList;
+    } catch (err) {
+      await queryRunner.rollbackTransaction();
+      await queryRunner.release();
+      throw err;
+    }
   }
 
   async findAll(boardId: number) {
@@ -42,9 +76,36 @@ export class ListService {
   }
 
   async delete(boardId: number, id: number) {
-    const deleteList = await this.listRepository.softDelete({ boardId, id });
-    console.log(deleteList);
-    return deleteList;
+    const queryRunner = this.dataSource.createQueryRunner();
+
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      const listToRemove = await queryRunner.manager.findOneBy(List, { id });
+
+      if (!listToRemove)
+        throw new NotFoundException('해당 리스트를 찾을 수 없습니다.');
+
+      const board = await queryRunner.manager.findOneBy(Board, {
+        id: listToRemove.boardId,
+      });
+
+      if (!board) throw new NotFoundException('해당 보드를 찾을 수 없습니다.');
+
+      if (board.orderList) {
+        board.orderList = board.orderList.filter((idList) => +idList !== id);
+
+        await queryRunner.manager.save(Board, board);
+      }
+      await queryRunner.manager.softRemove(listToRemove);
+
+      await queryRunner.commitTransaction();
+      return listToRemove;
+    } catch (err) {
+      await queryRunner.rollbackTransaction();
+      await queryRunner.release();
+      throw err;
+    }
   }
 
   //카드 생성 삭제시 필요해서 추가해요!
