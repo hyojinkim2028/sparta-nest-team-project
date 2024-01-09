@@ -13,6 +13,7 @@
       type="text/javascript"
       src="https://cdn3.devexpress.com/jslib/23.2.3/js/dx.all.js"
     ></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/js/data.js"></script>
     <link
       rel="stylesheet"
@@ -30,61 +31,74 @@
   </body>
   <script>
     $(() => {
-      // 작업 상태 배열
-      const statuses = [
-        'Not Started',
-        'Need Assistance',
-        'In Progress',
-        'Deferred',
-        'Completed',
-      ];
+      // const statuses = [
+      //   'Not Started',
+      //   'Need Assistance',
+      //   'In Progress',
+      //   'Deferred',
+      //   'Completed',
+      // ];
 
-      // Kanban 보드 렌더링 함수 호출
-      renderKanban($('#kanban'), statuses);
+      // 조회
+      axios
+        .get('http://localhost:3000/api/list/9')
+        .then(function (response) {
+          const data = response.data.data;
+          // 작업 상태 배열
+          const statuses = data.map((list) => list.listTitle);
 
-      // Kanban 보드 렌더링 함수
-      function renderKanban($container, statusList) {
-        // 각 상태에 대한 목록 렌더링
-        statusList.forEach((status) => {
-          renderList($container, status);
+          // Kanban 보드 렌더링 함수 호출
+          renderKanban($('#kanban'), statuses);
+
+          // Kanban 보드 렌더링 함수
+          function renderKanban($container, statusList) {
+            // 각 상태에 대한 목록 렌더링
+            statusList.forEach((status) => {
+              renderList($container, status);
+            });
+
+            // 가로 스크롤 및 정렬 기능 추가
+            $container.addClass('scrollable-board').dxScrollView({
+              direction: 'horizontal',
+              showScrollbar: 'always',
+            });
+
+            // 목록 정렬 기능 추가
+            $container.addClass('sortable-lists').dxSortable({
+              filter: '.list',
+              itemOrientation: 'horizontal',
+              handle: '.list-title',
+              moveItemOnDrop: true,
+            });
+          }
+
+          // 목록 렌더링 함수
+          function renderList($container, status) {
+            // 새로운 목록 컨테이너 생성
+            const $list = $('<div>').addClass('list').appendTo($container);
+
+            // 목록 제목 렌더링
+            renderListTitle($list, status);
+
+            // 상태에 따라 작업 필터링 및 카드 렌더링
+            const listTasks = tasks.filter(
+              (task) => task.Task_Status === status,
+            );
+            renderCards($list, listTasks);
+          }
+
+          // 목록 제목 렌더링 함수
+          function renderListTitle($container, status) {
+            $('<div>')
+              .addClass('list-title')
+              .addClass('dx-theme-text-color')
+              .text(status)
+              .appendTo($container);
+          }
+        })
+        .catch(function (error) {
+          console.error('GET 요청 에러:', error);
         });
-
-        // 가로 스크롤 및 정렬 기능 추가
-        $container.addClass('scrollable-board').dxScrollView({
-          direction: 'horizontal',
-          showScrollbar: 'always',
-        });
-
-        // 목록 정렬 기능 추가
-        $container.addClass('sortable-lists').dxSortable({
-          filter: '.list',
-          itemOrientation: 'horizontal',
-          handle: '.list-title',
-          moveItemOnDrop: true,
-        });
-      }
-
-      // 목록 렌더링 함수
-      function renderList($container, status) {
-        // 새로운 목록 컨테이너 생성
-        const $list = $('<div>').addClass('list').appendTo($container);
-
-        // 목록 제목 렌더링
-        renderListTitle($list, status);
-
-        // 상태에 따라 작업 필터링 및 카드 렌더링
-        const listTasks = tasks.filter((task) => task.Task_Status === status);
-        renderCards($list, listTasks);
-      }
-
-      // 목록 제목 렌더링 함수
-      function renderListTitle($container, status) {
-        $('<div>')
-          .addClass('list-title')
-          .addClass('dx-theme-text-color')
-          .text(status)
-          .appendTo($container);
-      }
 
       // 카드 렌더링 함수
       function renderCards($container, tasks) {
