@@ -17,9 +17,21 @@
 }
 .regBox {
   background: rgba(0, 0, 0, 0.1);
-  padding: 20px;
+  padding: 40px 40px;
   box-sizing: border-box;
   border-radius: 15px;
-  width: 800px;
+  width: 400px;
   margin: 15px;
+}
+.regLable {
+  font-size: 20px;
+}
+.input-group-text {
+  width: 100%;
+  padding: 10px;
+  font-size: 19px;
+}
+.regSubmit {
+  padding: 20px;
+  font-size: 20px;
 }
