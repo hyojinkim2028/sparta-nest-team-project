@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { IsNotEmpty, IsString } from 'class-validator';
 import { Board } from 'src/boards/entities/board.entity';
+import { Card } from 'src/cards/entities/card.entity';
 
 @Entity('lists')
 export class List {
@@ -47,6 +48,6 @@ export class List {
   @ManyToOne((type) => Board, (board) => board.lists, { onDelete: 'CASCADE' })
   board: Board;
 
-  // @OneToMany((type) => Card, (card) => card.list, {})
-  // cards: Card[];
+  @OneToMany(() => Card, (card) => card.lists, { cascade: true })
+  cards: Card[];
 }

@@ -11,4 +11,10 @@ export class AppController {
   async hello() {
     return { message: '프론트!!!!!!!!!' };
   }
+
+  @Get('/boardList')
+  @Page('mainBoardList')
+  async hihi() {
+    return { message: '프론트!!!!!!!!!' };
+  }
 }

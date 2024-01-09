@@ -5,18 +5,19 @@ import {
   DeleteDateColumn,
   Entity,
   Index,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-// import { Invite } from 'src/invite/entities/invite.entity';
+import { Card } from 'src/cards/entities/card.entity';
 
 @Index('email', ['email'], { unique: true })
 @Entity({
   name: 'users',
 })
 export class User {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ unsigned: true })
   id: number;
 
   /**
@@ -64,4 +65,7 @@ export class User {
 
   @DeleteDateColumn({ name: 'deleted_at' })
   deletedAt: Date;
+
+  @OneToMany(() => Card, (card) => card.user)
+  card: Card[];
 }

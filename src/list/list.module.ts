@@ -10,5 +10,6 @@ import { Board } from 'src/boards/entities/board.entity';
   imports: [TypeOrmModule.forFeature([List, /*Card,*/ Board]), AuthModule],
   controllers: [ListController],
   providers: [ListService],
+  exports: [ListService],
 })
 export class ListModule {}
