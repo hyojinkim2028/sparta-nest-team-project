@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
 import bcrypt from 'bcrypt';
 import { LoginDto } from './dtos/login.dto';
+import { response } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -46,7 +47,7 @@ export class AuthService {
     return { accessToken };
   }
 
-  /**유저 확인 */
+  /**로그인 확인 */
   async validateUser({ email, password }: LoginDto) {
     const user = await this.userRepository.findOne({
       where: { email },

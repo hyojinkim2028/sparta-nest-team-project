@@ -60,14 +60,20 @@ export class ListService {
       },
     });
 
-    return lists;
+    const board = await this.boardRepository.findOneBy({ id: boardId });
+
+    return {
+      success: true,
+      message: '리스트 조회에 성공했습니다.',
+      order_list: board.orderList,
+      data: lists,
+    };
   }
 
   async update(boardId: number, id: number, { listTitle }: CreateListDto) {
     if (!listTitle) {
       throw new BadRequestException('수정할 리스트명을 작성해 주세요.');
     }
-    console.log(listTitle);
 
     const updateList = await this.listRepository.update(
       { boardId, id },

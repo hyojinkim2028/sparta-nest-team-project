@@ -21,18 +21,12 @@
         <li><a href="#" class="nav-link text-white">주요 코드</a></li>
       </ul>
 
-      <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-        <input
-          type="search"
-          class="form-control form-control-dark text-bg-dark"
-          placeholder="Search..."
-          aria-label="Search"
-        />
-      </form>
-
       <div class="text-end">
-        <button type="button" class="btn btn-outline-light me-2">로그인</button>
-        <button type="button" class="btn btn-warning">회원가입</button>
+        <button type="button" class="btn btn-outline-light me-2" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-whatever="@login">로그인</button>
+        <button type="button" class="btn btn-warning" onclick="location.href= '/api/register'">회원가입</button>
+        <!-- 로그인 했을때 -->
+          <button type="button" class="btn btn-outline-light me-2">로그아웃</button>
+          <button type="button" class="btn btn-warning" onclick="location.href= '/api/user/userId'">내정보</button>
       </div>
   </div>
 </header>

@@ -11,6 +11,7 @@ import { UserService } from './user.service';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { ChangePasswordDto } from './dtos/changepassword.dto';
+import { Page } from 'src/decorators/page.decorator';
 
 @ApiTags('사용자')
 @Controller('user')

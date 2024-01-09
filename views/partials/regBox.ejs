@@ -1,25 +1,27 @@
 <form class="regForm" method="post" action="/api/auth/register">
-  <p>이름</p>
+  <p class="regLable">이름</p>
   <input
     class="input-group-text"
     type="text"
+    id="name"
     name="name"
     placeholder="이름을 입력해주세요."
     value="example"
     required
   />
   <br />
-  <p>email</p>
+  <p class="regLable">email</p>
   <input
     class="input-group-text"
     type="email"
+    id="email"
     name="email"
     placeholder="이메일을 입력해주세요."
     value="example@example.com"
     required
   />
   <br />
-  <p>비밀번호</p>
+  <p class="regLable">비밀번호</p>
   <input
     class="input-group-text"
     type="password"
@@ -28,7 +30,7 @@
     required
   />
   <br />
-  <p>비밀번호 확인</p>
+  <p class="regLable">비밀번호 확인</p>
   <input
     class="input-group-text"
     type="password"
@@ -37,7 +39,10 @@
     required
   />
   <br />
-  <button class="btn btn-secondary btn-sm input-group-text" type="submit">
+  <button
+    class="btn btn-secondary btn-sm input-group-text regSubmit"
+    type="submit"
+  >
     회원가입
   </button>
 </form>
