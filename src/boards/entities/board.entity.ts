@@ -1,4 +1,5 @@
 import { IsNotEmpty, IsString } from 'class-validator';
+import { Invite } from 'src/invite/entities/invite.entity';
 import { List } from 'src/list/entities/list.entity';
 import { User } from 'src/user/entities/user.entity';
 import {
@@ -57,8 +58,8 @@ export class Board {
    * 리스트 배열
    * @example [1,2,3]
    */
-  @Column({ type: 'json' })
-  orderList: string[];
+  @Column('simple-array')
+  orderList: number[];
 
   @CreateDateColumn()
   createdAt: Date;
@@ -73,6 +74,9 @@ export class Board {
   @ManyToOne(() => User)
   user: User;
 
+  @OneToMany(() => Invite, (invite) => invite.board)
+  invite: Invite[];
+  
   @OneToMany((type) => List, (list) => list.board, {})
   lists: List[];
 }

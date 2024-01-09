@@ -1,30 +1,30 @@
-  <div
+<div
   class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark sideBar"
   style="width: 280px; height: 100vh"
 >
-  <a
-    href="/"
-    class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
-  >
-    <svg class="bi pe-none me-2" width="40" height="32">
-      <use xlink:href="#bootstrap" />
-    </svg>
-    <span class="fs-4">Board List</span>
-  </a>
+  <div style="margin-left: 15px">
+    <a
+      href="/"
+      class="d-flex align-items-center mb-4 mb-md-0 me-md-auto text-white text-decoration-none"
+    >
+      <i class="fa-solid fa-plus fa-xl fa-fw"></i>
+      <span class="fs-4">&nbsp;보드 생성</span>
+    </a>
+  </div>
   <hr />
-  <ul class="nav nav-pills flex-column mb-auto">
-    <li class="nav-item">
-      <a href="/" class="nav-link text-white" aria-current="page">
-        <i class="fa-brands fa-trello fa-lg fa-fw" style="color: #ffc107;"></i>
-        <span> 보드 생성</span>
-      </a>
-    </li>
-    <li">
+  <ul class="nav nav-pills flex-column mb-auto" style="margin-left: 15px">
+    <!-- 보드 리스트 foreach로 리스트 불러오기-->
+    <li>
       <a href="#" class="nav-link text-white align-items-center">
-        <i class="fa-solid fa-square-full fa-lg fa-fw" style="color: #ffc107;"></i>
-        <span> 보드1</span>
+        <i
+          class="fa-solid fa-square-full fa-lg fa-fw"
+          style="color: #ffc107"
+        ></i>
+        <span>&nbsp;&nbsp;보드1</span>
       </a>
     </li>
+    <!-- 보드리스트 끝 -->
   </ul>
+  <ul></ul>
 </div>
 <div class="sidebar-back"></div>

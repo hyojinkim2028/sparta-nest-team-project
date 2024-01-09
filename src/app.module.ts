@@ -11,6 +11,7 @@ import { UserModule } from './user/user.module';
 import { CommentModule } from './comment/comment.module';
 import { ListModule } from './list/list.module';
 import { BoardsModule } from './boards/boards.module';
+import { InviteModule } from './invite/invite.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { BoardsModule } from './boards/boards.module';
     CommentModule,
     ListModule,
     BoardsModule,
+    InviteModule,
   ],
   controllers: [AppController],
   providers: [AppService],

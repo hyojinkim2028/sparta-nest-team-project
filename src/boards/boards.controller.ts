@@ -44,7 +44,7 @@ export class BoardsController {
 
   /**
    *
-   * @param 보드 전체 조회
+   * @param 보드 전체 조회(본인이 생성한 보드 + 조인중인 보드)
    * @returns
    */
   @ApiBearerAuth()
@@ -113,6 +113,37 @@ export class BoardsController {
     return {
       statusCode: HttpStatus.OK,
       message: '보드 삭제에 성공했습니다!',
+      data,
+    };
+  }
+
+  // 유저 초대
+  @Post('/:boardId/invite')
+  async inviteUser(@Body('email') email, @Param('boardId') boardId) {
+    const data = await this.boardsService.createInvite(email, boardId);
+    return {
+      statusCode: HttpStatus.CREATED,
+      message: '유저 초대 완료했습니다!',
+      data,
+    };
+  }
+
+
+
+  /**
+   *
+   * @param 해당 보드에서 초대한 유저 조회(초대후 승락 대기중인 유저)
+   * @returns
+   */
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard('jwt'))
+  @Get('/:boardId/invite')
+  async findAllInviteOnPending(@Request() req, @Param('boardId') boardId) {
+    const userId = req.user.id;
+    const data = await this.boardsService.findAllInvite(userId, boardId);
+    return {
+      statusCode: HttpStatus.FOUND,
+      message: '초대중인 내역 전체 조회에 성공했습니다!',
       data,
     };
   }
