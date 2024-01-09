@@ -1,15 +1,15 @@
-<div class="b-example-divider"></div>
-
 <div
-  class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5"
+  class="modal mpdal-backdrop fade"
+  id="loginModal"
   tabindex="-1"
-  role="dialog"
-  id="modalSignin"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+  style="z-index: 1051"
 >
-  <div class="modal-dialog" role="document">
-    <div class="modal-content rounded-4 shadow">
-      <div class="modal-header p-5 pb-4 border-bottom-0">
-        <h1 class="fw-bold mb-0 fs-2">Sign up for free</h1>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">로그인</h5>
         <button
           type="button"
           class="btn-close"
@@ -17,67 +17,45 @@
           aria-label="Close"
         ></button>
       </div>
-
-      <div class="modal-body p-5 pt-0">
-        <form class="">
-          <div class="form-floating mb-3">
-            <input
-              type="email"
-              class="form-control rounded-3"
-              id="floatingInput"
-              placeholder="name@example.com"
-            />
-            <label for="floatingInput">Email address</label>
-          </div>
-          <div class="form-floating mb-3">
-            <input
-              type="password"
-              class="form-control rounded-3"
-              id="floatingPassword"
-              placeholder="Password"
-            />
-            <label for="floatingPassword">Password</label>
-          </div>
-          <button
-            class="w-100 mb-2 btn btn-lg rounded-3 btn-primary"
-            type="submit"
-          >
-            Sign up
-          </button>
-          <small class="text-body-secondary"
-            >By clicking Sign up, you agree to the terms of use.</small
-          >
-          <hr class="my-4" />
-          <h2 class="fs-5 fw-bold mb-3">Or use a third-party</h2>
-          <button
-            class="w-100 py-2 mb-2 btn btn-outline-secondary rounded-3"
-            type="submit"
-          >
-            <svg class="bi me-1" width="16" height="16">
-              <use xlink:href="#twitter" />
-            </svg>
-            Sign up with Twitter
-          </button>
-          <button
-            class="w-100 py-2 mb-2 btn btn-outline-primary rounded-3"
-            type="submit"
-          >
-            <svg class="bi me-1" width="16" height="16">
-              <use xlink:href="#facebook" />
-            </svg>
-            Sign up with Facebook
-          </button>
-          <button
-            class="w-100 py-2 mb-2 btn btn-outline-secondary rounded-3"
-            type="submit"
-          >
-            <svg class="bi me-1" width="16" height="16">
-              <use xlink:href="#github" />
-            </svg>
-            Sign up with GitHub
-          </button>
-        </form>
-      </div>
+      <!-- -- -->
+      <form class="modal-body" id="loginFormModalBody">
+        <!-- 로그인 -->
+        <div class="loginForm">
+          <p class="regLable">email</p>
+          <input
+            class="input-group-text loginEmail"
+            type="email"
+            name="email"
+            id="email"
+            placeholder="이메일을 입력해주세요."
+            value="example@example.com"
+            required
+          />
+          <p class="regLable">비밀번호</p>
+          <input
+            class="input-group-text loginPassword"
+            type="password"
+            name="password"
+            id="password"
+            value="123123"
+            required
+          />
+          <br />
+        </div>
+        <input
+          class="btn btn-warning input-group-text"
+          type="submit"
+          id="loginSubmit"
+        />
+      </form>
+      <!-- -- -->
+      <button
+        type="button"
+        class="btn btn-secondary mt-2 input-group-text"
+        data-bs-dismiss="modal"
+      >
+        닫기
+      </button>
     </div>
   </div>
 </div>

@@ -157,3 +157,7 @@ footer {
   font-size: 25px;
   color: black;
 }
+
+.input-group-text {
+  width: 100%;
+}

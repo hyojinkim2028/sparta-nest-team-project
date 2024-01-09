@@ -44,12 +44,10 @@ export class AuthService {
     const payload = { id: userId };
     const accessToken = this.jwtService.sign(payload);
 
-    // 쿠키로 나가라
-
     return { accessToken };
   }
 
-  /**유저 확인 */
+  /**로그인 확인 */
   async validateUser({ email, password }: LoginDto) {
     const user = await this.userRepository.findOne({
       where: { email },
