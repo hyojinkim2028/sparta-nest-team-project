@@ -1,18 +1,29 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateBoardDto } from './dtos/create-board.dto';
 import { UpdateBoardDto } from './dtos/update-board.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Board } from './entities/board.entity';
-import { User } from 'src/user/entities/user.entity';
+import { User } from '../user/entities/user.entity';
+import { Invite } from 'src/invite/entities/invite.entity';
+import { InvitationStatus } from 'src/invite/types/invite-invitationStatus.type';
 
 @Injectable()
 export class BoardsService {
   constructor(
     @InjectRepository(Board)
     private readonly boardsRepository: Repository<Board>,
+
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+
+    @InjectRepository(Invite)
+    private readonly inviteRepository: Repository<Invite>,
   ) {}
 
   // 보드생성
@@ -34,6 +45,7 @@ export class BoardsService {
 
   // 해당 유저의 보드 전체 조회
   async findAll(userId: number) {
+    // 해당 유저가 생성한 보드
     const boards = await this.boardsRepository.find({
       where: {
         user: {
@@ -42,7 +54,18 @@ export class BoardsService {
       },
       select: ['boardTitle'],
     });
-    return boards;
+
+    // 초대 승락하여 조인한 보드
+    const invitedList = await this.inviteRepository.find({
+      where: {
+        user: {
+          id: userId,
+        },
+        invitationStatus: InvitationStatus.Accepted,
+      },
+      relations: ['board'],
+    });
+    return [...boards, ...invitedList];
   }
 
   // 보드 상세조회
@@ -53,7 +76,7 @@ export class BoardsService {
     return board;
   }
 
-  // 영화 수정
+  // 보드 수정
   async update(userId: number, id: number, updateBoardDto: UpdateBoardDto) {
     const board = await this.boardsRepository.findOne({
       where: { id },
@@ -84,5 +107,63 @@ export class BoardsService {
     }
 
     return board;
+  }
+
+  // 유저 초대
+  async createInvite(email: string, boardId: number) {
+    const user = await this.userRepository.findOne({ where: { email } });
+    if (!user) throw new NotFoundException('존재하지 않는 유저입니다.');
+
+    const invitedList = await this.inviteRepository.find({
+      where: {
+        board: {
+          id: boardId,
+        },
+        invitationStatus: InvitationStatus.Accepted,
+      },
+      relations: ['user'],
+    });
+
+    const invitedEmailList = invitedList.map((invited) => invited.user.email);
+
+    if (invitedEmailList.includes(email))
+      throw new BadRequestException('이미 조인중인 유저입니다.');
+
+    const invite = await this.inviteRepository.save({
+      user: {
+        id: user.id,
+      },
+      board: {
+        id: boardId,
+      },
+    });
+    return invite;
+  }
+
+  // 해당 보드에서 초대한 유저(승락대기중) 조회
+  async findAllInvite(userId: number, boardId: number) {
+    const board = await this.boardsRepository.findOne({
+      where: { id: boardId },
+    });
+    const invitedList = await this.inviteRepository.find({
+      where: {
+        board: {
+          id: boardId,
+        },
+        invitationStatus: InvitationStatus.Pending,
+      },
+      relations: ['user'],
+    });
+
+    const invitedIdList = invitedList.map((invited) => invited.user.id);
+
+    if (!invitedIdList.includes(userId) && board.boardOwner !== userId)
+      throw new ForbiddenException('접근 권한이 없습니다.');
+
+    const invitedEmailList = invitedList.map((invited) => ({
+      email: invited.user.email,
+    }));
+
+    return invitedEmailList;
   }
 }
