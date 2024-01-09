@@ -4,3 +4,35 @@
   crossorigin="anonymous"
 ></script>
 <script src="/js/main.js" type="module"></script>
+<script src="/js/user.js" type="module"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    let loginFormModalBody = document.querySelector('#loginFormModalBody');
+    loginFormModalBody.addEventListener('submit', (e) => {
+      e.preventDefault();
+      console.log('Form submission prevented.');
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      try {
+        let response = axios
+          .post('/api/auth/login', {
+            email: email,
+            password: password,
+          })
+          .then(function (response) {
+            console.log(response);
+            // location.href = '/api/home';
+          })
+          .catch(function (error) {});
+      } catch (err) {
+        console.error('로그인 에러:', err);
+      }
+    });
+  });
+</script>
+
+//axios 쓸때 'DOMContentLoaded' 사용해야 페이지가 전부 로드 된 뒤에 서버에 연결
+시켜준다.

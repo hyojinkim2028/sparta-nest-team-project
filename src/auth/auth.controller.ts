@@ -13,6 +13,7 @@ import { AuthService } from './auth.service';
 import { RegisterDto } from './dtos/register.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { LoginDto } from './dtos/login.dto';
+import { Response } from 'express';
 
 @ApiTags('인증')
 @Controller('auth')
@@ -24,7 +25,7 @@ export class AuthController {
    * @returns
    */
   @Post('/register')
-  async register(@Body() registerDto: RegisterDto) {
+  async register(@Body() registerDto: RegisterDto, @Res() res: Response) {
     const data = await this.authService.register(registerDto);
     return {
       statusCode: HttpStatus.CREATED,
@@ -42,13 +43,14 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @UseGuards(AuthGuard('local'))
   @Post('/login')
-  async login(@Request() req, @Body() loginDto: LoginDto) {
-    const data = this.authService.login(req.user.id);
+  async login(
+    @Request() req,
+    @Body() loginDto: LoginDto,
+    @Res() res: Response,
+  ) {
+    const accessToken = this.authService.login(req.user.id);
+    res.setHeader('Authorization', `Bearer ${accessToken.accessToken}`);
 
-    return {
-      statusCode: HttpStatus.OK,
-      message: '로그인에 성공했습니다.',
-      data,
-    };
+    return res.status(HttpStatus.OK).json({ accessToken });
   }
 }
