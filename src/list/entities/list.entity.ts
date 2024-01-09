@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -46,6 +47,7 @@ export class List {
   deletedAt: Date;
 
   @ManyToOne((type) => Board, (board) => board.lists, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'boardId' })
   board: Board;
 
   @OneToMany(() => Card, (card) => card.lists, { cascade: true })
