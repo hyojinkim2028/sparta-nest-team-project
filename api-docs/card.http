@@ -21,7 +21,7 @@ Authorization: Bearer {{accessToken}}
 #
 
 ### 카드 수정하기
-PATCH http://localhost:3001/api/card/34
+PATCH http://localhost:3001/api/card/39
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
@@ -39,7 +39,7 @@ Authorization: Bearer {{accessToken}}
 #
 
 ### 카드 삭제하기
-DELETE http://localhost:3001/api/card/37
+DELETE http://localhost:3001/api/card/39
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
@@ -47,7 +47,7 @@ Authorization: Bearer {{accessToken}}
 #
 
 ### 카드 상세정보 보기
-GET http://localhost:3001/api/card/33
+GET http://localhost:3001/api/card/39
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 

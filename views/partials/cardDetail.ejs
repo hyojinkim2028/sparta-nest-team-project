@@ -1,0 +1,147 @@
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Open modal for @mdo</button>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@fat">Open modal for @fat</button>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Open modal for @getbootstrap</button>
+
+<!-- ddfd -->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog flex">
+    <div class="modal-content round modalSize">
+      <div class = "cardDetailTop">
+        <!-- <button type="button" class="btn-close right" data-bs-dismiss="modal" aria-label="Close"></button> -->
+      </div>
+
+      <div class="modal-header column eraseLine" >
+        <h4 class="leftText boled modal-title fs-5j" id="exampleModalLabel"><i class="fa-regular fa-rectangle-list" style="color: #b7bdc8;"></i> 트렐로 카드 상세보기 프론트</h4>
+        <p class = "inLeftText grey small">list: 속해있는 리스트 이름이 들어갑니다.</p>
+      </div>
+        <!-- <div class="btn-group-vertical" role="group" aria-label="Vertical button group"> -->
+      <!-- <div class="col-md-2 ms-auto">
+        <button type="button" class="btn btn-secondary sideBtn">Button</button>
+        <button type="button" class="btn btn-secondary sideBtn">Button</button>
+        <button type="button" class="btn btn-secondary sideBtn">Button</button>
+        <button type="button" class="btn btn-secondary sideBtn">Button</button>
+      </div>
+      <div class="grid text-center" style="--bs-columns: 18; --bs-gap: .5rem;">
+        <div style="grid-column: span 14; background-color: aliceblue;">14 columns</div>
+        <div style = " background-color: yellow;"  class="g-col-4">.g-col-4</div>
+      </div> -->
+
+        <!-- </div> -->
+        
+      <div class="modal-body mainModal">
+        <form>
+          <div class="modal-body">
+            <div class="container-fluid">
+       
+              <div class="row">
+                <div class="col-md-3 ms-auto mainModal">
+                  <form>
+                    <div class="col-mb-3">
+                      <label for="message-text" class="col-form-label boled">
+                        <i class="fa-solid fa-audio-description" style="color: #b7bdc8;"></i> 
+                        설명
+                      </label>
+                      <div class="inLeftTextArea">
+                        <textarea class="form-control descriptionText" id="message-text" placeholder="상세 설명을 적어주세요."></textarea>
+                      </div>
+                    </div>
+                    <div class="col-mb-3">
+                      <label for="recipient-name" class="col-form-label boled">
+                        <i class="fa-regular fa-comment" style="color: #b7bdc8;"></i> 
+                        댓글
+                      </label>
+                      <div class="inLeftTextArea">
+                        <input type="text" class="form-control commentsInput" id="recipient-name" placeholder="댓글을 적어주세요.">
+                        <div class="comments">
+                          <div class="commentsInfo"><b>@유빌리</b> <span>19:18:00</span></div>
+                          트렐로뤨로뤠에에히이일로오오오
+                        </div>
+                        <div class="comments">
+                          <div class="commentsInfo"><b>@두리두리</b> <span>20:18:00</span></div>
+                          우리는 일렐로오오오~~~~~
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="col-md-2 ms-auto sideModal">.col-md-2 .ms-auto</div>
+              </div>
+        
+            </div>
+          </div>
+        </form>
+      </div>
+  
+      <div class="modal-footer eraseLine">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Send message</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- 
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog flex">
+    <div class="modal-content round modalSize">
+      <div class = "cardDetailTop">
+      </div>
+
+      <div class="modal-header column eraseLine" >
+        <h4 class="leftText boled modal-title fs-5j" id="exampleModalLabel"><i class="fa-regular fa-rectangle-list" style="color: #b7bdc8;"></i> 트렐로 카드 상세보기 프론트</h4>
+        <p class = "inLeftText grey small">list: 속해있는 리스트 이름이 들어갑니다.</p>
+      </div>
+      <div class="col-md-2 ms-auto">
+        <button type="button" class="btn btn-secondary sideBtn">Button</button>
+        <button type="button" class="btn btn-secondary sideBtn">Button</button>
+        <button type="button" class="btn btn-secondary sideBtn">Button</button>
+        <button type="button" class="btn btn-secondary sideBtn">Button</button>
+      </div>
+      <div class="grid text-center" style="--bs-columns: 18; --bs-gap: .5rem;">
+        <div style="grid-column: span 14; background-color: aliceblue;">14 columns</div>
+        <div style = " background-color: yellow;"  class="g-col-4">.g-col-4</div>
+      </div>        
+      <div class="modal-body mainModal">
+        <form>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label boled">
+              <i class="fa-solid fa-audio-description" style="color: #b7bdc8;"></i> 
+              설명
+            </label>
+            <div class="inLeftTextArea">
+              <textarea class="form-control descriptionText" id="message-text" placeholder="상세 설명을 적어주세요."></textarea>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label boled">
+              <i class="fa-regular fa-comment" style="color: #b7bdc8;"></i> 
+              댓글
+            </label>
+            <div class="inLeftTextArea">
+              <input type="text" class="form-control commentsInput" id="recipient-name" placeholder="댓글을 적어주세요.">
+              <div class="comments">
+                <div class="commentsInfo"><b>@유빌리</b> <span>19:18:00</span></div>
+                트렐로뤨로뤠에에히이일로오오오
+              </div>
+              <div class="comments">
+                <div class="commentsInfo"><b>@두리두리</b> <span>20:18:00</span></div>
+                우리는 일렐로오오오~~~~~
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+  
+      <div class="modal-footer eraseLine">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Send message</button>
+      </div>
+    </div>
+  </div>
+</div> -->
+
