@@ -140,7 +140,7 @@ export class BoardsService {
     return invite;
   }
 
-  // 해당 보드에서 초대한 유저 조회
+  // 해당 보드에서 초대한 유저(승락대기중) 조회
   async findAllInvite(userId: number, boardId: number) {
     const board = await this.boardsRepository.findOne({
       where: { id: boardId },
@@ -150,7 +150,7 @@ export class BoardsService {
         board: {
           id: boardId,
         },
-        invitationStatus: InvitationStatus.Accepted,
+        invitationStatus: InvitationStatus.Pending,
       },
       relations: ['user'],
     });

@@ -44,7 +44,7 @@ export class BoardsController {
 
   /**
    *
-   * @param 보드 전체 조회
+   * @param 보드 전체 조회(본인이 생성한 보드 + 조인중인 보드)
    * @returns
    */
   @ApiBearerAuth()
@@ -128,9 +128,11 @@ export class BoardsController {
     };
   }
 
+
+
   /**
    *
-   * @param 해당 보드에서 초대한 유저 조회(승락후 조인중인 유저) -> 관리자와 조인한 유저만 조회 가능
+   * @param 해당 보드에서 초대한 유저 조회(초대후 승락 대기중인 유저)
    * @returns
    */
   @ApiBearerAuth()
@@ -141,7 +143,7 @@ export class BoardsController {
     const data = await this.boardsService.findAllInvite(userId, boardId);
     return {
       statusCode: HttpStatus.FOUND,
-      message: '초대된 내역 전체 조회에 성공했습니다!',
+      message: '초대중인 내역 전체 조회에 성공했습니다!',
       data,
     };
   }
