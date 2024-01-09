@@ -3,120 +3,365 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Kanban Board</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
-      .list {
-        width: 200px;
-        height: 200px;
+      body {
+        font-family: Arial, sans-serif;
+      }
+      .board {
+        display: flex;
+        justify-content: space-around;
+        padding: 20px;
+      }
+      .column {
+        background-color: #f4f4f4;
+        border-radius: 4px;
         padding: 10px;
-        border: 1px solid #aaaaaa;
+        width: 30%;
+      }
+      .column-header {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        text-align: center;
       }
       .card {
-        width: 180px;
-        height: 30px;
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-bottom: 10px;
         padding: 10px;
-        margin: 10px 0;
-        border: 1px solid #aaaaaa;
+        cursor: pointer;
+      }
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0, 0, 0);
+        background-color: rgba(0, 0, 0, 0.4);
+        padding-top: 60px;
+      }
+      .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+      }
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+      .close:hover,
+      .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      .task-form input,
+      .task-form select {
+        margin: 5px;
       }
     </style>
   </head>
   <body>
-    <div class="list" draggable="true">
-      <div class="card" draggable="true">Card 1</div>
-      <div class="card" draggable="true">Card 2</div>
-    </div>
-    <div class="list" draggable="true">
-      <div class="card" draggable="true">Card 3</div>
-      <div class="card" draggable="true">Card 4</div>
-    </div>
-    <div class="list" draggable="true">
-      <div class="card" draggable="true">Card 5</div>
-      <div class="card" draggable="true">Card 6</div>
-    </div>
-    <div class="list" draggable="true">
-      <div class="card" draggable="true">Card 7</div>
-    </div>
-  </body>
-  <script>
-    // 페이지가 로드되면 실행되는 함수
-    window.onload = function () {
-      // 클래스 이름이 'list'인 요소들과 'card'인 요소들을 모두 가져옵니다.
-      var lists = document.getElementsByClassName('list');
-      var cards = document.getElementsByClassName('card');
+    <!-- 태스크 추가 버튼 -->
+    <button id="add-task-btn">태스크 추가</button>
 
-      // 드래그 중인 항목을 저장할 변수입니다.
-      var draggedItem = null;
+    <!-- 모달 창 -->
+    <div id="taskModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
 
-      // 모든 list에 대하여
-      for (let i = 0; i < lists.length; i++) {
-        // list 위로 드래그하는 동안 발생하는 이벤트입니다. 기본 동작을 막아서 드롭을 허용합니다.
-        lists[i].addEventListener('dragover', function (event) {
-          event.preventDefault();
-        });
+        <!-- 태스크 추가/수정 양식 -->
+        <div class="task-form">
+          <input type="text" id="modal-task-title" placeholder="제목" />
+          <input type="date" id="modal-task-due-date" />
+          <select id="modal-task-priority">
+            <option value="high">높음</option>
+            <option value="medium" selected>중간</option>
+            <option value="low">낮음</option>
+          </select>
+          <select id="modal-task-status">
+            <option value="todo">할 일</option>
+            <option value="in-progress">진행 중</option>
+            <option value="done">완료</option>
+          </select>
+          <input type="text" id="modal-task-content" placeholder="내용입력" />
+          <button id="modal-submit-btn">추가</button>
+        </div>
+      </div>
+    </div>
 
-        // 드래그한 항목을 list에 드롭할 때 발생하는 이벤트입니다.
-        lists[i].addEventListener('drop', function (event) {
-          event.preventDefault();
-          if (draggedItem.classList.contains('list')) {
-            // 드래그한 항목이 list인 경우
-            // 드래그한 list를 드롭한 위치에 삽입합니다.
-            this.parentNode.insertBefore(draggedItem, this);
-            // list의 순서를 업데이트합니다.
-            updateOrder('list', this.parentNode);
-          } else {
-            // 드래그한 항목이 card인 경우
-            // 드래그한 card를 드롭한 list에 추가합니다.
-            this.appendChild(draggedItem);
-            // card의 순서를 업데이트합니다.
-            updateOrder('card', this);
+    <!-- 칸반 보드 -->
+    <div class="board">
+      <div class="column" id="todo">
+        <div class="column-header">할 일</div>
+      </div>
+      <div class="column" id="in-progress">
+        <div class="column-header">진행 중</div>
+      </div>
+      <div class="column" id="done">
+        <div class="column-header">완료</div>
+      </div>
+    </div>
+
+    <script>
+      // 페이지 로드 시 실행
+      document.addEventListener('DOMContentLoaded', function () {
+        let draggedItem = null;
+
+        // 드래그 앤 드롭을 위한 초기화 함수
+        function initializeDragDrop() {
+          document.querySelectorAll('.card').forEach((card) => {
+            card.addEventListener('dragstart', function () {
+              draggedItem = card;
+              card.classList.add('dragging');
+              setTimeout(() => (card.style.display = 'none'), 0);
+            });
+
+            card.addEventListener('dragend', function () {
+              setTimeout(() => {
+                card.style.display = 'block';
+                card.classList.remove('dragging');
+                draggedItem = null;
+                saveTasks(); // 드래그 종료 시 태스크 저장
+              }, 0);
+            });
+          });
+        }
+
+        // 새 태스크 카드를 생성하는 함수
+        function createTaskCard(title, dueDate, priority, content) {
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.draggable = true;
+          card.innerHTML =
+            '<strong>' +
+            title +
+            '</strong><br>' +
+            '<span class="due-date">' +
+            dueDate +
+            '</span><br>' +
+            '<span class="priority">' +
+            priority +
+            '</span><br>' +
+            '<span class="content">' +
+            content +
+            '</span><br>' +
+            '<button class="edit-btn">수정</button>' +
+            '<button class="delete-btn">삭제</button>';
+          return card;
+        }
+
+        // 태스크를 로컬 스토리지에 저장하는 함수
+        function saveTasks() {
+          const tasks = [];
+          document.querySelectorAll('.column').forEach((column) => {
+            const columnTasks = Array.from(
+              column.querySelectorAll('.card'),
+            ).map((card) => ({
+              title: card.querySelector('strong').textContent,
+              dueDate: card.querySelector('.due-date').textContent,
+              priority: card.querySelector('.priority').textContent,
+              content: card.querySelector('.content').textContent,
+              status: column.id,
+            }));
+            tasks.push({ column: column.id, tasks: columnTasks });
+          });
+          localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+
+        // // 서버에 태스크 데이터를 저장하는 함수
+        // function saveTasks() {
+        //   const tasks = [];
+        //   document.querySelectorAll('.column').forEach(column => {
+        //     const columnTasks = Array.from(column.querySelectorAll('.card')).map(card => ({
+        //       title: card.querySelector('strong').textContent,
+        //       dueDate: card.querySelector('.due-date').textContent,
+        //       priority: card.querySelector('.priority').textContent,
+        //       content: card.querySelector('.content').textContent,
+        //       status: column.id,
+        //     }));
+        //     tasks.push(...columnTasks);
+        //   });
+
+        //   axios.post('/api/tasks', { tasks: tasks })
+        //     .then(response => {
+        //       console.log('Tasks saved successfully');
+        //     })
+        //     .catch(error => {
+        //       console.error('Error saving tasks:', error);
+        //     });
+        // }
+
+        // 로컬 스토리지에서 태스크를 불러오는 함수
+        function loadTasks() {
+          const tasks = JSON.parse(localStorage.getItem('tasks'));
+          if (tasks) {
+            tasks.forEach((columnData) => {
+              const column = document.getElementById(columnData.column);
+              columnData.tasks.forEach((taskData) => {
+                const card = createTaskCard(
+                  taskData.title,
+                  taskData.dueDate,
+                  taskData.priority,
+                  taskData.content,
+                );
+                column.appendChild(card);
+              });
+            });
+            initializeDragDrop();
           }
-        });
-      }
+        }
 
-      // 모든 card에 대하여
-      for (let i = 0; i < cards.length; i++) {
-        // card를 드래그 시작할 때 발생하는 이벤트입니다. 드래그하는 card를 draggedItem에 저장합니다.
-        cards[i].addEventListener('dragstart', function (event) {
-          draggedItem = this;
+        // // 서버에서 태스크 데이터를 가져오는 함수
+        // function loadTasks() {
+        //   axios.get('/api/tasks')
+        //     .then(response => {
+        //       const tasks = response.data;  // 서버에서 받아온 태스크 데이터
+        //       tasks.forEach(task => {
+        //         const card = createTaskCard(task.title, task.dueDate, task.priority, task.content);
+        //         document.getElementById(task.status).appendChild(card);
+        //       });
+        //       initializeDragDrop();
+        //     })
+        //     .catch(error => {
+        //       console.error('Error loading tasks:', error);
+        //     });
+        // }
+
+        // 모달 관련 코드
+        var modal = document.getElementById('taskModal');
+        var btn = document.getElementById('add-task-btn');
+        var span = document.getElementsByClassName('close')[0];
+
+        btn.onclick = function () {
+          modal.style.display = 'block';
+          document.getElementById('modal-task-title').value = '';
+          document.getElementById('modal-task-due-date').value = '';
+          document.getElementById('modal-task-priority').value = 'medium';
+          document.getElementById('modal-task-status').value = 'todo';
+          document.getElementById('modal-task-content').value = '';
+          document.getElementById('modal-submit-btn').textContent = '추가';
+        };
+
+        span.onclick = function () {
+          modal.style.display = 'none';
+        };
+
+        window.onclick = function (event) {
+          if (event.target == modal) {
+            modal.style.display = 'none';
+          }
+        };
+
+        // 태스크 추가 또는 수정을 처리하는 이벤트 리스너
+        document
+          .getElementById('modal-submit-btn')
+          .addEventListener('click', function () {
+            const title = document.getElementById('modal-task-title').value;
+            const dueDate = document.getElementById(
+              'modal-task-due-date',
+            ).value;
+            const priority = document.getElementById(
+              'modal-task-priority',
+            ).value;
+            const status = document.getElementById('modal-task-status').value;
+            const content = document.getElementById('modal-task-content').value;
+
+            if (this.textContent === '추가') {
+              const newCard = createTaskCard(title, dueDate, priority, content);
+              document.getElementById(status).appendChild(newCard);
+              initializeDragDrop();
+            } else {
+              const editingCard = document.querySelector('.editing');
+              editingCard.querySelector('strong').textContent = title;
+              editingCard.querySelector('.due-date').textContent = dueDate;
+              editingCard.querySelector('.priority').textContent = priority;
+              editingCard.querySelector('.content').textContent = content;
+              document.getElementById(status).appendChild(editingCard);
+              editingCard.classList.remove('editing');
+            }
+            modal.style.display = 'none';
+            saveTasks();
+          });
+
+        // 태스크 수정 및 삭제 버튼 처리
+        document
+          .querySelector('.board')
+          .addEventListener('click', function (e) {
+            if (e.target.className === 'edit-btn') {
+              const card = e.target.parentNode;
+              card.classList.add('editing');
+              document.getElementById('modal-task-title').value =
+                card.querySelector('strong').textContent;
+              document.getElementById('modal-task-due-date').value =
+                card.querySelector('.due-date').textContent;
+              document.getElementById('modal-task-priority').value =
+                card.querySelector('.priority').textContent;
+              document.getElementById('modal-task-status').value =
+                card.closest('.column').id;
+              document.getElementById('modal-task-content').value =
+                card.querySelector('.content').textContent;
+              document.getElementById('modal-submit-btn').textContent = '수정';
+              modal.style.display = 'block';
+            } else if (e.target.className === 'delete-btn') {
+              e.target.parentNode.remove();
+              saveTasks();
+            }
+          });
+
+        // 드래그 앤 드롭 처리
+        document.querySelectorAll('.column').forEach((column) => {
+          column.addEventListener('dragover', function (e) {
+            e.preventDefault();
+          });
+
+          column.addEventListener('drop', function (e) {
+            e.preventDefault();
+            if (draggedItem) {
+              let afterElement = getDragAfterElement(column, e.clientY);
+              if (afterElement == null) {
+                column.appendChild(draggedItem);
+              } else {
+                column.insertBefore(draggedItem, afterElement);
+              }
+              saveTasks();
+            }
+          });
         });
 
-        // card를 드래그 끝냈을 때 발생하는 이벤트입니다. draggedItem를 null로 초기화합니다.
-        cards[i].addEventListener('dragend', function (event) {
-          draggedItem = null;
-        });
-      }
-    };
+        // 드래그 후 요소 위치 결정
+        function getDragAfterElement(container, y) {
+          const draggableElements = [
+            ...container.querySelectorAll('.card:not(.dragging)'),
+          ];
 
-    // 순서를 업데이트하고 서버에 PUT 요청을 보내는 함수입니다.
-    function updateOrder(type, parent) {
-      // parent 요소 내의 type에 해당하는 요소들을 순회하면서 각 요소의 id를 가져와서 order 배열을 만듭니다.
-      var items = parent.getElementsByClassName(type);
-      var order = Array.from(items).map(function (item) {
-        return item.id; // list_id 또는 card_id
+          return draggableElements.reduce(
+            (closest, child) => {
+              const box = child.getBoundingClientRect();
+              const offset = y - box.top - box.height / 2;
+              if (offset < 0 && offset > closest.offset) {
+                return { offset: offset, element: child };
+              } else {
+                return closest;
+              }
+            },
+            { offset: Number.NEGATIVE_INFINITY },
+          ).element;
+        }
+
+        loadTasks();
       });
-
-      var url;
-      // 타입에 따라 요청을 보낼 URL을 결정합니다.
-      if (type === 'list') {
-        url = `http://your-server.com/api/boards/${parent.id}/listOrder`; // parent.id는 board_id
-      } else {
-        // type === 'card'
-        url = `http://your-server.com/api/lists/${parent.id}/cardOrder`; // parent.id는 list_id
-      }
-
-      // 서버에 PUT 요청을 보냅니다.
-      axios
-        .put(url, { order: order })
-        .then(function (response) {
-          // 요청이 성공하면 콘솔에 응답을 출력합니다.
-          console.log(response);
-        })
-        .catch(function (error) {
-          // 요청이 실패하면 콘솔에 에러를 출력합니다.
-          console.error(error);
-        });
-    }
-
-    //리퀘스트 예시 req.body = {"order": ["list_id1", "list_id2", "list_id3", ...] }
-  </script>
+    </script>
+  </body>
 </html>

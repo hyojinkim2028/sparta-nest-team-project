@@ -58,8 +58,8 @@ export class Board {
    * 리스트 배열
    * @example [1,2,3]
    */
-  @Column({ type: 'json' })
-  orderList: string[];
+  @Column('simple-array')
+  orderList: number[];
 
   @CreateDateColumn()
   createdAt: Date;

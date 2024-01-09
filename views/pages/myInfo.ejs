@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <%- include('../partials/head.ejs') %>
+  <link rel="stylesheet" href="/css/reg.css" />
+  <body>
+    <%- include('../partials/header.ejs') %>
+    <div class="row">
+      <!-- 🔼메인-사이드 네비 -->
+      <div class="col" style="margin: 0; padding: 0">
+        <div class="regBackgreound justify-content-center">
+          <div>
+            <div class="regBoard container">
+              <div class="regTitle text-center">내 정보</div>
+              <div class="row">
+                <!-- 회원 정보 박스 -->
+                <div class="regBox col-2">
+                  <%- include('../partials/regBox.ejs') %>
+                </div>
+                <!-- 보드 끝 -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 메인 -->
+    </div>
+    <!-- 푸터 -->
+    <%-include('../partials/footer.ejs') %>
+  </body>
+  <%- include('../partials/scripts.ejs') %>
+</html>

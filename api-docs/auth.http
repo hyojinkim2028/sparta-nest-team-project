@@ -1,4 +1,4 @@
-@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImlhdCI6MTcwNDc2MzY0MywiZXhwIjoxNzA0ODA2ODQzfQ.no2wpyme4-9z8Z-iABRB-QOAzzBVQHTc1ELvNKOhe7E
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsImlhdCI6MTcwNDc5ODU5NCwiZXhwIjoxNzA0ODQxNzk0fQ.EVmTnC_j3-S6yl2XC2UFvxoe1cBCtWbOHir5RtCpbVs
 
 ### 회원가입
 POST http://localhost:3001/api/auth/register
@@ -24,6 +24,7 @@ Content-Type: application/json
 GET http://localhost:3001/api/user/info
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
+d
 
 
 ### 비밀번호 변경
