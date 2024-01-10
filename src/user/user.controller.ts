@@ -12,6 +12,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { ChangePasswordDto } from './dtos/changepassword.dto';
 import { Page } from 'src/decorators/page.decorator';
+import { Query } from '@nestjs/common';
 
 @ApiTags('사용자')
 @Controller('user')
@@ -70,6 +71,28 @@ export class UserController {
     return {
       statusCode: HttpStatus.ACCEPTED,
       message: '회원삭제되었습니다.',
+      data,
+    };
+  }
+
+  //유저 이름으로 유저 정보 가져오는 로직
+  //(카드 생성시 availableMembers를 아이디 배열로 받기 때문에 만들어요)
+  /**
+   * 이름으로 유저아이디 찾기
+   * @param req
+   * @returns
+   */
+  @UseGuards(AuthGuard('jwt'))
+  @Get()
+  async getUserId(@Query('name') name: string): Promise<object> {
+    console.log('name', name);
+
+    const data = await this.userService.findOneByName(name);
+    console.log('data컨트롤러', data);
+
+    return {
+      statusCode: HttpStatus.OK,
+      message: '내 정보 조회에 성공했습니다.ㅂㅂㅂ',
       data,
     };
   }

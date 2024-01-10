@@ -218,6 +218,162 @@
   console.log(boardId);
   //axios 쓸때 'DOMContentLoaded' 사용해야 페이지가 전부 로드 된 뒤에 서버에 연결
   //시켜준다.
+
+  //
+
+  //cardDetail 은지
+  document.addEventListener('DOMContentLoaded', function () {
+    const saveCardDetail = document.querySelector('#saveCardDetail');
+
+    //공개할 멤버 검색버튼 누르면 유저 찾아서 아래에 표시해주기.
+    const availableMemberBtn = document.getElementById('availableMemberBtn');
+    const workersSearchBtn = document.getElementById('workersSearchBtn');
+
+    //공개할 멤버 아이디
+    let findAvailableUserIdArr = [];
+
+    //작업자 아이디
+    let findWorkerIdArr = [];
+
+    //공개할 멤버 검색.
+    availableMemberBtn.addEventListener('click', async (e) => {
+      const cardAvailableMembers =
+        document.getElementById('availableMembers').value;
+      console.log('cardAvailableMembers', cardAvailableMembers);
+      const findAvailableUserId = await axios.get('/api/user', {
+        params: { name: cardAvailableMembers },
+      });
+      console.log('findAvailableUserId', findAvailableUserId.data.data);
+
+      if (findAvailableUserId.data.data) {
+        document.getElementById('findUserName').innerText +=
+          findAvailableUserId.data.data.name + ', ';
+        console.log('findAvailableUserIdArr', findAvailableUserIdArr);
+        return findAvailableUserIdArr.push(findAvailableUserId.data.data.id);
+      } else {
+        alert('없는 멤버를 검색하셧습니다.');
+      }
+    });
+
+    //담당자를 검색.
+    workersSearchBtn.addEventListener('click', async (e) => {
+      const workMembers = document.getElementById('workers').value;
+      console.log('workMembers', workMembers);
+      const findWorkerId = await axios.get('/api/user', {
+        params: { name: workMembers },
+      });
+      console.log('findWorkerId', findWorkerId.data.data);
+
+      if (findWorkerId.data.data) {
+        document.getElementById('findWorkerName').innerText +=
+          findWorkerId.data.data.name + ', ';
+        console.log('findWorkerIdArr', findWorkerIdArr);
+        return findWorkerIdArr.push(findWorkerId.data.data.id);
+      } else {
+        alert('없는 멤버를 검색하셧습니다.');
+      }
+    });
+
+    //카드색깔 보여주기
+    const cardColors = document.querySelectorAll('.dropdown-item');
+    let choiceColor;
+
+    //카드 색깔 클릭이벤트 등록하기
+    cardColors.forEach((color) => {
+      console.log('컬러이벤트등록', color);
+      color.addEventListener('click', function (e) {
+        console.log('당신의 선택은?', e.target.parentNode.id);
+        choiceColor = '';
+        choiceColor = e.target.parentNode.id;
+        return changeColorStatus(choiceColor);
+      });
+    });
+
+    //카드 색깔 선택시 유저에게 보여주기.
+    function changeColorStatus(choiceColor) {
+      if (!choiceColor)
+        alert('색상이 제대로 선택되지 않았습니다. 다시 선택해 주세요.');
+      else {
+        const choiceColorBtn = document.getElementById('choiceBackgroundColor');
+        const checkChoiceColor = document.getElementById('checkChoiceColor');
+
+        return (checkChoiceColor.style.backgroundColor = `#${choiceColor}`);
+      }
+    }
+
+    //기간 데이터 가져오기.
+    let date = {};
+    const dateSaveBtn = document.getElementById('dateSaveBtn');
+    dateSaveBtn.addEventListener('click', (e) => {
+      const cardStartDate = document.getElementById('startDate').value;
+      const cardEndDate = document.getElementById('endDate').value;
+      const cardEndTime = document.getElementById('endTime').value;
+
+      if (
+        isValidDate(cardStartDate) &&
+        isValidDate(cardEndDate) &&
+        isValidTime(cardEndTime)
+      ) {
+        console.log('date', {
+          startDate: cardStartDate,
+          endDate: cardEndDate,
+          endTime: cardEndTime,
+        });
+        return (date = {
+          startDate: cardStartDate,
+          endDate: cardEndDate,
+          endTime: cardEndTime,
+        });
+      } else {
+        alert('유효하지 않은 날짜/시간 을 입력하셨습니다.');
+      }
+    });
+
+    //유효한 날짜인지 검증하는 로직
+    const isValidDate = (date) => {
+      const dateParsing = new Date(date);
+      return dateParsing instanceof Date;
+    };
+
+    //유효한 시간인지 검증하는 로직
+    const isValidTime = (time) => {
+      const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
+      return timeRegex.test(time);
+    };
+
+    //카드 저장하기 버튼 누르면
+    saveCardDetail.addEventListener('click', (e) => {
+      e.preventDefault();
+      console.log('date', date);
+
+      const cardTitle = document.getElementById('cardTitleInput').value;
+      const cardDescription = document.getElementById('cardDescription').value;
+
+      //주완님 코멘트 저장.
+      const cardComments = document.getElementById('cardComments').value;
+
+      //카드 생성하기 요청
+      let listId = 1;
+      axios
+        .post(`/api/card/list/${listId}`, {
+          cardName: cardTitle,
+          cardDescription: cardDescription,
+          allowMembers: findAvailableUserIdArr,
+          workers: findWorkerIdArr,
+          cardColor: choiceColor,
+          startDate: date.startDate,
+          endDate: date.endDate,
+          endTime: date.endTime,
+        })
+        .then((response) => {
+          console.log(response);
+          console.log('카드 생성이 완료되었습니다.');
+        })
+        .catch((error) => {
+          console.log('err', err);
+        });
+    });
+  });
 </script>
 <script>
   const currentUrl = String(window.location.href);

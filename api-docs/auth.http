@@ -40,3 +40,9 @@ Authorization: Bearer {{accessToken}}
 PUT  http://localhost:3001/api/user/delete
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
+
+
+### 회원이름으로 아이디
+GET http://localhost:3001/api/user?name=사용자
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}

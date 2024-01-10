@@ -18,13 +18,13 @@
 
 <div class="modal fade"   id="exampleModal_cardDetail_1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog flex">
-    <div class="modal-content round modalSize">
+    <div class="modal-content round modalSize" id="cardDetailModal">
       <div class = "cardDetailTop" id="cardColor"></div>
       
       <div class="modal-header column eraseLine mainModal" >
         <h4 class="leftText boled modal-title fs-5j" id="exampleModalLabel">
           <i class="fa-regular fa-rectangle-list" style="color: #b7bdc8;"></i> 
-          <input type="text" placeholder="카드 제목을 적어주세요" class = "cardTitleInput"/>
+          <input type="text" placeholder="카드 제목을 적어주세요" class = "cardTitleInput" id="cardTitleInput"/>
         </h4>
         <p class = "inLeftText grey small">list: 속해있는 리스트 이름이 들어갑니다.</p>
         <div class="dropdown">
@@ -37,14 +37,16 @@
               choice color
             </button>
             <ul class="dropdown-menu">
-              <li style="background-color: #dc4c64; height: 40px;"><a class="dropdown-item" style="color: white;">pink</a></li>
-              <li style="background-color: #e4a11b; height: 40px;"><a class="dropdown-item" style="color: white;">orange</a></li>
-              <li style="background-color: #8ac9de; height: 40px;"><a class="dropdown-item" style="color: white;">sky</a></li>
-              <li style="background-color: #123f6f; height: 40px;"><a class="dropdown-item" style="color: white;">navy</a></li>
-              <li style="background-color: #115438; height: 40px;"><a class="dropdown-item" style="color: white;">green</a></li>
+              <li id="dc4c64" style="background-color: #dc4c64; height: 40px;"><a class="dropdown-item" style="color: white;">pink</a></li>
+              <li id="e4a11b" style="background-color: #e4a11b; height: 40px;"><a class="dropdown-item" style="color: white;">orange</a></li>
+              <li id="8ac9de" style="background-color: #8ac9de; height: 40px;"><a class="dropdown-item" style="color: white;">sky</a></li>
+              <li id="123f6f" style="background-color: #123f6f; height: 40px;"><a class="dropdown-item" style="color: white;">navy</a></li>
+              <li id="115438" style="background-color: #115438; height: 40px;"><a class="dropdown-item" style="color: white;">green</a></li>
 
             </ul>
           </div>
+          <div id="checkChoiceColor" style="margin-left: 20px; margin-top: 3px;width: 30px; height: 30px; border: 1px solid;"></div>
+
         </div>
       </div>
 
@@ -59,19 +61,20 @@
               <input
                 type="search"
                 class="form-control rounded searchInput"
-                placeholder="접근 가능한 멤버를 입력해주세요."
+                id="availableMembers"
+                placeholder="접근 가능한 멤버를 입력후 검색버튼을 눌러주세요."
                 aria-label="Search"
                 aria-describedby="search-addon"
                 style="width: 75%;"
               />
 
               <span class="input-group-text border-0 searchInput" id="membersSearchBtn" style="width: 20%; color: #6e6e6e; display: flex; text-align: center; align-items: center; justify-content: center; margin-left: auto;">
-                <button type="button" class="btn btn-light">
+                <button type="button" class="btn btn-light" id="availableMemberBtn">
                   <i class="fas fa-search"> 검색</i>
                 </button>
               </span>
             </div>
-
+            <div id = "findUserName" style="margin-left: 45px;"></div>
           </div>
           <div class="input-group rounded marginTop30" id="serarchWorkersInput" data-mdb-input-init>
             <label for="message-text" class="col-form-label boled" style="width: 100%;">
@@ -82,6 +85,7 @@
               <input
                 type="search"
                 class="form-control rounded searchInput"
+                id="workers"
                 placeholder="해당 업무를 담당할 멤버를 입력해주세요."
                 aria-label="Search"
                 aria-describedby="search-addon"
@@ -94,7 +98,7 @@
                 </button>
               </span>
             </div>
-
+            <div id = "findWorkerName" style="margin-left: 45px;"></div>
           </div>
           <div class="input-group rounded marginTop30" id="dateInput" data-mdb-input-init>
             <label for="message-text" class="col-form-label boled" style="width: 100%;">
@@ -105,7 +109,8 @@
               <input
                 type="search"
                 class="form-control rounded searchInput"
-                placeholder="시작 날짜"
+                id="startDate"
+                placeholder="시작 날짜 ex) 20240110"
                 aria-label="Search"
                 aria-describedby="search-addon"
                 style="width: 22.6%;"
@@ -113,7 +118,8 @@
               <input
                 type="search"
                 class="form-control rounded searchInput"
-                placeholder="마감 날짜"
+                id="endDate"
+                placeholder="마감 날짜  ex) 20240220"
                 aria-label="Search"
                 aria-describedby="search-addon"
                 style="width: 22.6%;"
@@ -121,14 +127,15 @@
               <input
                 type="search"
                 class="form-control rounded searchInput"
-                placeholder="마감 시간"
+                id="endTime"
+                placeholder="마감 시간  ex) 18:00"
                 aria-label="Search"
                 aria-describedby="search-addon"
                 style="width: 22.6%;"
               />
               <span class="input-group-text border-0 searchInput" id="datesSearchBtn" style="width: 20%; color: #6e6e6e; display: flex; text-align: center; align-items: center; justify-content: center; margin-left: auto;">
-                <button type="button" class="btn btn-light">
-                  <i class="fas fa-search"> 검색</i>
+                <button type="button" class="btn btn-light" style="font-weight: bolder;" id="dateSaveBtn">
+                  저장
                 </button>
               </span>
             </div>
@@ -140,7 +147,7 @@
               설명
             </label>
             <div class="inLeftTextArea">
-              <textarea class="form-control descriptionText" id="message-text" placeholder="상세 설명을 적어주세요."></textarea>
+              <textarea class="form-control descriptionText" id="cardDescription" placeholder="상세 설명을 적어주세요."></textarea>
             </div>
           </div>
           <div class="col-mb-3 marginTop30">
@@ -149,7 +156,7 @@
               댓글
             </label>
             <div class="inLeftTextArea">
-              <input type="text" class="form-control commentsInput" id="recipient-name" placeholder="댓글을 적어주세요.">
+              <input type="text" class="form-control commentsInput" id="cardComments" placeholder="댓글을 적어주세요.">
               <div class="comments">
                 <div class="commentsInfo"><b>@유빌리</b> <span>19:18:00</span></div>
                 <div class="commentsAndBtn">
@@ -172,7 +179,7 @@
       <div class="modal-footer eraseLine rightBtn">
         <button type="button" class="btn btn-light" data-bs-dismiss="modal">취소</button>
         <button type="button" class="btn btn-secondary">수정</button>
-        <button type="button" class="btn btn-primary">저장</button>
+        <button type="button" class="btn btn-primary" id="saveCardDetail">저장</button>
       </div>
     </div>
   </div>
@@ -189,17 +196,17 @@
     // ...options
   });
 
-  document.addEventListener('DOMContentLoaded', function () {
-    const cardDetailModal = document.querySelector('#')
-  }
-  axios({
-    method: 'post',
-    url: '/user/12345',
-    data: {
-      firstName: 'Fred',
-      lastName: 'Flintstone'
-    }
-  });
+  //document.addEventListener('DOMContentLoaded', function () {
+  //  const cardDetailModal = document.querySelector('#')
+  //}
+  //axios({
+  //  method: 'post',
+  //  url: '/user/12345',
+  //  data: {
+  //    firstName: 'Fred',
+  //    lastName: 'Flintstone'
+  //  }
+  //});
 
   const navbarAutocomplete = document.querySelector('#searchInput');
   //이것만 가져온 데이터로 바꿔주면 될듯.
