@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -8,6 +9,7 @@ import { DataSource, Repository } from 'typeorm';
 import { List } from './entities/list.entity';
 import { CreateListDto } from './dtos/create-list.dto';
 import { Board } from 'src/boards/entities/board.entity';
+import { CardOrderListDto } from './dtos/card-order-list.dto';
 
 @Injectable()
 export class ListService {
@@ -79,6 +81,8 @@ export class ListService {
       { boardId, id },
       { listTitle },
     );
+
+    return updateList;
   }
 
   async delete(boardId: number, id: number) {
@@ -112,6 +116,19 @@ export class ListService {
       await queryRunner.release();
       throw err;
     }
+  }
+
+  async editOrder(
+    boardId: number,
+    id: number,
+    { cardOrder }: CardOrderListDto,
+  ) {
+    const updateList = await this.listRepository.update(
+      { boardId, id },
+      { cardOrder },
+    );
+
+    return updateList;
   }
 
   //카드 생성 삭제시 필요해서 추가해요!
