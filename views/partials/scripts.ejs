@@ -5,6 +5,7 @@
 ></script>
 <script src="/js/main.js" type="module"></script>
 <script src="/js/user.js" type="module"></script>
+<script src="/js/user.js" type="module"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script>
@@ -100,29 +101,127 @@
 
     // 클릭된 div의 색상 출력
     console.log('Selected Color:', backgroundColor);
+    try {
+      await axios({
+        method: 'POST',
+        url: '/api/boards',
+        data: {
+          boardTitle: title,
+          description,
+          backgroundColor, // 클릭된 div의 색상을 전달
+        },
+      })
+        .then((res) => {
+          alert('보드 생성 성공!');
+        })
+        .catch((error) => {
+          console.log(error);
+          throw new Error(error);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
+  const createBtn = document.getElementById('submit');
+  createBtn.addEventListener('click', createBoard);
+  //
+  let boardId = 0;
+  async function getBoards() {
     await axios({
-      method: 'POST',
+      method: 'GET',
       url: '/api/boards',
-      data: {
-        boardTitle: title,
-        description,
-        backgroundColor, // 클릭된 div의 색상을 전달
-      },
     })
       .then((res) => {
-        alert('보드 생성 성공!');
+        // 내가 생성한 보드
+        const owner = res.data.data.board;
+        console.log(owner);
+        // 초대된 보드
+        const invited = res.data.data.invite;
+
+        // 본인 생성보드 메인
+        owner.forEach((data) => {
+          let ownerBoard = `
+          <div class="boardOne col-2" data-id=${data.id} style="cursor: pointer">
+            <div class="boardOne-title text-center">${data.boardTitle}</div>
+          </div>
+          `;
+          document
+            .querySelector('.ownerBoardList')
+            .insertAdjacentHTML('beforeend', ownerBoard);
+        });
+
+        // 초대된 보드 사이드바
+        owner.forEach((data) => {
+          let ownerBoard = `
+          <li>
+      <div class="nav-link text-white align-items-center" data-id=${data.id}>
+        <i
+          class="fa-solid fa-square-full fa-lg fa-fw"
+          style="color: ${data.backgroundColor}"
+        ></i>
+        <span>&nbsp;&nbsp;${data.boardTitle}</span>
+      </div>
+    </li>
+          `;
+          document
+            .querySelector('.ownerBoardUl')
+            .insertAdjacentHTML('beforeend', ownerBoard);
+        });
+
+        // 초대된 보드 메인
+        invited.forEach((data) => {
+          let invitedBoard = `
+          <div class="boardOne col-2" data-id=${data.board.id} style="cursor: pointer">
+            <div class="boardOne-title text-center">${data.board.boardTitle}</div>
+          </div>
+          `;
+          document
+            .querySelector('.invitedBoardList')
+            .insertAdjacentHTML('beforeend', invitedBoard);
+        });
+
+        // 초대된 보드 사이드바
+        invited.forEach((data) => {
+          let invitedBoard = `
+          <li>
+      <div class="nav-link text-white align-items-center" data-id=${data.board.id}>
+        <i
+          class="fa-solid fa-square-full fa-lg fa-fw"
+          style="color: ${data.board.backgroundColor}"
+        ></i>
+        <span>&nbsp;&nbsp;${data.board.boardTitle}</span>
+      </div>
+    </li>
+          `;
+          document
+            .querySelector('.invitedBoardUl')
+            .insertAdjacentHTML('beforeend', invitedBoard);
+        });
+
+        const selectedBoard = document.getElementsByClassName('boardOne');
+        for (let i = 0; i < selectedBoard.length; i++) {
+          selectedBoard[i].addEventListener('click', function () {
+            boardId = selectedBoard[i].getAttribute('data-id');
+            window.location.href = `board/${boardId}`;
+            // console.log(boardId);
+          });
+        }
       })
       .catch((error) => {
         console.log(error);
         throw new Error(error);
       });
   }
+  getBoards();
 
-  const createBtn = document.getElementById('submit');
-  createBtn.addEventListener('click', createBoard);
-  //
+  console.log(boardId);
+  //axios 쓸때 'DOMContentLoaded' 사용해야 페이지가 전부 로드 된 뒤에 서버에 연결
+  //시켜준다.
 </script>
+<script>
+  const currentUrl = String(window.location.href);
+  currentUrl.split('/').pop();
 
-//axios 쓸때 'DOMContentLoaded' 사용해야 페이지가 전부 로드 된 뒤에 서버에 연결
-시켜준다.
+  console.log(currentUrl.split('/').pop());
+</script>
