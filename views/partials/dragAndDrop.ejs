@@ -136,12 +136,9 @@
         // 카드에 우선 순위, 제목 및 담당자 정보 추가
         $('<div>')
           .addClass('card-priority')
-          .addClass(`priority-${task.cardName}`)
+          .addClass(`priority-${Math.floor(Math.random() * 4) + 1}`)
           .appendTo($item);
-        $('<div>')
-          .addClass('card-subject')
-          .text(task.cardDescription)
-          .appendTo($item);
+        $('<div>').addClass('card-subject').text(task.cardName).appendTo($item);
         $('<div>').addClass('card-assignee').text(task.writer).appendTo($item);
       }
     });
