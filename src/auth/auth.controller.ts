@@ -49,7 +49,7 @@ export class AuthController {
     @Res() res: Response,
   ) {
     const accessToken = this.authService.login(req.user.id);
-    res.setHeader('Authorization', `Bearer ${accessToken.accessToken}`);
+    res.cookie('Authorization', accessToken.accessToken);
 
     return res.status(HttpStatus.OK).json({ accessToken });
   }

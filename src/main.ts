@@ -5,12 +5,13 @@ import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
+import cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const configService = app.get(ConfigService);
   const port = configService.get<number>('SERVER_PORT');
-
+  app.use(cookieParser());
   app.setGlobalPrefix('api');
 
   app.useGlobalPipes(
@@ -35,6 +36,7 @@ async function bootstrap() {
       operationSorter: 'alpha',
     },
   });
+  app.use(cookieParser());
   /** ejs 프론트 추가 */
   app.useStaticAssets(join(__dirname, '..', 'public'));
   app.setBaseViewsDir(join(__dirname, '..', 'views'));
