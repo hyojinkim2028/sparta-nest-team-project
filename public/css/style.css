@@ -390,7 +390,7 @@ footer {
 .sideBarTitle {
   color: white;
   margin-left: 20px;
-  font-size: 25px;
+  font-size: 20px;
   font-weight: 700;
   margin-bottom: 20px;
 }
@@ -435,7 +435,16 @@ footer {
   align-items: center;
 }
 
-.board-update-btn,
+.board-update-btn {
+  background-color: #ffc107;
+  width: 48%;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  color: black;
+  font-size: 1rem;
+  font-weight: 600;
+}
 .board-delete-btn {
   background-color: #ffc107;
   width: 48%;
@@ -444,5 +453,107 @@ footer {
   border-radius: 8px;
   color: black;
   font-size: 1rem;
+  font-weight: 600;
+}
+
+/* .board-description{
+  
+}
+ */
+
+/* 모달 창 내용 스타일링을 위한 예제 스타일 */
+/* .createBoardBox {
+  width: 800px;
+} */
+
+.modal-title-board {
+  font-size: 3rem;
+  color: #333;
+  margin-bottom: 40px;
+}
+
+.boardCreateValues {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+/* .board-info {
+  width: 90%;
+  height: 300px;
+} */
+
+.board-input-container {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.board-create-label {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.board-create-input {
+  width: 100%;
+  height: 50px;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 1.5rem;
+  padding-left: 15px;
+}
+
+.colorBox-container {
+  width: 100%;
+  height: 300px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 3%;
+}
+
+/* 8개의 정사각형 div */
+.square {
+  width: 100%;
+  height: 100%;
+  background-color: #ddd;
+  border-radius: 10px;
+}
+
+.selected {
+  border: 5px solid black;
+}
+
+.boardSubmitBtn {
+  margin-top: 30px;
+  width: 100%;
+  height: 100px;
+}
+
+.submit-btn {
+  width: 100%;
+  height: 100%;
+  background-color: #333;
+  border-radius: 10px;
+  color: white;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.invitedInfo {
+  margin-top: 15px;
+}
+
+.invitedInfo > button {
+  margin-left: 5px;
+  border-radius: 8px;
+  background-color: #ffc107;
+  border: none;
   font-weight: 600;
 }
