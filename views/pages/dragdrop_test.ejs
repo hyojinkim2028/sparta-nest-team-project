@@ -30,7 +30,7 @@
     <!-- 칸반보드 e -->
   </body>
   <script>
-    $(() => {
+    $(async () => {
       // const statuses = [
       //   'Not Started',
       //   'Need Assistance',
@@ -40,7 +40,7 @@
       // ];
 
       // 조회
-      axios
+      await axios
         .get('http://localhost:3000/api/list/9')
         .then(function (response) {
           const data = response.data.data;

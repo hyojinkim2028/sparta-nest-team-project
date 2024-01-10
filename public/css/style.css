@@ -192,6 +192,12 @@ footer {
   flex-direction: column;
   width: 1000px;
 }
+
+.row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
 .modalSize {
   height: auto;
   width: 1000px;
@@ -225,7 +231,21 @@ footer {
   margin: 0px 0px 18px 0px;
   padding-left: 13px;
 }
-
+.commentsAndBtn {
+  display: flex;
+  flex-direction: row;
+}
+.cardTitleInput {
+  padding: 10px;
+  font-size: 25px;
+  border-top: transparent;
+  border-left: transparent;
+  border-right: transparent;
+  outline: none;
+}
+.dropdown-item:hover {
+  background-color: inherit;
+}
 .right {
   margin-left: auto;
   padding: 20px;
@@ -263,6 +283,26 @@ footer {
   padding: 30px;
 }*/
 
+.searchInput {
+  margin-left: 32px;
+  /*font-weight: lighter;*/
+  width: 200px;
+}
+
+.dropdown {
+  margin-right: auto;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+}
+#choiceBackgroundColor {
+  width: 269px;
+  /*width: 187px;*/
+}
+.commentsDelete {
+  margin-left: auto;
+  float: right;
+}
 /*카드 상세 e*/
 
 /* 칸반보드 s */
