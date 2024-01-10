@@ -20,17 +20,16 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       ]),
       ignoreExpiration: false,
       secretOrKey: configService.get<string>('JWT_SECRET'),
-
     });
   }
 
   private static extractJWT(request: any): string | null {
-    console.log(request.cookies);
     return request?.cookies?.Authentication?.accessToken;
   }
 
   async validate(payload: JwtPayLoad) {
     const findUser = await this.authService.findByUserId(payload.id);
+
     if (_.isNil(findUser)) {
       throw new NotFoundException('해당되는 사용자를 찾을 수 없습니다.');
     }

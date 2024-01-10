@@ -5,4 +5,5 @@ export class CreateBoardDto extends PickType(Board, [
   'boardTitle',
   'description',
   'backgroundColor',
+  'orderList'
 ]) {}
