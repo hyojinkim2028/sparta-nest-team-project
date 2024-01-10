@@ -1,0 +1,92 @@
+<div
+  class="createBoardBox modal mpdal-backdrop fade"
+  id="boardCreateModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+  style="z-index: 1051; padding: 30px"
+>
+  <div class="modal-dialog">
+    <div class="modal-content" style="padding: 20px">
+      <div class="modal-header">
+        <h2 class="modal-title-board" id="exampleModalLabel">CREATE BOARD</h2>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="input-container modal-body">
+        <label class="board-create-label" for="input1"
+          ><p class="boardCreateValues">BOARD TITLE</p></label
+        >
+        <input
+          class="board-create-input"
+          type="text"
+          id="title"
+          name="input1"
+        />
+        <label for="input2"><p class="boardCreateValues">DESCRIPTION</p></label>
+        <input
+          class="board-create-input"
+          type="text"
+          id="description"
+          name="input2"
+        />
+
+        <div class="board-input-container">
+          <label for="input2" class="board-create-label"
+            ><p class="boardCreateValues">BACKGROUND COLOR</p></label
+          >
+          <div class="colorBox-container">
+            <!-- 8개의 정사각형 div -->
+            <div
+              class="square"
+              style="background-color: #7fffd4"
+              data-color="#7fffd4"
+            ></div>
+            <div
+              class="square"
+              style="background-color: thistle"
+              data-color="navajowhite"
+            ></div>
+            <div
+              class="square"
+              style="background-color: navajowhite"
+              data-color="navajowhite"
+            ></div>
+            <div
+              class="square"
+              style="background-color: forestgreen"
+              data-color="forestgreen"
+            ></div>
+            <div
+              class="square"
+              style="background-color: lightslategray"
+              data-color="lightslategray"
+            ></div>
+            <div
+              class="square"
+              style="background-color: #ffc107"
+              data-color="#ffc107"
+            ></div>
+            <div
+              class="square"
+              style="background-color: tomato"
+              data-color="tomato"
+            ></div>
+            <div
+              class="square"
+              style="background-color: rgb(113, 24, 171)"
+              data-color="rgb(113, 24, 171)"
+            ></div>
+          </div>
+          <div class="boardSubmitBtn justify-items-center">
+            <button class="submit-btn text-center" id="submit">CREATE!</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

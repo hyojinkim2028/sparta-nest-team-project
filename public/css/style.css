@@ -175,16 +175,27 @@ footer {
   margin-right: auto;
   padding-left: 33px;
 }
+
+.marginTop30 {
+  margin-top: 30px;
+}
 .inLeftTextArea {
   padding-left: 33px;
+  margin-top: 7px;
+}
+.rightBtn {
+  margin-right: 20px;
+  margin-bottom: 20px;
 }
 .column {
   display: flex;
   flex-direction: column;
+  width: 1000px;
 }
 .modalSize {
   height: auto;
   width: 1000px;
+  /*width: 150%;*/
 }
 .descriptionText {
   height: 200px;
@@ -244,20 +255,14 @@ footer {
   width: 100%;
   margin-right: auto;
   padding: 30px;
-  background-color: bisque;
 }
 
-.sideModal {
+/*.sideModal {
   width: 35%;
   margin-left: auto;
   padding: 30px;
-  background-color: yellowgreen;
-}
+}*/
 
-.sideBtn {
-  width: 80%;
-  margin: 5px;
-}
 /*카드 상세 e*/
 
 /* 칸반보드 s */

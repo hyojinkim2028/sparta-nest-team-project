@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function saveLists() {
     const lists = [];
     document.querySelectorAll('.kanban_list').forEach((list) => {
-      const card = Array.from(column.querySelectorAll('.kanban_card')).map(
+      const card = Array.from(column.quㅓㄴerySelectorAll('.kanban_card')).map(
         (card) => ({
           cardName: card.querySelector('.cardName').textContent,
           cardId: card.querySelector('#id').textContent,

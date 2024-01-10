@@ -8,14 +8,14 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script>
+  // 로그인 엑시오스
   document.addEventListener('DOMContentLoaded', function () {
     let loginFormModalBody = document.querySelector('#loginFormModalBody');
     loginFormModalBody.addEventListener('submit', (e) => {
       e.preventDefault();
-      console.log('Form submission prevented.');
-
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
+      let user;
       try {
         let response = axios
           .post('/api/auth/login', {
@@ -24,6 +24,39 @@
           })
           .then(function (response) {
             console.log(response);
+            user;
+            console.log('로그인 되었습니다.');
+            // location.href = '/api/home';
+          })
+          .catch(function (error) {});
+      } catch (err) {
+        console.error('로그인 에러:', err);
+      }
+    });
+  });
+  // 회원가입 엑시오스
+  document.addEventListener('DOMContentLoaded', function () {
+    let registerFromBody = document.querySelector('#registerFrom');
+    registerFromBody.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('regEmail').value;
+      const password = document.getElementById('regPassword').value;
+      const passwordConfirm = document.getElementById('passwordConfirm').value;
+      let user;
+      try {
+        let response = axios
+          .post('/api/auth/register', {
+            name: name,
+            email: email,
+            password: password,
+            passwordConfirm: passwordConfirm,
+          })
+          .then(function (response) {
+            console.log(response);
+            user;
+            console.log('가입 되었습니다.');
             // location.href = '/api/home';
           })
           .catch(function (error) {});
@@ -33,6 +66,60 @@
     });
   });
 </script>
+<script>
+  // 효진
+  let color = '#7fffd4';
+  const colorData = document.getElementsByClassName('square');
+  let selectedBox = colorData[0]; // 첫번째 박스가 디폴트로 선택됨
 
-//axios 쓸때 'DOMContentLoaded' 사용해야 페이지가 전부 로드 된 뒤에 서버에 연결
-시켜준다.
+  // 클릭된 div의 색상을 저장하고 선택된 클래스를 관리하는 함수
+  function getColor(event) {
+    color = event.currentTarget.getAttribute('data-color');
+
+    // 기존에 선택된 박스가 있으면 선택 클래스 제거
+    if (selectedBox) {
+      selectedBox.classList.remove('selected');
+    }
+
+    // 현재 클릭된 박스에 선택 클래스 추가
+    event.currentTarget.classList.add('selected');
+    selectedBox = event.currentTarget;
+  }
+
+  // 초기 선택된 박스에 디폴트로 selected 클래스 추가
+  selectedBox.classList.add('selected');
+
+  for (let i = 0; i < colorData.length; i++) {
+    colorData[i].addEventListener('click', getColor);
+  }
+
+  async function createBoard() {
+    const title = document.getElementById('title').value;
+    const description = document.getElementById('description').value;
+    const backgroundColor = color;
+
+    // 클릭된 div의 색상 출력
+    console.log('Selected Color:', backgroundColor);
+
+    await axios({
+      method: 'POST',
+      url: '/api/boards',
+      data: {
+        boardTitle: title,
+        description,
+        backgroundColor, // 클릭된 div의 색상을 전달
+      },
+    })
+      .then((res) => {
+        alert('보드 생성 성공!');
+      })
+      .catch((error) => {
+        console.log(error);
+        throw new Error(error);
+      });
+  }
+
+  const createBtn = document.getElementById('submit');
+  createBtn.addEventListener('click', createBoard);
+  //
+</script>
