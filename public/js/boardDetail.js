@@ -5,7 +5,7 @@ async function getBoardDetail() {
   try {
     const boardDetailData = await axios.get(`/api/boards/${getBoardId}`);
     const boardDetail = boardDetailData.data.data;
-    console.log(boardDetail.backgroundColor);
+    console.log(boardDetail);
     document.querySelector('.kanban').style.backgroundColor =
       boardDetail.backgroundColor;
     document.getElementById('boardName').innerHTML =
