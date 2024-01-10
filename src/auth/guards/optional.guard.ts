@@ -4,13 +4,13 @@ import { AuthGuard } from '@nestjs/passport';
 @Injectable()
 export class LoginOrNotGuard extends AuthGuard('jwt') {
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const canActivate = await super.canActivate(context);
-    if (canActivate) {
+    try {
+      await super.canActivate(context);
       return true;
+    } catch (error) {
+      const request = context.switchToHttp().getRequest();
+      request.user = null; // 사용자가 없음
+      return true; // 인증되지 않았어도 접근을 허용
     }
-
-    const request = context.switchToHttp().getRequest();
-    request.user = null; // 사용자가 없음을 명시
-    return true; // 인증되지 않았어도 접근을 허용
   }
 }
