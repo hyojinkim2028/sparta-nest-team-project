@@ -3,8 +3,22 @@
   <%- include('../partials/head.ejs') %>
   <body>
     <%- include('../partials/loginModal.ejs') %>
+    <!--  -->
+    <%- include('../partials/inviteModal.ejs') %>
+    <!--  -->
     <%-include('../partials/header.ejs') %>
+    <%-include('../partials/updateBoardModal.ejs') %>
+    <%-include('../partials/notice.ejs') %>
     <div class="row">
+      <div class="modal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header"></div>
+          </div>
+        </div>
+      </div>
+      <!--  -->
+      <!--  -->
       <%-include('../partials/boardInfoSideBar.ejs') %>
       <!-- 🔼메인-사이드 네비 -->
       <%- include('../partials/mainBoard.ejs') %>
