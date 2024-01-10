@@ -40,120 +40,152 @@
       // ];
 
       // 조회
-      await axios
+      axios
         .get('http://localhost:3000/api/list/9')
         .then(function (response) {
           const data = response.data.data;
           // 작업 상태 배열
           const statuses = data.map((list) => list.listTitle);
 
-          // Kanban 보드 렌더링 함수 호출
-          renderKanban($('#kanban'), statuses);
+          // Kanban 보드 렌더링
+          renderKanban($('#kanban'), statuses, cardData);
+        } catch (error) {
+          console.error('에러 발생:', error);
+        }
 
-          // Kanban 보드 렌더링 함수
-          function renderKanban($container, statusList) {
-            // 각 상태에 대한 목록 렌더링
-            statusList.forEach((status) => {
-              renderList($container, status);
-            });
+        // Kanban 보드 렌더링 함수
+        function renderKanban($container, statusList, cardData) {
+          // 각 상태에 대한 목록 렌더링
+          statusList.forEach((status) => {
+            renderList($container, status, cardData);
+          });
 
-            // 가로 스크롤 및 정렬 기능 추가
-            $container.addClass('scrollable-board').dxScrollView({
-              direction: 'horizontal',
-              showScrollbar: 'always',
-            });
+          // 가로 스크롤 및 정렬 기능 추가
+          $container.addClass('scrollable-board').dxScrollView({
+            direction: 'horizontal',
+            showScrollbar: 'always',
+          });
 
-            // 목록 정렬 기능 추가
-            $container.addClass('sortable-lists').dxSortable({
-              filter: '.list',
-              itemOrientation: 'horizontal',
-              handle: '.list-title',
-              moveItemOnDrop: true,
-            });
-          }
+          // 목록 정렬 기능 추가
+          $container.addClass('sortable-lists').dxSortable({
+            filter: '.list',
+            itemOrientation: 'horizontal',
+            handle: '.list-title',
+            moveItemOnDrop: true,
+          });
+        }
 
-          // 목록 렌더링 함수
-          function renderList($container, status) {
-            // 새로운 목록 컨테이너 생성
-            const $list = $('<div>').addClass('list').appendTo($container);
+        // 목록 렌더링 함수
+        function renderList($container, status, cardData) {
+          // 새로운 목록 컨테이너 생성
+          const $list = $('<div>').addClass(`list`).appendTo($container);
 
-            // 목록 제목 렌더링
-            renderListTitle($list, status);
+          // 목록 제목 렌더링
+          renderListTitle($list, status);
 
-            // 상태에 따라 작업 필터링 및 카드 렌더링
-            const listTasks = tasks.filter(
-              (task) => task.Task_Status === status,
-            );
-            renderCards($list, listTasks);
-          }
+          // 상태에 따라 작업 필터링 및 카드 렌더링
+          const listTasks = cardData.map((card) => card);
+          console.log(listTasks);
+          renderCards($list, listTasks);
+        }
 
-          // 목록 제목 렌더링 함수
-          function renderListTitle($container, status) {
-            $('<div>')
-              .addClass('list-title')
-              .addClass('dx-theme-text-color')
-              .text(status)
-              .appendTo($container);
-          }
-        })
-        .catch(function (error) {
-          console.error('GET 요청 에러:', error);
-        });
+        // 목록 제목 렌더링 함수
+        function renderListTitle($container, status) {
+          $('<div>')
+            .addClass('list-title')
+            .addClass('dx-theme-text-color')
+            .text(status)
+            .appendTo($container);
+        }
 
-      // 카드 렌더링 함수
-      function renderCards($container, tasks) {
-        // 스크롤 가능한 컨테이너 및 카드 컨테이너 생성
-        const $scroll = $('<div>').appendTo($container);
-        const $items = $('<div>').appendTo($scroll);
+        // 카드 렌더링 함수
+        function renderCards($container, tasks) {
+          // 스크롤 가능한 컨테이너 및 카드 컨테이너 생성
+          const $scroll = $('<div>').appendTo($container);
+          const $items = $('<div>').appendTo($scroll);
 
-        // 각 작업에 대한 카드 렌더링
-        tasks.forEach((task) => {
-          renderCard($items, task);
-        });
+          // 각 작업에 대한 카드 렌더링
+          tasks.forEach((task) => {
+            renderCard($items, task);
+          });
 
-        // 세로 스크롤 및 정렬 기능 추가
-        $scroll.addClass('scrollable-list').dxScrollView({
-          direction: 'vertical',
-          showScrollbar: 'always',
-        });
+          // 세로 스크롤 및 정렬 기능 추가
+          $scroll.addClass('scrollable-list').dxScrollView({
+            direction: 'vertical',
+            showScrollbar: 'always',
+          });
 
-        // 카드 정렬 기능 추가
-        $items.addClass('sortable-cards').dxSortable({
-          group: 'tasksGroup',
-          moveItemOnDrop: true,
-        });
-      }
+          // 카드 정렬 기능 추가
+          $items.addClass('sortable-cards').dxSortable({
+            group: 'tasksGroup',
+            moveItemOnDrop: true,
+          });
+        }
 
-      // 카드 렌더링 함수
-      function renderCard($container, task) {
-        // 각 작업에 대한 카드 생성
-        const $item = $('<div>')
-          .addClass('card')
-          .addClass('dx-card')
-          .addClass('dx-theme-text-color')
-          .addClass('dx-theme-background-color')
-          .appendTo($container);
+        // 카드 렌더링 함수
+        function renderCard($container, task) {
+          // 각 작업에 대한 카드 생성
+          const $item = $('<div>')
+            .addClass('card')
+            .addClass('dx-card')
+            .addClass('dx-theme-text-color')
+            .addClass('dx-theme-background-color')
+            .appendTo($container);
 
-        // 작업에 대한 담당자 정보 검색
-        const employee = employees.filter(
-          (e) => e.ID === task.Task_Assigned_Employee_ID,
-        )[0];
-
-        // 카드에 우선 순위, 제목 및 담당자 정보 추가
-        $('<div>')
-          .addClass('card-priority')
-          .addClass(`priority-${task.Task_Priority}`)
-          .appendTo($item);
-        $('<div>')
-          .addClass('card-subject')
-          .text(task.Task_Subject)
-          .appendTo($item);
-        $('<div>')
-          .addClass('card-assignee')
-          .text(employee.Name)
-          .appendTo($item);
-      }
+          // 카드에 우선 순위, 제목 및 담당자 정보 추가
+          $('<div>')
+            .addClass('card-priority')
+            .addClass(`priority-${task.cardName}`)
+            .appendTo($item);
+          $('<div>')
+            .addClass('card-subject')
+            .text(task.cardDescription)
+            .appendTo($item);
+          $('<div>')
+            .addClass('card-assignee')
+            .text(task.writer)
+            .appendTo($item);
+        }
+      });
     });
+
+    async function fetchData(httpMethod, url) {
+      try {
+        const response = await axios[httpMethod](url);
+        return response.data;
+      } catch (error) {
+        console.error(`${httpMethod} 요청 에러:`, error);
+        throw error; // 에러를 다시 던지거나 다른 처리를 추가할 수 있습니다.
+      }
+    }
+
+    async function getList() {
+      try {
+        const listData = await fetchData(
+          'get',
+          'http://localhost:3001/api/list/9',
+        );
+        return listData.data;
+      } catch (error) {
+        // 에러 처리
+        console.error('에러 발생:', error);
+        throw error;
+      }
+    }
+
+    async function getCard() {
+      try {
+        const cardData = await fetchData(
+          'get',
+          'http://localhost:3001/api/card/list/21',
+        );
+        return cardData.data.cardList;
+      } catch (error) {
+        // 에러 처리
+        console.error('에러 발생:', error);
+        throw error;
+      }
+    }
   </script>
   <!--<script>
     $(() => {
