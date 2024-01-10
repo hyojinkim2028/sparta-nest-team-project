@@ -1,4 +1,4 @@
-@accessToken =  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzA0NzY3MjA1LCJleHAiOjE3MDQ4MTA0MDV9.2s9OB2bSoMTvRDOJBfrB4MjFtqOnnNJPXsopN-RwJTE
+@accessToken =  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzA0ODY4MjIzLCJleHAiOjE3MDQ5MTE0MjN9.707K5SDQThqrKRpB95ZV_m9Z_MmLAFC29-9zb4AXHWk
 
 ### 회원가입
 POST http://localhost:3001/api/auth/register
@@ -49,7 +49,7 @@ Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
 {
-  "boardTitle" : "done"
+  "orderList" : "[1,2,3]"
 }
 
 ### 보드 삭제
