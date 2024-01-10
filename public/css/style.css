@@ -313,7 +313,7 @@ footer {
 .list {
   border-radius: 8px;
   margin: 5px;
-  background-color: rgba(192, 192, 192, 0.4);
+  background-color: rgba(255, 255, 255, 0.6);
   display: inline-block;
   vertical-align: top;
   white-space: normal;
