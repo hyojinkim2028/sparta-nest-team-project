@@ -96,6 +96,26 @@ export class BoardsService {
     return updatedBoard;
   }
 
+  // 보드 수정
+  async updateOrderList(
+    userId: number,
+    id: number,
+    updateBoardDto: UpdateBoardDto,
+  ) {
+    const board = await this.boardsRepository.findOne({
+      where: { id },
+    });
+
+
+    const { ...data } = updateBoardDto;
+
+    const updatedBoard = this.boardsRepository.save({
+      ...board,
+      ...data,
+    });
+    return updatedBoard;
+  }
+
   async remove(userId: number, id: number) {
     const board = await this.boardsRepository.findOne({
       where: { id },
