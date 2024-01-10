@@ -45,6 +45,15 @@ export class AppController {
     };
   }
 
+  @Get('/boardModal')
+  @Page('createBoardModal')
+  async createBoardModal(@UserInfo() user: User, @Req() req) {
+    return {
+      message:
+        '평범한 회원가입페이지입니다. 평범하지 않은 모달이 될수도 있습니다.',
+    };
+  }
+
   @Get('/test')
   @Page('dragdrop_test')
   async DragAndDrop() {

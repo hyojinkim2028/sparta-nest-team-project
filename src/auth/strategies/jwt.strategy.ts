@@ -5,18 +5,28 @@ import { ConfigService } from '@nestjs/config';
 import { JwtPayLoad } from '../interfaces/jwt-payload.interface';
 import _ from 'lodash';
 import { AuthService } from '../auth.service';
+import { Request } from 'express';
 
 @Injectable()
-export class jwtStrategy extends PassportStrategy(Strategy) {
+export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
     private configService: ConfigService,
     private readonly authService: AuthService,
   ) {
     super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      jwtFromRequest: ExtractJwt.fromExtractors([
+        JwtStrategy.extractJWT,
+        ExtractJwt.fromAuthHeaderAsBearerToken(),
+      ]),
       ignoreExpiration: false,
       secretOrKey: configService.get<string>('JWT_SECRET'),
+
     });
+  }
+
+  private static extractJWT(request: any): string | null {
+    console.log(request.cookies);
+    return request?.cookies?.Authentication?.accessToken;
   }
 
   async validate(payload: JwtPayLoad) {
@@ -26,7 +36,5 @@ export class jwtStrategy extends PassportStrategy(Strategy) {
     }
     console.log('jwt findUser', findUser);
     return findUser;
-
-    // return payload;
   }
 }
