@@ -20,7 +20,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       ]),
       ignoreExpiration: false,
       secretOrKey: configService.get<string>('JWT_SECRET'),
-
     });
   }
 
@@ -31,6 +30,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   async validate(payload: JwtPayLoad) {
     const findUser = await this.authService.findByUserId(payload.id);
+    console.log('jwt stratrgy에서 validate 작동');
+
     if (_.isNil(findUser)) {
       throw new NotFoundException('해당되는 사용자를 찾을 수 없습니다.');
     }
