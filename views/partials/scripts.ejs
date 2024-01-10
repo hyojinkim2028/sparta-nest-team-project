@@ -8,14 +8,14 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script>
+  // 로그인 엑시오스
   document.addEventListener('DOMContentLoaded', function () {
     let loginFormModalBody = document.querySelector('#loginFormModalBody');
     loginFormModalBody.addEventListener('submit', (e) => {
       e.preventDefault();
-      console.log('Form submission prevented.');
-
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
+      let user;
       try {
         let response = axios
           .post('/api/auth/login', {
@@ -24,6 +24,39 @@
           })
           .then(function (response) {
             console.log(response);
+            user;
+            console.log('로그인 되었습니다.');
+            // location.href = '/api/home';
+          })
+          .catch(function (error) {});
+      } catch (err) {
+        console.error('로그인 에러:', err);
+      }
+    });
+  });
+  // 회원가입 엑시오스
+  document.addEventListener('DOMContentLoaded', function () {
+    let registerFromBody = document.querySelector('#registerFrom');
+    registerFromBody.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('regEmail').value;
+      const password = document.getElementById('regPassword').value;
+      const passwordConfirm = document.getElementById('passwordConfirm').value;
+      let user;
+      try {
+        let response = axios
+          .post('/api/auth/register', {
+            name: name,
+            email: email,
+            password: password,
+            passwordConfirm: passwordConfirm,
+          })
+          .then(function (response) {
+            console.log(response);
+            user;
+            console.log('가입 되었습니다.');
             // location.href = '/api/home';
           })
           .catch(function (error) {});
@@ -34,8 +67,8 @@
   });
 </script>
 <script>
-    // 효진
-    let color = '#7fffd4';
+  // 효진
+  let color = '#7fffd4';
   const colorData = document.getElementsByClassName('square');
   let selectedBox = colorData[0]; // 첫번째 박스가 디폴트로 선택됨
 

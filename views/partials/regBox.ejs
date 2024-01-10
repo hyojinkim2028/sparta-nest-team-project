@@ -1,4 +1,4 @@
-<form class="regForm" method="post" action="/api/auth/register">
+<form class="regForm" id="registerFrom">
   <p class="regLable">이름</p>
   <input
     class="input-group-text"
@@ -14,7 +14,7 @@
   <input
     class="input-group-text"
     type="email"
-    id="email"
+    id="regEmail"
     name="email"
     placeholder="이메일을 입력해주세요."
     value="example@example.com"
@@ -25,6 +25,7 @@
   <input
     class="input-group-text"
     type="password"
+    id="regPassword"
     name="password"
     value="123123"
     required
@@ -34,6 +35,7 @@
   <input
     class="input-group-text"
     type="password"
+    id="passwordConfirm"
     name="passwordConfirm"
     value="123123"
     required
@@ -42,6 +44,7 @@
   <button
     class="btn btn-secondary btn-sm input-group-text regSubmit"
     type="submit"
+    id="regSubmitBtn"
   >
     회원가입
   </button>

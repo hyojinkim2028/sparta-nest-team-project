@@ -1,243 +1,92 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- <script defer src="../../public/js/boardCreateModal.js"></script> -->
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script
-      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"
-    ></script>
-    <title>모달 창 예제</title>
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        background-color: #ffc107;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-      }
-
-      .box {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 600px;
-        height: 800px;
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-        padding: 20px;
-        box-sizing: border-box;
-      }
-
-      /* 모달 창 내용 스타일링을 위한 예제 스타일 */
-      h2 {
-        font-size: 3rem;
-        color: #333;
-        margin-bottom: 40px;
-      }
-
-      p {
-        font-size: 1.3rem;
-        font-weight: 600;
-      }
-
-      .board-info {
-        width: 90%;
-        height: 300px;
-      }
-
-      .input-container {
-        width: 100%;
-        margin-bottom: 10px;
-      }
-
-      label {
-        display: block;
-        margin-bottom: 5px;
-        color: #333;
-      }
-
-      input {
-        width: 100%;
-        height: 50px;
-        padding: 8px;
-        box-sizing: border-box;
-        border: 1px solid #ccc;
-        border-radius: 10px;
-        font-size: 1.5rem;
-        padding-left: 15px;
-      }
-
-      .colorBox-container {
-        width: 100%;
-        height: 300px;
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-        padding: 20px;
-        box-sizing: border-box;
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: repeat(2, 1fr);
-        gap: 3%;
-      }
-
-      /* 8개의 정사각형 div */
-      .square {
-        width: 100%;
-        height: 100%;
-        background-color: #ddd;
-        border-radius: 10px;
-      }
-
-      .selected {
-        border: 2px solid black;
-      }
-
-      .submit {
-        margin-top: 30px;
-        width: 300px;
-        height: 100px;
-      }
-
-      .submit-btn {
-        width: 100%;
-        height: 100%;
-        background-color: #333;
-        border-radius: 10px;
-        color: white;
-        font-size: 2rem;
-        font-weight: 700;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="box">
-      <h2>CREATE BOARD</h2>
-
-      <div class="input-container">
-        <label for="input1"><p>BOARD TITLE</p></label>
-        <input type="text" id="title" name="input1" />
+<div
+  class="createBoardBox modal mpdal-backdrop fade"
+  id="boardCreateModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+  style="z-index: 1051; padding: 30px"
+>
+  <div class="modal-dialog">
+    <div class="modal-content" style="padding: 20px">
+      <div class="modal-header">
+        <h2 class="modal-title-board" id="exampleModalLabel">CREATE BOARD</h2>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
+      <div class="input-container modal-body">
+        <label class="board-create-label" for="input1"
+          ><p class="boardCreateValues">BOARD TITLE</p></label
+        >
+        <input
+          class="board-create-input"
+          type="text"
+          id="title"
+          name="input1"
+        />
+        <label for="input2"><p class="boardCreateValues">DESCRIPTION</p></label>
+        <input
+          class="board-create-input"
+          type="text"
+          id="description"
+          name="input2"
+        />
 
-      <div class="input-container">
-        <label for="input2"><p>DESCRIPTION</p></label>
-        <input type="text" id="description" name="input2" />
-      </div>
-
-      <div class="input-container">
-        <label for="input2"><p>BACKGROUND COLOR</p></label>
-      </div>
-
-      <div class="colorBox-container">
-        <!-- 8개의 정사각형 div -->
-        <div
-          class="square"
-          style="background-color: #7fffd4"
-          data-color="#7fffd4"
-        ></div>
-        <div
-          class="square"
-          style="background-color: thistle"
-          data-color="navajowhite"
-        ></div>
-        <div
-          class="square"
-          style="background-color: navajowhite"
-          data-color="navajowhite"
-        ></div>
-        <div
-          class="square"
-          style="background-color: forestgreen"
-          data-color="forestgreen"
-        ></div>
-        <div
-          class="square"
-          style="background-color: lightslategray"
-          data-color="lightslategray"
-        ></div>
-        <div
-          class="square"
-          style="background-color: #ffc107"
-          data-color="#ffc107"
-        ></div>
-        <div
-          class="square"
-          style="background-color: tomato"
-          data-color="tomato"
-        ></div>
-        <div
-          class="square"
-          style="background-color: rgb(113, 24, 171)"
-          data-color="rgb(113, 24, 171)"
-        ></div>
+        <div class="board-input-container">
+          <label for="input2" class="board-create-label"
+            ><p class="boardCreateValues">BACKGROUND COLOR</p></label
+          >
+          <div class="colorBox-container">
+            <!-- 8개의 정사각형 div -->
+            <div
+              class="square"
+              style="background-color: #7fffd4"
+              data-color="#7fffd4"
+            ></div>
+            <div
+              class="square"
+              style="background-color: thistle"
+              data-color="navajowhite"
+            ></div>
+            <div
+              class="square"
+              style="background-color: navajowhite"
+              data-color="navajowhite"
+            ></div>
+            <div
+              class="square"
+              style="background-color: forestgreen"
+              data-color="forestgreen"
+            ></div>
+            <div
+              class="square"
+              style="background-color: lightslategray"
+              data-color="lightslategray"
+            ></div>
+            <div
+              class="square"
+              style="background-color: #ffc107"
+              data-color="#ffc107"
+            ></div>
+            <div
+              class="square"
+              style="background-color: tomato"
+              data-color="tomato"
+            ></div>
+            <div
+              class="square"
+              style="background-color: rgb(113, 24, 171)"
+              data-color="rgb(113, 24, 171)"
+            ></div>
+          </div>
+          <div class="boardSubmitBtn justify-items-center">
+            <button class="submit-btn text-center" id="submit">CREATE!</button>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="submit">
-      <button class="submit-btn" id="submit">CREATE!</button>
-    </div>
-    <script>
-      // let color = '#7fffd4';
-      // const colorData = document.getElementsByClassName('square');
-      // let selectedBox = colorData[0]; // 첫번째 박스가 디폴트로 선택됨
-
-      // // 클릭된 div의 색상을 저장하고 선택된 클래스를 관리하는 함수
-      // function getColor(event) {
-      //   color = event.currentTarget.getAttribute('data-color');
-
-      //   // 기존에 선택된 박스가 있으면 선택 클래스 제거
-      //   if (selectedBox) {
-      //     selectedBox.classList.remove('selected');
-      //   }
-
-      //   // 현재 클릭된 박스에 선택 클래스 추가
-      //   event.currentTarget.classList.add('selected');
-      //   selectedBox = event.currentTarget;
-      // }
-
-      // // 초기 선택된 박스에 디폴트로 selected 클래스 추가
-      // selectedBox.classList.add('selected');
-
-      // for (let i = 0; i < colorData.length; i++) {
-      //   colorData[i].addEventListener('click', getColor);
-      // }
-
-      // async function createBoard() {
-      //   const title = document.getElementById('title').value;
-      //   const description = document.getElementById('description').value;
-      //   const backgroundColor = color;
-
-      //   // 클릭된 div의 색상 출력
-      //   console.log('Selected Color:', backgroundColor);
-
-      //   await axios({
-      //     method: 'POST',
-      //     url: '/api/boards',
-      //     data: {
-      //       boardTitle: title,
-      //       description,
-      //       backgroundColor, // 클릭된 div의 색상을 전달
-      //     },
-      //   })
-      //     .then((res) => {
-      //       alert('보드 생성 성공!');
-      //     })
-      //     .catch((error) => {
-      //       console.log(error);
-      //       throw new Error(error);
-      //     });
-      // }
-
-      // const createBtn = document.getElementById('submit');
-      // createBtn.addEventListener('click', createBoard);
-    </script>
-  </body>
-</html>
+  </div>
+</div>
