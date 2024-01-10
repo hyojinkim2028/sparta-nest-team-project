@@ -24,7 +24,6 @@ export class UserController {
    * @returns
    */
   @ApiBearerAuth()
-  // @Page('myInfo')
   @UseGuards(AuthGuard('jwt'))
   @Get('info')
   async myInfo(@Request() req) {

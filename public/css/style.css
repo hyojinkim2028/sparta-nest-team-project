@@ -337,3 +337,7 @@ footer {
 }
 
 /* 칸반보드 e */
+
+.input-group-text {
+  width: 100%;
+}
