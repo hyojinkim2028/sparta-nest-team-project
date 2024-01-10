@@ -19,10 +19,15 @@
   padding: 20px;
   box-sizing: border-box;
   border-radius: 15px;
-  width: 400px;
+  width: 500px;
   margin: 15px;
-  cursor: move;
+  cursor: pointer;
 }
+
+.boardOne:hover {
+  color: gray;
+}
+
 .boardOne-title {
   margin-bottom: 10px;
   font-size: 25px;

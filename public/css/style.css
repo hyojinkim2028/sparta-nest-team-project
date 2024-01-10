@@ -386,3 +386,63 @@ footer {
 .input-group-text {
   width: 100%;
 }
+
+.sideBarTitle {
+  color: white;
+  margin-left: 20px;
+  font-size: 25px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.ownerBoardUl,
+.invitedBoardUl {
+  font-size: 20px;
+  font-weight: 600;
+  height: 50%;
+}
+
+.sideBar-ul {
+  height: 80%;
+}
+
+.boardOne {
+  background: rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 15px;
+  width: 400px;
+  margin: 15px;
+  cursor: pointer;
+}
+
+.boardOne:hover {
+  background-color: rgba(233, 231, 231, 0.66);
+}
+
+.boardOne:active {
+  border: 5px solid rgba(0, 0, 0, 0.521);
+}
+
+.board-btns {
+  margin-left: auto;
+  margin-right: auto;
+  /* margin-top: 30px; */
+  padding: 10px;
+  width: 100%;
+  height: 80px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.board-update-btn,
+.board-delete-btn {
+  background-color: #ffc107;
+  width: 48%;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  color: black;
+  font-size: 1rem;
+  font-weight: 600;
+}

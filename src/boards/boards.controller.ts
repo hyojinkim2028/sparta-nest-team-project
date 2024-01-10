@@ -55,7 +55,7 @@ export class BoardsController {
   @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))
   @Get()
-  @Render('boardList')
+  // @Render('boardList')
   async findAllBoards(@Request() req) {
     const userId = req.user.id;
     const data = await this.boardsService.findAll(userId);

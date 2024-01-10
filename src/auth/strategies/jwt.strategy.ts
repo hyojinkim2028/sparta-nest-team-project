@@ -24,10 +24,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   private static extractJWT(request: any): string | null {
-    console.log('request', request);
-    const result = request?.cookies?.Authorization;
-    console.log('===>', result);
-    return result;
+    return request?.cookies?.Authorization;
   }
 
   async validate(payload: JwtPayLoad) {
