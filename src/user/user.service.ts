@@ -74,4 +74,18 @@ export class UserService {
     await this.findOneById(id);
     await this.userRepository.softDelete({ id });
   }
+
+  //회원 이름으로 아이디 조회
+  async findOneByName(name: string): Promise<User> {
+    try {
+      console.log('name', name);
+      const findUserId = await this.userRepository.findOne({
+        where: { name },
+      });
+      console.log('findUserId서비스', findUserId);
+      return findUserId;
+    } catch (err) {
+      console.log(err);
+    }
+  }
 }
