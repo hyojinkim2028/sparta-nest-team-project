@@ -3,29 +3,32 @@
   style="width: 280px; height: 100vh"
 >
   <div style="margin-left: 15px">
-    <a
-      href="/"
+    <div
       class="d-flex align-items-center mb-4 mb-md-0 me-md-auto text-white text-decoration-none"
     >
       <i class="fa-solid fa-plus fa-xl fa-fw"></i>
-      <span class="fs-4">&nbsp;보드 생성</span>
-    </a>
-
+      <span
+        class="fs-4"
+        data-bs-toggle="modal"
+        data-bs-target="#boardCreateModal"
+        >&nbsp;보드 생성</span
+      >
+    </div>
   </div>
   <hr />
-  <ul class="nav nav-pills flex-column mb-auto" style="margin-left: 15px">
-    <!-- 보드 리스트 foreach로 리스트 불러오기-->
-    <li>
-      <a href="#" class="nav-link text-white align-items-center">
-        <i
-          class="fa-solid fa-square-full fa-lg fa-fw"
-          style="color: #ffc107"
-        ></i>
-        <span>&nbsp;&nbsp;보드1</span>
-      </a>
-    </li>
-    <!-- 보드리스트 끝 -->
+  <ul
+    class="nav nav-pills flex-column mb-auto ownerBoardUl"
+    style="margin-left: 15px"
+  >
+    <div class="sideBarTitle">My Board</div>
+    <!-- 본인 생성 보드 리스트 foreach로 리스트 불러오기-->
   </ul>
-  <ul></ul>
+  <ul
+    class="nav nav-pills flex-column mb-auto invitedBoardUl"
+    style="margin-left: 15px"
+  >
+    <div class="sideBarTitle">Invited Board</div>
+    <!-- 초대된 보드리스트 끝 -->
+  </ul>
 </div>
 <div class="sidebar-back"></div>
