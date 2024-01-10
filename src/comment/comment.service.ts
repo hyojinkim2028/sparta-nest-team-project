@@ -29,7 +29,7 @@ export class CommentService {
   async findAll(cardId: number) {
     const comments = await this.commentRepository.find({
       where: { card_id: cardId, deleted_at: null },
-      select: ['card_id', 'id', 'user_id', 'content', 'created_at' ],
+      select: ['card_id', 'id', 'user_id', 'content', 'updated_at' ],
     });
     for (const comment of comments) {
       const userName = await this.userRepository.find({
