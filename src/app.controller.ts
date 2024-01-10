@@ -10,8 +10,8 @@ import { AuthGuard } from '@nestjs/passport';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  // @UseGuards(LoginOrNotGuard)
-  // @UseGuards(AuthGuard('jwt'))
+  @UseGuards(LoginOrNotGuard)
+  @UseGuards(AuthGuard('jwt'))
   @Get('home')
   @Page('main')
   async hello(@UserInfo() user: User) {

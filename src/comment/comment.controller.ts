@@ -55,8 +55,13 @@ export class CommentController {
   @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))
   @Get(':cardId/comments')
-  findAll(@Param('cardId') cardId: number) {
-    return this.commentService.findAll(+cardId);
+  async findAll(@Param('cardId') cardId: number) {
+    const data = await this.commentService.findAll(+cardId);
+    return {
+      statusCode: HttpStatus.FOUND,
+      message: '댓글 조회에 성공했습니다',
+      data,
+    };
   }
 
   /**
@@ -68,11 +73,16 @@ export class CommentController {
   @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))
   @Get(':cardId/comments/:commentId')
-  findOne(
+  async findOne(
     @Param('cardId') cardId: number,
     @Param('commentId') commentId: number,
   ) {
-    return this.commentService.findOne(+cardId, +commentId);
+    const data = await this.commentService.findOne(+cardId, +commentId);
+    return {
+      statusCode: HttpStatus.FOUND,
+      message: '댓글 상세 조회에 성공했습니다',
+      data,
+    };
   }
 
   /**

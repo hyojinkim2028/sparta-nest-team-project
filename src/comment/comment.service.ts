@@ -4,11 +4,13 @@ import { UpdateCommentDto } from './dto/update-comment.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Comment } from './entities/comment.entity';
 import { Repository } from 'typeorm';
+import { User } from 'src/user/entities/user.entity';
 
 @Injectable()
 export class CommentService {
   constructor(
     @InjectRepository(Comment) private commentRepository: Repository<Comment>,
+    @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
 
   async create(
@@ -25,10 +27,19 @@ export class CommentService {
   }
 
   async findAll(cardId: number) {
-    return await this.commentRepository.find({
+    const comments = await this.commentRepository.find({
       where: { card_id: cardId, deleted_at: null },
-      select: ['card_id', 'id', 'user_id', 'content'],
+      select: ['card_id', 'id', 'user_id', 'content', 'created_at' ],
     });
+    for (const comment of comments) {
+      const userName = await this.userRepository.find({
+        where: { id: comment.user_id, deletedAt: null },
+        select: ['name'],
+      });
+      comment["userName"]= userName[0].name;
+    }
+
+    return comments;
   }
 
   async findOne(cardId: number, commentId: number) {
