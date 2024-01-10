@@ -160,6 +160,153 @@ footer {
   color: black;
 }
 
+/* 카드 상세 */
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.leftText {
+  margin-top: 10px;
+  margin-right: auto;
+}
+.inLeftText {
+  margin-top: 5px;
+  margin-right: auto;
+  padding-left: 33px;
+}
+
+.marginTop30 {
+  margin-top: 30px;
+}
+.inLeftTextArea {
+  padding-left: 33px;
+  margin-top: 7px;
+}
+.rightBtn {
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+.column {
+  display: flex;
+  flex-direction: column;
+  width: 1000px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.modalSize {
+  height: auto;
+  width: 1000px;
+  /*width: 150%;*/
+}
+.descriptionText {
+  height: 200px;
+}
+.border {
+  border-top: 1px transparent;
+  border-left: 1px transparent;
+  border-right: 1px transparent;
+
+  border-bottom: 1px solid gainsboro;
+}
+.eraseLine {
+  border: 1px solid transparent;
+}
+.grey {
+  color: grey;
+}
+.commentsInput {
+  margin-bottom: 30px;
+}
+.commentsInfo {
+  font-size: 12px;
+  color: grey;
+  /* margin-bottom: 2px; */
+}
+.comments {
+  margin: 0px 0px 18px 0px;
+  padding-left: 13px;
+}
+.commentsAndBtn {
+  display: flex;
+  flex-direction: row;
+}
+.cardTitleInput {
+  padding: 10px;
+  font-size: 25px;
+  border-top: transparent;
+  border-left: transparent;
+  border-right: transparent;
+  outline: none;
+}
+.dropdown-item:hover {
+  background-color: inherit;
+}
+.right {
+  margin-left: auto;
+  padding: 20px;
+}
+
+.cardDetailTop {
+  background-color: #44abb8;
+  /* background-color: #4c6b1e; */
+  border-radius: 16px 16px 0 0;
+  height: 80px;
+  padding: 20px;
+}
+
+.round {
+  border-radius: 20px;
+}
+
+.small {
+  font-size: 15px;
+}
+
+.boled {
+  font-weight: bolder;
+}
+
+.mainModal {
+  width: 100%;
+  margin-right: auto;
+  padding: 30px;
+}
+
+/*.sideModal {
+  width: 35%;
+  margin-left: auto;
+  padding: 30px;
+}*/
+
+.searchInput {
+  margin-left: 32px;
+  /*font-weight: lighter;*/
+  width: 200px;
+}
+
+.dropdown {
+  margin-right: auto;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+}
+#choiceBackgroundColor {
+  width: 269px;
+  /*width: 187px;*/
+}
+.commentsDelete {
+  margin-left: auto;
+  float: right;
+}
+/*카드 상세 e*/
+
 /* 칸반보드 s */
 #kanban {
   white-space: nowrap;
@@ -168,7 +315,7 @@ footer {
 .list {
   border-radius: 8px;
   margin: 5px;
-  background-color: rgba(192, 192, 192, 0.4);
+  background-color: rgba(255, 255, 255, 0.6);
   display: inline-block;
   vertical-align: top;
   white-space: normal;
