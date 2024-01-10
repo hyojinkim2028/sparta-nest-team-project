@@ -1,4 +1,69 @@
-<p id="userId"><%= data.id %></p>
-<p id="userName">유저 이름</p>
-<p id="userEmail">이메일</p>
-<p id="createdAt">가입일</p>
+<h3 class="text-center">회원정보</h3>
+<p class="regLable">이름</p>
+<input
+  class="input-group-text infoDisabled"
+  type="text"
+  value="<%= user.name %>"
+  required
+  disabled
+  readonly
+/>
+<br />
+<p class="regLable">email</p>
+<input
+  class="input-group-text infoDisabled"
+  type="text"
+  value="<%= user.email %>"
+  required
+  disabled
+  readonly
+/>
+<br />
+<hr/>
+<h4 class="text-center mt-5">비밀번호 수정</h4>
+<form class=infoForm" id="infoUpdateFrom">
+  <br />
+  <p class="regLable">비밀번호</p>
+  <input
+    class="input-group-text"
+    type="text"
+    id="beforePassword"
+    name="password"
+    value="<%= user.password %>"
+    required
+  />
+  <br />
+  <p class="regLable">새 비밀번호</p>
+  <input
+    class="input-group-text"
+    type="text"
+    id="newPassword"
+    name="newPassword"
+    value="456456"
+    required
+  />
+  <br />
+  <p class="regLable">비밀번호 확인</p>
+  <input
+    class="input-group-text"
+    type="text"
+    id="passwordConfirm"
+    name="passwordConfirm"
+    value="456456"
+    required
+  />
+  <br />
+  <button
+    class="btn btn-secondary btn-sm input-group-text mt-3 infoPasswordSubmit"
+    type="submit"
+    id="regSubmitBtn"
+  >
+    비밀번호 변경
+  </button>
+</form>
+<button
+class="btn btn-danger btn-sm mt-3 input-group-text"
+id="deleteUserBtn"
+>
+회원탈퇴
+</button>

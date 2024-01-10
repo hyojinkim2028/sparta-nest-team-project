@@ -6,14 +6,8 @@
     <%-include('../partials/createBoardModal.ejs') %>
     <%-include('../partials/header.ejs') %>
     <div class="row">
-      <% if(user===null){ %>
-        <%- include('../partials/projectInfo.ejs') %>
-        
-        <% }else{ %>
-      <%-include('../partials/sideBar.ejs') %>
       <!-- 🔼메인-사이드 네비 -->
-      <%- include('../partials/boardList.ejs') %>
-      <% } %>
+      <%- include('../partials/projectInfo.ejs') %>
     </div>
     <!-- 푸터 -->
     <%-include('../partials/footer.ejs') %>

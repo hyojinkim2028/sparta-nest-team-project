@@ -1,6 +1,9 @@
 *::-webkit-scrollbar {
   display: none;
 }
+body {
+  background-color: #ffc107;
+}
 header {
   position: fixed;
   top: 0;
@@ -15,8 +18,9 @@ footer {
   bottom: 0;
   width: 100%;
   text-align: center;
+  height: 50px;
+  background-color: #ffc107;
 }
-
 .sideBar {
   position: fixed;
 }
@@ -35,7 +39,6 @@ footer {
   padding: 30px;
   width: 100%;
   height: 100vh;
-  background: #ffc107;
 }
 
 .kanban__board {
@@ -122,23 +125,22 @@ footer {
 
 .board-title {
   margin-bottom: 20px;
-  font-size: 30px;
+  font-size: 20px;
   color: black;
   user-select: none;
 }
 
 .boardOne {
-  background: rgba(0, 0, 0, 0.1);
   padding: 20px;
   box-sizing: border-box;
   border-radius: 15px;
-  width: 400px;
+  width: 250px;
   margin: 15px;
   cursor: move;
 }
 .boardOne-title {
   margin-bottom: 10px;
-  font-size: 25px;
+  font-size: 17px;
   color: black;
 }
 
@@ -243,7 +245,7 @@ footer {
 .sideBarTitle {
   color: white;
   margin-left: 20px;
-  font-size: 25px;
+  font-size: 20px;
   font-weight: 700;
   margin-bottom: 20px;
 }

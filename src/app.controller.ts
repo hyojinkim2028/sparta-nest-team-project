@@ -21,6 +21,7 @@ export class AppController {
     };
   }
 
+  @UseGuards(LoginOrNotGuard)
   @Get('/register')
   @Page('register')
   async regFront(@UserInfo() user: User) {
@@ -30,6 +31,46 @@ export class AppController {
         '평범한 회원가입페이지입니다. 평범하지 않은 모달이 될수도 있습니다. 로그인도 마찬가지',
     };
   }
+
+  @UseGuards(LoginOrNotGuard)
+  @Get('/team')
+  @Page('teamInfo')
+  async teamInfo(@UserInfo() user: User) {
+    return {
+      user,
+      message: '팀 소개',
+    };
+  }
+
+  @UseGuards(LoginOrNotGuard)
+  @Get('/code')
+  @Page('codeIntro')
+  async codeIntro(@UserInfo() user: User) {
+    return {
+      user,
+      message: '코드소개',
+    };
+  }
+
+  @UseGuards(LoginOrNotGuard)
+  @Get('/project')
+  @Page('project')
+  async projectInfo(@UserInfo() user: User) {
+    return {
+      user,
+      message: '프로젝트 소개',
+    };
+  }
+  @UseGuards(LoginOrNotGuard)
+  @Get('/plan')
+  @Page('plan')
+  async planInfo(@UserInfo() user: User) {
+    return {
+      user,
+      message: '프로젝트 플랜',
+    };
+  }
+
   @UseGuards(LoginOrNotGuard)
   @Get('/info')
   @Page('myInfo')
@@ -47,8 +88,7 @@ export class AppController {
   async boardInfo(@UserInfo() user: User, @Req() req) {
     return {
       user,
-      message:
-        '평범한 회원가입페이지입니다. 평범하지 않은 모달이 될수도 있습니다.',
+      message: '보드상세!!',
     };
   }
 
