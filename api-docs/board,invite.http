@@ -49,6 +49,15 @@ Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
 {
+  "boardTitle" : "done"
+}
+
+### 보드 리스트 수정
+PATCH  http://localhost:3001/api/boards/25/list
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
   "orderList" : "[1,2,3]"
 }
 
