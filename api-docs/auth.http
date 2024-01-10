@@ -1,5 +1,4 @@
-@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTYsImlhdCI6MTcwNDg1OTEwMCwiZXhwIjoxNzA0OTAyMzAwfQ.zDSReoSC-AUW_FHIpmfAlOQr-j7CIbzAh8hUrjyhCso
-
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEsImlhdCI6MTcwNDg3MzQ2MywiZXhwIjoxNzA0OTE2NjYzfQ.ouc8KZNr1dBdO1SMSuRYOnydJG3p6ZC_-1tsqyIE97E
 ### 회원가입
 POST http://localhost:3001/api/auth/register
 Content-Type: application/json
