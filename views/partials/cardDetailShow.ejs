@@ -15,6 +15,10 @@
   카드 상세보기
 </button>
 
+<!--//카드 데이터 생성은  +add눌러서 
+//카드 데이터 조회는 카드 눌러서 _ 카드 버튼을 누르면 모달 (저장된거 나옴)
+//카드 번호를 클릭이벤트로 가져옴 그것에 해당하는 데이터 뿌려주기.-->
+
 
 <div class="modal fade"   id="exampleModal_cardDetail_1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog flex">
@@ -24,7 +28,7 @@
       <div class="modal-header column eraseLine mainModal" >
         <h4 class="leftText boled modal-title fs-5j" id="exampleModalLabel">
           <i class="fa-regular fa-rectangle-list" style="color: #b7bdc8;"></i> 
-          <input type="text" placeholder="카드 제목을 적어주세요" class = "cardTitleInput" id="cardTitleInput"/>
+          <div class = "cardTitleInput" id="cardTitleInput"></div>
         </h4>
         <p class = "inLeftText grey small">list: 속해있는 리스트 이름이 들어갑니다.</p>
         <div class="dropdown">
@@ -51,22 +55,19 @@
       </div>
 
       <div class="modal-body mainModal" >
-        <form>
           <div class="input-group rounded marginTop30" id="serarchmembersInput" data-mdb-input-init>
             <label for="message-text" class="col-form-label boled" style="width: 100%;">
               <i class="fa-solid fa-audio-description" style="color: #b7bdc8;"></i> 
               공개할 멤버
             </label>
             <div class="row">
-              <input
-                type="search"
+              <div type="search"
                 class="form-control rounded searchInput"
                 id="availableMembers"
-                placeholder="접근 가능한 멤버를 입력후 검색버튼을 눌러주세요."
-                aria-label="Search"
-                aria-describedby="search-addon"
-                style="width: 75%;"
-              />
+                style="width: 75%;">
+                
+              </div>
+              
 
               <span class="input-group-text border-0 searchInput" id="membersSearchBtn" style="width: 20%; color: #6e6e6e; display: flex; text-align: center; align-items: center; justify-content: center; margin-left: auto;">
                 <button type="button" class="btn btn-light" id="availableMemberBtn">
@@ -82,15 +83,12 @@
               담당자
             </label>
             <div class="row">
-              <input
+              <div
                 type="search"
                 class="form-control rounded searchInput"
                 id="workers"
-                placeholder="해당 업무를 담당할 멤버를 입력해주세요."
-                aria-label="Search"
-                aria-describedby="search-addon"
                 style="width: 75%;"
-              />
+              ></div>
 
               <span class="input-group-text border-0 searchInput" id="workersSearchBtn" style="width: 20%; color: #6e6e6e; display: flex; text-align: center; align-items: center; justify-content: center; margin-left: auto;">
                 <button type="button" class="btn btn-light">
@@ -106,33 +104,24 @@
               기간
             </label>
             <div class="row">
-              <input
+              <div
                 type="search"
                 class="form-control rounded searchInput"
                 id="startDate"
-                placeholder="시작 날짜 ex) 20240110"
-                aria-label="Search"
-                aria-describedby="search-addon"
                 style="width: 22.6%;"
-              />
-              <input
+              ></div>
+              <div
                 type="search"
                 class="form-control rounded searchInput"
                 id="endDate"
-                placeholder="마감 날짜  ex) 20240220"
-                aria-label="Search"
-                aria-describedby="search-addon"
                 style="width: 22.6%;"
-              />
-              <input
+              ></div>
+              <div
                 type="search"
                 class="form-control rounded searchInput"
                 id="endTime"
-                placeholder="마감 시간  ex) 18:00"
-                aria-label="Search"
-                aria-describedby="search-addon"
                 style="width: 22.6%;"
-              />
+              /></div>
               <span class="input-group-text border-0 searchInput" id="datesSearchBtn" style="width: 20%; color: #6e6e6e; display: flex; text-align: center; align-items: center; justify-content: center; margin-left: auto;">
                 <button type="button" class="btn btn-light" style="font-weight: bolder;" id="dateSaveBtn">
                   저장
@@ -147,7 +136,7 @@
               설명
             </label>
             <div class="inLeftTextArea">
-              <textarea class="form-control descriptionText" id="cardDescription" placeholder="상세 설명을 적어주세요."></textarea>
+              <div class="form-control descriptionText" id="cardDescription"></div>
             </div>
           </div>
           <div class="col-mb-3 marginTop30">
@@ -172,14 +161,12 @@
                 </div>
               </div>
             </div>
-          </div>
-        </form>      
+          </div>  
       </div>
   
       <div class="modal-footer eraseLine rightBtn">
         <button type="button" class="btn btn-light" data-bs-dismiss="modal">취소</button>
-        <!--<button type="button" class="btn btn-secondary">수정</button>-->
-        <button type="button" class="btn btn-primary" id="saveCardDetail">저장</button>
+        <button type="button" class="btn btn-secondary">수정</button>
       </div>
     </div>
   </div>
