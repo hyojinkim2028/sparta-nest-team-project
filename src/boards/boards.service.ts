@@ -52,7 +52,7 @@ export class BoardsService {
           id: userId,
         },
       },
-      select: ['boardTitle'],
+      select: ['id', 'boardTitle','backgroundColor'],
     });
 
     // 초대 승락하여 조인한 보드
@@ -65,7 +65,10 @@ export class BoardsService {
       },
       relations: ['board'],
     });
-    return [...boards, ...invitedList];
+    return {
+      board : boards,
+      invite : invitedList
+    };
   }
 
   // 보드 상세조회
@@ -105,7 +108,6 @@ export class BoardsService {
     const board = await this.boardsRepository.findOne({
       where: { id },
     });
-
 
     const { ...data } = updateBoardDto;
 
