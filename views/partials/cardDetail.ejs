@@ -7,10 +7,11 @@
 
 <button
   type="button"
-  class="btn btn-primary"
+  class="btn btn-primary card-btn"
   data-bs-toggle="modal"
   data-bs-target="#exampleModal_cardDetail_1"
   data-bs-whatever="@cardDetail"
+  data-card-id="0"
 >
   카드 상세보기
 </button>
@@ -150,29 +151,22 @@
             </label>
             <div class="inLeftTextArea">
               <input type="text" class="form-control commentsInput" id="recipient-name" placeholder="댓글을 적어주세요.">
-              <div class="comments">
+
+              <!--<div class="comments">
                 <div class="commentsInfo"><b>@유빌리</b> <span>19:18:00</span></div>
                 <div class="commentsAndBtn">
                   <div style="width: 70%;">트렐로뤨로뤠에에히이일로오오오 </div> 
                   <button type="button" class="commentsDelete btn btn-light"  style="width: 7%; margin-left: auto;">삭제</button>
-                </div>
-              </div>
-              <div class="comments">
-                <div class="commentsInfo"><b>@김두리</b> <span>21:18:00</span></div>
-                <div class="commentsAndBtn">
-                  <div style="width: 70%;">요들레이히이 트렐로가 아니라 일렐로가 더 좋네요~ </div> 
-                  <button type="button" class="commentsDelete btn btn-light"  style="width: 7%; margin-left: auto;">삭제</button>
-                </div>
+                </div>-->
+
               </div>
             </div>
           </div>
-        </form>      
-      </div>
-  
-      <div class="modal-footer eraseLine rightBtn">
-        <button type="button" class="btn btn-light" data-bs-dismiss="modal">취소</button>
-        <button type="button" class="btn btn-secondary">수정</button>
-        <button type="button" class="btn btn-primary">저장</button>
+          <div class="modal-footer eraseLine rightBtn">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+            <button type="button-submit" class="btn btn-primary" id="submit-comment" data-card-id="0" >저장</button>
+          </div> 
+        </form>    
       </div>
     </div>
   </div>
