@@ -14,7 +14,7 @@
         class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"
       >
         <li>
-          <a href="project_info" class="nav-link text-white">프로젝트 소개</a>
+          <a href="/api/project_info" class="nav-link text-white">프로젝트 소개</a>
         </li>
         <li><a href="#" class="nav-link text-white">팀 소개</a></li>
         <li><a href="#" class="nav-link text-white">플랜</a></li>
@@ -22,12 +22,14 @@
       </ul>
 
       <div class="text-end">
+        <% if(user===null){ %>
         <button type="button" class="btn btn-outline-light me-2" data-bs-toggle="modal" data-bs-target="#loginModal">로그인</button>
         <button type="button" class="btn btn-warning" onclick="location.href= '/api/register'">회원가입</button>
-        <!-- 로그인 했을때 -->
+        <% }else{ %>
           <button type="button" class="btn btn-outline-light me-2">로그아웃</button>
-          <button type="button" class="btn btn-warning" onclick="location.href= '/api/user/userId'">내정보</button>
-      </div>
+          <button type="button" class="btn btn-warning" onclick="location.href= '/api/user/info'">내정보</button>
+        <% } %>
+        </div>
   </div>
 </header>
 <div style="height: 80px"></div>
