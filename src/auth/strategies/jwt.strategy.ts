@@ -24,10 +24,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   private static extractJWT(request: any): string | null {
-<<<<<<< HEAD
-    console.log(request.cookies);
-=======
->>>>>>> 22418add9555af5202f0a41b94e17ce20f454ad2
     return request?.cookies?.Authorization;
   }
 
