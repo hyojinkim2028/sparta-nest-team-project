@@ -9,9 +9,9 @@ Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
 {
-  "cardName": "카드 이름0123",
+  "cardName": "카드 이름111",
   "cardDescription": "카드 상세내용",    
-  "allowMembers": [8,9,10],
+  "allowMembers": [8,9,10, 11],
   "workers": [8,9],
   "cardColor": "red",
   "startDate": "2024-03-28",
