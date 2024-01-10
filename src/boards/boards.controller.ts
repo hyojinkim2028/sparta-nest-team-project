@@ -51,7 +51,7 @@ export class BoardsController {
   @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))
   @Get()
-  @Render('boardList')
+  // @Render('boardList')
   async findAllBoards(@Request() req) {
     const userId = req.user.id;
     const data = await this.boardsService.findAll(userId);
@@ -100,6 +100,30 @@ export class BoardsController {
       data,
     };
   }
+
+
+    /**
+   *
+   * @param 오더리스트 수정
+   * @returns
+   */
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard('jwt'))
+    @Patch(':id/list')
+    async updateOrderList(
+      @Request() req,
+      @Param('id') id,
+      @Body() updateBoardDto: UpdateBoardDto,
+    ) {
+      const userId = req.user.id;
+      const data = await this.boardsService.updateOrderList(userId, +id, updateBoardDto);
+      return {
+        statusCode: HttpStatus.OK,
+        message: '보드 수정에 성공했습니다!',
+        data,
+      };
+    }
+
 
   /**
    *

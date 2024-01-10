@@ -52,7 +52,7 @@ export class BoardsService {
           id: userId,
         },
       },
-      select: ['boardTitle'],
+      select: ['id', 'boardTitle','backgroundColor'],
     });
 
     // 초대 승락하여 조인한 보드
@@ -65,7 +65,10 @@ export class BoardsService {
       },
       relations: ['board'],
     });
-    return [...boards, ...invitedList];
+    return {
+      board : boards,
+      invite : invitedList
+    };
   }
 
   // 보드 상세조회
@@ -86,6 +89,25 @@ export class BoardsService {
     if (board.boardOwner !== userId) {
       throw new ForbiddenException('관리자에게 권한이 있습니다');
     }
+
+    const { ...data } = updateBoardDto;
+
+    const updatedBoard = this.boardsRepository.save({
+      ...board,
+      ...data,
+    });
+    return updatedBoard;
+  }
+
+  // 보드 수정
+  async updateOrderList(
+    userId: number,
+    id: number,
+    updateBoardDto: UpdateBoardDto,
+  ) {
+    const board = await this.boardsRepository.findOne({
+      where: { id },
+    });
 
     const { ...data } = updateBoardDto;
 

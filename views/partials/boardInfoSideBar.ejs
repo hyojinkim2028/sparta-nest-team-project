@@ -1,0 +1,40 @@
+<div
+  class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark sideBar"
+  style="width: 280px; height: 100vh"
+>
+  <div style="margin-left: 15px">
+    <div
+      class="d-flex align-items-center mb-4 mb-md-0 me-md-auto text-white text-decoration-none"
+    >
+      <i class="fa-solid fa-plus fa-xl fa-fw"></i>
+      <span
+        class="fs-4"
+        data-bs-toggle="modal"
+        data-bs-target="#boardCreateModal"
+        >&nbsp;유저 초대</span
+      >
+    </div>
+  </div>
+  <hr />
+  <div class="sideBar-ul">
+    <ul
+      class="nav nav-pills flex-column mb-auto ownerBoardUl"
+      style="margin-left: 15px"
+    >
+      <div class="sideBarTitle">My Board</div>
+      <!-- 본인 생성 보드 리스트 foreach로 리스트 불러오기-->
+    </ul>
+    <ul
+      class="nav nav-pills flex-column mb-auto invitedBoardUl"
+      style="margin-left: 15px"
+    >
+      <div class="sideBarTitle">Invited Board</div>
+      <!-- 초대된 보드리스트 끝 -->
+    </ul>
+  </div>
+  <div class="board-btns row">
+    <button class="board-update-btn">UPDATE</button>
+    <button class="board-delete-btn">DELETE</button>
+  </div>
+</div>
+<div class="sidebar-back"></div>

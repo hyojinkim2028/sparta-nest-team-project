@@ -1,4 +1,4 @@
-import { Controller, Get, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, Req, Request, UseGuards } from '@nestjs/common';
 import { AppService } from './app.service';
 import { Page } from './decorators/page.decorator';
 import { UserInfo } from './utils/userInfo.decorator';
@@ -11,12 +11,9 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @UseGuards(LoginOrNotGuard)
-  @UseGuards(AuthGuard('jwt'))
   @Get('home')
   @Page('main')
   async hello(@UserInfo() user: User) {
-    console.log('app.컨트롤러에서 user 보내는중', user);
-
     return {
       user,
       message:
@@ -26,32 +23,36 @@ export class AppController {
 
   @Get('/register')
   @Page('register')
-  async regFront(@UserInfo() user: User, @Req() req) {
+  async regFront(@UserInfo() user: User) {
     return {
+      user,
       message:
         '평범한 회원가입페이지입니다. 평범하지 않은 모달이 될수도 있습니다. 로그인도 마찬가지',
     };
   }
-
+  @UseGuards(LoginOrNotGuard)
   @Get('/info')
   @Page('myInfo')
-  async GetUserInfo(@UserInfo() user: User, @Req() req) {
+  async GetUserInfo(@UserInfo() user: User) {
     return {
+      user,
       message:
         '평범한 회원가입페이지입니다. 평범하지 않은 모달이 될수도 있습니다. 로그인도 마찬가지',
     };
   }
 
-  /**이게 맞는지 확인 필요함, 보드 리스트에서 클릭했을때 어느 주소로 가는지 확인 필요함 */
+  @UseGuards(LoginOrNotGuard)
   @Get('/board/:boardId')
   @Page('boardInfo')
   async boardInfo(@UserInfo() user: User, @Req() req) {
     return {
+      user,
       message:
         '평범한 회원가입페이지입니다. 평범하지 않은 모달이 될수도 있습니다.',
     };
   }
 
+  @UseGuards(LoginOrNotGuard)
   @Get('/boardModal')
   @Page('createBoardModal')
   async createBoardModal(@UserInfo() user: User, @Req() req) {
@@ -61,6 +62,7 @@ export class AppController {
     };
   }
 
+  @UseGuards(LoginOrNotGuard)
   @Get('/test')
   @Page('dragdrop_test')
   async DragAndDrop() {
