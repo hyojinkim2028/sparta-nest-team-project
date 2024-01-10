@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <%- include('../partials/head.ejs') %>
-  <body>
+  <body class="dx-viewport" style="background-color: #ffc107">
     <%- include('../partials/loginModal.ejs') %>
     <!--  -->
     <%- include('../partials/inviteModal.ejs') %>
@@ -19,11 +19,13 @@
       </div>
       <!--  -->
       <!--  -->
+
       <%-include('../partials/boardInfoSideBar.ejs') %>
       <!-- 🔼메인-사이드 네비 -->
-      <%- include('../partials/mainBoard.ejs') %>
-      <!-- 푸터 -->
+      <!--<%-include('../partials/dragAndDrop.ejs') %>-->
+      <%-include('./dragdrop_test.ejs') %>
     </div>
+    <!-- 푸터 -->
     <%-include('../partials/footer.ejs') %>
   </body>
   <%- include('../partials/scripts.ejs') %>

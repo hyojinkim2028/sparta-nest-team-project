@@ -1,12 +1,11 @@
-@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTYsImlhdCI6MTcwNDg1OTEwMCwiZXhwIjoxNzA0OTAyMzAwfQ.zDSReoSC-AUW_FHIpmfAlOQr-j7CIbzAh8hUrjyhCso
-
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEsImlhdCI6MTcwNDg3MzQ2MywiZXhwIjoxNzA0OTE2NjYzfQ.ouc8KZNr1dBdO1SMSuRYOnydJG3p6ZC_-1tsqyIE97E
 ### 회원가입
 POST http://localhost:3001/api/auth/register
 Content-Type: application/json
 
 {
-  "name": "사용자",
-  "email": "example@example.com",
+  "name": "율무2",
+  "email": "12examplef1231231231II2u@example.com",
   "password": "123123",
   "passwordConfirm": "123123"
 }
@@ -39,5 +38,11 @@ Authorization: Bearer {{accessToken}}
 
 ### 회원탈퇴
 PUT  http://localhost:3001/api/user/delete
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+
+### 회원이름으로 아이디
+GET http://localhost:3001/api/user?name=사용자
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
