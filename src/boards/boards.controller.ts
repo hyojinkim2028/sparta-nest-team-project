@@ -16,6 +16,7 @@ import { CreateBoardDto } from './dtos/create-board.dto';
 import { UpdateBoardDto } from './dtos/update-board.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
+import { UserInfo } from 'src/utils/userInfo.decorator';
 
 @ApiTags('보드')
 @Controller('boards')
@@ -32,9 +33,12 @@ export class BoardsController {
   @Post()
   async createBoard(
     @Request() req, //
+    //@UserInfo() user : User
     @Body() createBoardDto: CreateBoardDto, //
   ) {
     const userId = req.user.id;
+
+    //const userId = user.id;
     const data = await this.boardsService.create(userId, createBoardDto);
     return {
       statusCode: HttpStatus.CREATED,
@@ -111,7 +115,7 @@ export class BoardsController {
   @Patch(':id/list')
   async updateOrderList(
     @Request() req,
-    @Param('id') id: number,
+    @Param('id') id,
     @Body() updateBoardDto: UpdateBoardDto,
   ) {
     const userId = req.user.id;
