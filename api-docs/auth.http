@@ -1,4 +1,4 @@
-@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEsImlhdCI6MTcwNDkzNDcwMywiZXhwIjoxNzA0OTc3OTAzfQ.bhNp3TLcob8QB2PBn7ERCNSso32YnYjW8IDBGRi1hEE
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsImlhdCI6MTcwNDkzODA0NCwiZXhwIjoxNzA0OTgxMjQ0fQ.nOuQm878JIZC9s0_hWdu-q33wO-Rn-nxkR5zOcGKi3c
 ### 회원가입
 POST http://localhost:3001/api/auth/register
 Content-Type: application/json
@@ -15,7 +15,7 @@ POST http://localhost:3001/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "example@example.com",
+  "email": "example1@example.com",
 	"password":"123123"
 }
 

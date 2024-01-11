@@ -24,13 +24,12 @@
             password: password,
           })
           .then(function (response) {
-            console.log(response);
             console.log('로그인 되었습니다.');
             location.href = '/api/home';
           })
           .catch(function (error) {});
       } catch (err) {
-        console.error('로그인 에러:', err);
+        alert(err);
       }
     });
   });
@@ -147,6 +146,7 @@
       })
         .then((res) => {
           alert('보드 생성 성공!');
+          location.reload();
         })
         .catch((error) => {
           console.log(error);
@@ -176,7 +176,7 @@
         // 본인 생성보드 메인
         owner.forEach((data) => {
           let ownerBoard = `
-          <div class="boardOne col-1" data-id=${data.id} style="cursor: pointer; background: ${data.backgroundColor}99">
+          <div class="boardOne col-1" data-id=${data.id} style="cursor: pointer; background: ${data.backgroundColor}; opacity:70%">
             <div class="boardOne-title text-center">${data.boardTitle}</div>
           </div>
           `;
@@ -185,11 +185,11 @@
             .insertAdjacentHTML('beforeend', ownerBoard);
         });
 
-        // 초대된 보드 사이드바
+        // 본인 생성보드 사이드바
         owner.forEach((data) => {
           let ownerBoard = `
-          <li>
-      <div class="nav-link text-white align-items-center" data-id=${data.id}>
+          <li class="btn btn-dark" style="text-align: left; padding-left:30px">
+      <div data-id=${data.id}>
         <i
           class="fa-solid fa-square-full fa-lg fa-fw"
           style="color: ${data.backgroundColor}"
@@ -218,8 +218,8 @@
         // 초대된 보드 사이드바
         invited.forEach((data) => {
           let invitedBoard = `
-          <li>
-      <div class="nav-link text-white align-items-center" data-id=${data.board.id}>
+          <li class="btn btn-dark" style="text-align: left; padding-left:30px">
+      <div data-id=${data.board.id}>
         <i
           class="fa-solid fa-square-full fa-lg fa-fw"
           style="color: ${data.board.backgroundColor}"

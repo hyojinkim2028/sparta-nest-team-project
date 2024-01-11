@@ -10,6 +10,7 @@ header {
   left: 0;
   width: 100%;
   text-align: center;
+  z-index: 100;
 }
 
 footer {
@@ -20,9 +21,11 @@ footer {
   text-align: center;
   height: 50px;
   background-color: #ffc107;
+  z-index: 1;
 }
 .sideBar {
   position: fixed;
+  z-index: 3;
 }
 .sidebar-back {
   width: 280px;

@@ -2,24 +2,12 @@
 <html lang="en">
   <%- include('../partials/head.ejs') %>
   <body class="dx-viewport" style="background-color: #ffc107">
-    <%- include('../partials/loginModal.ejs') %>
-    <!--  -->
     <%- include('../partials/inviteModal.ejs') %>
-    <!--  -->
     <%-include('../partials/header.ejs') %>
     <%-include('../partials/updateBoardModal.ejs') %>
     <%-include('../partials/notice.ejs') %>
     <div class="row">
-      <div class="modal" tabindex="-1">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header"></div>
-          </div>
-        </div>
-      </div>
       <!--  -->
-      <!--  -->
-
       <%-include('../partials/boardInfoSideBar.ejs') %>
       <!-- 🔼메인-사이드 네비 -->
       <%-include('../partials/dragAndDrop.ejs') %>
@@ -27,123 +15,120 @@
     </div>
     <!-- 푸터 -->
     <%-include('../partials/footer.ejs') %>
-    <script>
-      const currentUrl = String(window.location.href);
-      let getBoardId = currentUrl.split('/').pop();
+  </body>
+  <script>
+    const currentUrl = String(window.location.href);
+    let getBoardId = currentUrl.split('/').pop();
 
-      async function getBoardDetail() {
-        try {
-          const boardDetailData = await axios.get(`/api/boards/${getBoardId}`);
-          const boardDetail = boardDetailData.data.data;
-          console.log(boardDetail);
-          document.querySelector('.kanban').style.backgroundColor =
-            boardDetail.backgroundColor;
-          document.getElementById('boardName').innerHTML =
-            `${boardDetail.boardTitle} _ `;
-          document.getElementById('boardDescription').innerHTML =
-            boardDetail.description;
+    async function getBoardDetail() {
+      try {
+        const boardDetailData = await axios.get(`/api/boards/${getBoardId}`);
+        const boardDetail = boardDetailData.data.data;
+        console.log(boardDetail);
+        document.querySelector('.kanban').style.backgroundColor =
+          boardDetail.backgroundColor;
+        document.querySelector('.boardName').innerHTML =
+          `${boardDetail.boardTitle} _ `;
+        document.querySelector('.boardDescription').innerHTML =
+          boardDetail.description;
 
-          const collaboratorData = await axios.get(
-            `/api/boards/${getBoardId}/invite`,
-          );
-          const collaborators = collaboratorData.data.data;
-          console.log(collaborators);
-          // 초대된 유저 사이드바
-          collaborators.forEach((data) => {
-            let collaborator = `
+        const collaboratorData = await axios.get(
+          `/api/boards/${getBoardId}/invite`,
+        );
+        const collaborators = collaboratorData.data.data;
+        console.log(collaborators);
+        // 초대된 유저 사이드바
+        collaborators.forEach((data) => {
+          let collaborator = `
                 <li>
             <div class="nav-link text-white align-items-center">
               <i style="font-size: 21px;">${data.name}</i>
             </div>
           </li>
                 `;
-            document
-              .querySelector('.invitedEmailUl')
-              .insertAdjacentHTML('beforeend', collaborator);
-          });
-
           document
-            .querySelector('.board-delete-btn')
-            .addEventListener('click', async function () {
-              try {
-                await axios.delete(`/api/boards/${getBoardId}`);
-                if (confirm('정말 삭제 하시겠습니까?')) {
-                  alert('삭제 완료!');
-                  window.location.href = 'http://localhost:3001/api/home';
-                } else {
-                  alert('취소합니다.');
-                }
-              } catch (error) {
-                console.error('Error fetching post:', error.message);
+            .querySelector('.invitedEmailUl')
+            .insertAdjacentHTML('beforeend', collaborator);
+        });
+
+        document
+          .querySelector('.board-delete-btn')
+          .addEventListener('click', async function () {
+            try {
+              await axios.delete(`/api/boards/${getBoardId}`);
+              if (confirm('정말 삭제 하시겠습니까?')) {
+                alert('삭제 완료!');
+                window.location.href = 'http://localhost:3001/api/home';
+              } else {
+                alert('취소합니다.');
               }
-            });
-        } catch (error) {
-          console.log(error);
-        }
+            } catch (error) {
+              console.error('Error fetching post:', error.message);
+            }
+          });
+      } catch (error) {
+        console.log(error);
       }
-      getBoardDetail();
+    }
+    getBoardDetail();
 
-      async function updateBoard() {
-        const title = document.getElementById('title').value;
-        const description = document.getElementById('description').value;
-        const backgroundColor = color;
+    let color = '#7fffd4';
+    const colorData = document.getElementsByClassName('square');
+    let selectedBox = colorData[0]; // 첫번째 박스가 디폴트로 선택됨
 
-        // 클릭된 div의 색상 출력
-        console.log('Selected Color:', backgroundColor);
-        try {
-          await axios({
-            method: 'PATCH',
-            url: `/api/boards/${getBoardId}`,
-            data: {
-              boardTitle: title,
-              description,
-              backgroundColor, // 클릭된 div의 색상을 전달
-            },
+    // 클릭된 div의 색상을 저장하고 선택된 클래스를 관리하는 함수
+    function getColor(event) {
+      color = event.currentTarget.getAttribute('data-color');
+
+      // 기존에 선택된 박스가 있으면 선택 클래스 제거
+      if (selectedBox) {
+        selectedBox.classList.remove('selected');
+      }
+
+      // 현재 클릭된 박스에 선택 클래스 추가
+      event.currentTarget.classList.add('selected');
+      selectedBox = event.currentTarget;
+    }
+
+    // 초기 선택된 박스에 디폴트로 selected 클래스 추가
+    selectedBox.classList.add('selected');
+
+    for (let i = 0; i < colorData.length; i++) {
+      colorData[i].addEventListener('click', getColor);
+    }
+    async function updateBoard() {
+      console.log(123123);
+      const title = document.getElementById('updateTitle').value;
+      const description = document.getElementById('updateDescription').value;
+      const backgroundColor = color;
+
+      // 클릭된 div의 색상 출력
+      console.log('Selected Color:', backgroundColor);
+      try {
+        await axios({
+          method: 'PATCH',
+          url: `/api/boards/${getBoardId}`,
+          data: {
+            boardTitle: title,
+            description,
+            backgroundColor, // 클릭된 div의 색상을 전달
+          },
+        })
+          .then((res) => {
+            alert('보드 수정 성공!');
+            location.reload();
           })
-            .then((res) => {
-              alert('보드 수정 성공!');
-              location.reload();
-            })
-            .catch((error) => {
-              console.log(error);
-              throw new Error(error);
-            });
-        } catch (error) {
-          console.log(error);
-        }
+          .catch((error) => {
+            console.log(error);
+            throw new Error(error);
+          });
+      } catch (error) {
+        console.log(error);
       }
+    }
 
-      const updateBtn = document.getElementById('updateBtn');
-      updateBtn.addEventListener('click', updateBoard);
-
-      async function createInvite() {
-        const inviteEmail = document.getElementById('inviteEmail').value;
-
-        try {
-          await axios({
-            method: 'POST',
-            url: `/api/boards/${getBoardId}/invite`,
-            data: {
-              email: inviteEmail,
-            },
-          })
-            .then((res) => {
-              alert('초대 성공!');
-              location.reload();
-            })
-            .catch((error) => {
-              alert('초대에 실패하였습니다. 이메일을 다시 확인해주세요');
-              console.log(error);
-              throw new Error(error);
-            });
-        } catch (error) {
-          console.log(error);
-        }
-      }
-
-      const inviteBtn = document.getElementById('inviteBtn');
-      inviteBtn.addEventListener('click', createInvite);
-    </script>
-  </body>
+    const updateBtn = document.getElementById('updateBtn');
+    updateBtn.addEventListener('click', updateBoard);
+  </script>
   <%- include('../partials/scripts.ejs') %>
 </html>

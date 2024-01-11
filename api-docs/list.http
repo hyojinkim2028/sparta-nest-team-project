@@ -1,10 +1,10 @@
-@accessToken =  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImlhdCI6MTcwNDcwMjAzMiwiZXhwIjoxNzA0NzQ1MjMyfQ.9Z85-g2YGokEg9BtKd93_SwE-FISTuq-ABfRak_-c1A
+@accessToken =  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsImlhdCI6MTcwNDkzODA0NCwiZXhwIjoxNzA0OTgxMjQ0fQ.nOuQm878JIZC9s0_hWdu-q33wO-Rn-nxkR5zOcGKi3c
 
 ### 리스트 생성하기
-POST http://localhost:3001/api/list/1
+POST http://localhost:3001/api/list/2
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
 {
-  "listTitle": "erd 생성하기3"
+  "listTitle": "2-3 리스트"
 }
