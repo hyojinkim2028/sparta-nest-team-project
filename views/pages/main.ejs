@@ -5,16 +5,12 @@
     <%- include('../partials/loginModal.ejs') %>
     <%-include('../partials/createBoardModal.ejs') %>
     <%-include('../partials/header.ejs') %>
-    <%-include('../partials/cardDetail.ejs') %>
-    <%-include('../partials/cardDetailShow.ejs') %>
-
     <div class="row">
       <% if(user===null){ %>
         <%- include('../partials/projectInfo.ejs') %>
       <% }else{ %>
         <%-include('../partials/sideBar.ejs') %>
         <%- include('../partials/boardList.ejs') %>
-        <%-include('../partials/cardDetail.ejs') %>
       <% } %>
     </div>
     <!-- 푸터 -->

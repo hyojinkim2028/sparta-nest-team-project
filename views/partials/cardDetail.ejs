@@ -318,7 +318,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
       //const cardComments = document.getElementById('cardComments').value;
 
       //카드 생성하기 요청
-      let listId = 1;
+      let listId = 6;
       axios
         .post(`/api/card/list/${listId}`, {
           cardName: cardTitle,
@@ -333,7 +333,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
         .then(async (response) => {
           console.log(response);
           alert('카드 생성이 완료되었습니다.');
-          window.location.href = 'home';
+          location.reload();
 
           //window.location.href('api/home')
           //await axios.get(`/api/home`, {})

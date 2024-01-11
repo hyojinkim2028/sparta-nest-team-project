@@ -90,13 +90,4 @@ export class AppController {
       message: '보드상세',
     };
   }
-
-  @UseGuards(LoginOrNotGuard)
-  @Get('/boardModal')
-  @Page('createBoardModal')
-  async createBoardModal(@UserInfo() user: User, @Req() req) {
-    return {
-      message: '보드 모달',
-    };
-  }
 }
