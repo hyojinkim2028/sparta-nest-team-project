@@ -7,33 +7,30 @@
       class="d-flex align-items-center mb-4 mb-md-0 me-md-auto text-white text-decoration-none"
     >
       <i class="fa-solid fa-plus fa-xl fa-fw"></i>
-      <span
-        class="fs-5"
-        data-bs-toggle="modal"
-        data-bs-target="#boardCreateModal"
+      <span class="fs-5" data-bs-toggle="modal" data-bs-target="#addPeopleModal"
         >&nbsp;유저 초대</span
       >
     </div>
   </div>
   <hr />
   <div class="sideBar-ul">
+    <div class="sideBarTitle" style="border-bottom: 2px solid white">
+      Collaborating Users
+    </div>
+    <!-- 조인중인 유저 리스트 -->
     <ul
-      class="nav nav-pills flex-column mb-auto ownerBoardUl"
+      class="nav nav-pills flex-column mb-auto invitedEmailUl"
       style="margin-left: 15px"
-    >
-      <div class="sideBarTitle">My Board</div>
-      <!-- 본인 생성 보드 리스트 foreach로 리스트 불러오기-->
-    </ul>
-    <ul
-      class="nav nav-pills flex-column mb-auto invitedBoardUl"
-      style="margin-left: 15px"
-    >
-      <div class="sideBarTitle">Invited Board</div>
-      <!-- 초대된 보드리스트 끝 -->
-    </ul>
+    ></ul>
   </div>
   <div class="board-btns row">
-    <button class="board-update-btn">UPDATE</button>
+    <button
+      class="board-update-btn"
+      data-bs-toggle="modal"
+      data-bs-target="#boardUpdateModal"
+    >
+      UPDATE
+    </button>
     <button class="board-delete-btn">DELETE</button>
   </div>
 </div>

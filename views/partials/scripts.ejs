@@ -5,7 +5,7 @@
 ></script>
 <script src="/js/main.js" type="module"></script>
 <script src="/js/user.js" type="module"></script>
-<script src="/js/user.js" type="module"></script>
+<script src="/js/boardDetail.js" type="module"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script>
@@ -34,6 +34,72 @@
       }
     });
   });
+</script>
+<script>
+  document
+    .querySelector('#Notification')
+    .addEventListener('click', async function () {
+      const received = await axios.get('/api/invite');
+      receivedInvitations = received.data.data;
+      document.querySelector('#infos').innerHTML = '';
+      receivedInvitations.forEach((data) => {
+        console.log(data.id);
+        let invitations = `
+        <div
+        style="
+          width: 100%;
+          height: 60px;
+          font-size: 20px;
+        "
+      >
+        <div class="invitedInfo" data-id=${data.id}>
+          ⬛️ ${data.board.boardTitle} 보드에 초대되셨습니다!
+          <button class="accept">Accept</button>
+          <button class="reject">Reject</button>
+        </div>
+      </div>
+        `;
+
+        document
+          .querySelector('#infos')
+          .insertAdjacentHTML('beforeend', invitations);
+      });
+      // 초대 승락
+      const acceptBtn = document.getElementsByClassName('accept');
+      for (let i = 0; i < acceptBtn.length; i++) {
+        acceptBtn[i].addEventListener('click', async function () {
+          const acceptId = acceptBtn[i].parentElement.getAttribute('data-id');
+          console.log(acceptId);
+          try {
+            await axios.patch(`/api/invite/${acceptId}`, {
+              invitationStatus: 'Accepted',
+            });
+            alert('초대를 수락하셨습니다.');
+            location.reload();
+          } catch (error) {
+            console.log(error);
+          }
+        });
+      }
+
+      // 초대 거절
+      const rejectBtn = document.getElementsByClassName('reject');
+      for (let i = 0; i < rejectBtn.length; i++) {
+        rejectBtn[i].addEventListener('click', async function () {
+          const rejectId = rejectBtn[i].parentElement.getAttribute('data-id');
+          try {
+            await axios.patch(`/api/invite/${rejectId}`, {
+              invitationStatus: 'Reject',
+            });
+            alert('초대를 거절하셨습니다.');
+            location.reload();
+          } catch (error) {
+            console.log(error);
+          }
+        });
+      }
+    });
+  const rejectBtn = document.getElementsByClassName('reject');
 </script>
 <script>
   // 효진
@@ -101,9 +167,9 @@
       url: '/api/boards',
     })
       .then((res) => {
+        console.log(res);
         // 내가 생성한 보드
         const owner = res.data.data.board;
-        console.log(owner);
         // 초대된 보드
         const invited = res.data.data.invite;
 
@@ -172,7 +238,6 @@
           selectedBoard[i].addEventListener('click', function () {
             boardId = selectedBoard[i].getAttribute('data-id');
             window.location.href = `board/${boardId}`;
-            // console.log(boardId);
           });
         }
       })
@@ -181,10 +246,7 @@
         throw new Error(error);
       });
   }
-  getBoards();
-
-  console.log(boardId);
-  //axios 쓸때 'DOMContentLoaded' 사용해야 페이지가 전부 로드 된 뒤에 서버에 연결
+  getBoards(); //axios 쓸때 'DOMContentLoaded' 사용해야 페이지가 전부 로드 된 뒤에 서버에 연결
   //시켜준다.
 </script>
 <script>

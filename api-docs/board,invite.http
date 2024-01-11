@@ -5,8 +5,8 @@ POST http://localhost:3001/api/auth/register
 Content-Type: application/json
 
 {
-  "name": "홍길동",
-  "email": "abc123@naver.com",
+  "name": "김효진",
+  "email": "ung123@naver.com",
   "password": "123123",
   "passwordConfirm": "123123"
 }
