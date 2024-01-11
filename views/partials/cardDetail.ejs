@@ -269,6 +269,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
     let date = {};
     const dateSaveBtn = document.getElementById('dateSaveBtn');
     dateSaveBtn.addEventListener('click', (e) => {
+      e.stopPropagation()
       const cardStartDate = document.getElementById('startDate').value;
       const cardEndDate = document.getElementById('endDate').value;
       const cardEndTime = document.getElementById('endTime').value;
