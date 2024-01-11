@@ -77,8 +77,7 @@ export class AppController {
   async GetUserInfo(@UserInfo() user: User) {
     return {
       user,
-      message:
-        '평범한 회원가입페이지입니다. 평범하지 않은 모달이 될수도 있습니다. 로그인도 마찬가지',
+      message: '회원가입 페이지',
     };
   }
 
@@ -88,7 +87,7 @@ export class AppController {
   async boardInfo(@UserInfo() user: User, @Req() req) {
     return {
       user,
-      message: '보드상세!!',
+      message: '보드상세',
     };
   }
 
@@ -97,8 +96,7 @@ export class AppController {
   @Page('createBoardModal')
   async createBoardModal(@UserInfo() user: User, @Req() req) {
     return {
-      message:
-        '평범한 회원가입페이지입니다. 평범하지 않은 모달이 될수도 있습니다.',
+      message: '보드 모달',
     };
   }
 }
