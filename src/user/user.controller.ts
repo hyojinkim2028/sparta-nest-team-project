@@ -96,7 +96,27 @@ export class UserController {
 
     return {
       statusCode: HttpStatus.OK,
-      message: '내 정보 조회에 성공했습니다.ㅂㅂㅂ',
+      message: '내 정보 조회에 성공했습니다.(이름으로)',
+      data,
+    };
+  }
+
+  //유저 아이디로 유저 정보 가져오는 로직
+  //(카드 생성시 availableMembers를 아이디 배열로 받기 때문에 만들어요)
+  /**
+   * 아이디로 유저정보 찾기
+   * @param req
+   * @returns
+   */
+  @UseGuards(AuthGuard('jwt'))
+  @Get()
+  async getUserName(@Query('id') id: number): Promise<object> {
+    const data = await this.userService.findOneById(id);
+    console.log('data컨트롤러', data, id);
+
+    return {
+      statusCode: HttpStatus.OK,
+      message: '내 정보 조회에 성공했습니다.(아이디로)',
       data,
     };
   }
