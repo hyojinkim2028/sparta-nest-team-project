@@ -15,12 +15,12 @@
   color: black;
   user-select: none;
 }
-.userBox {
-  background: rgba(0, 0, 0, 0.1);
+.userInfoBox {
+  background: rgba(0, 0, 0, 0.05);
   padding: 40px 40px;
   box-sizing: border-box;
   border-radius: 15px;
-  width: 400px;
+  width: 500px;
   margin: 15px;
 }
 .regLable {
@@ -34,4 +34,9 @@
 .regSubmit {
   padding: 20px;
   font-size: 20px;
+}
+
+.infoDisabled {
+  background-color: #f9de8f;
+  border: 5px #ffc107;
 }

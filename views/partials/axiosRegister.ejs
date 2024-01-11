@@ -1,0 +1,32 @@
+<script>
+  // 회원가입 엑시오스
+  document.addEventListener('DOMContentLoaded', function () {
+    let registerFromBody = document.querySelector('#registerFrom');
+    registerFromBody.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('regEmail').value;
+      const password = document.getElementById('regPassword').value;
+      const passwordConfirm = document.getElementById('passwordConfirm').value;
+      try {
+        let response = axios
+          .post('/api/auth/register', {
+            name: name,
+            email: email,
+            password: password,
+            passwordConfirm: passwordConfirm,
+          })
+          .then(function (response) {
+            console.log('가입 되었습니다.');
+            console.log(response);
+            console.log('가입 되었습니다.');
+            location.href = '/api/home';
+          })
+          .catch(function (error) {});
+      } catch (err) {
+        console.error('회원가입 에러:', err);
+      }
+    });
+  });
+</script>
