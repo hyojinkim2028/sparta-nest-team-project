@@ -13,7 +13,7 @@
   data-bs-whatever="@cardDetail"
   data-card-id="0"
 >
-  카드 상세보기
+  카드 추가하기
 </button>
 
 
@@ -182,7 +182,7 @@
 <script>
 
 //cardDetail 은지
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function (e) {
     const saveCardDetail = document.querySelector('#saveCardDetail');
 
     //공개할 멤버 검색버튼 누르면 유저 찾아서 아래에 표시해주기.
@@ -197,12 +197,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     //공개할 멤버 검색.
     availableMemberBtn.addEventListener('click', async (e) => {
+      e.stopImmediatePropagation()
       const cardAvailableMembers =
         document.getElementById('availableMembers').value;
       console.log('cardAvailableMembers', cardAvailableMembers);
       const findAvailableUserId = await axios.get('/api/user', {
         params: { name: cardAvailableMembers },
       });
+      console.log('+++++++++++')
+
       console.log('findAvailableUserId', findAvailableUserId.data.data);
 
       if (findAvailableUserId.data.data) {
@@ -217,6 +220,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     //담당자를 검색.
     workersSearchBtn.addEventListener('click', async (e) => {
+      e.stopImmediatePropagation()
       const workMembers = document.getElementById('workers').value;
       console.log('workMembers', workMembers);
       const findWorkerId = await axios.get('/api/user', {
@@ -309,8 +313,8 @@ document.addEventListener('DOMContentLoaded', function () {
       const cardTitle = document.getElementById('cardTitleInput').value;
       const cardDescription = document.getElementById('cardDescription').value;
 
-      //주완님 코멘트 저장.
-      const cardComments = document.getElementById('cardComments').value;
+      ////주완님 코멘트 저장.
+      //const cardComments = document.getElementById('cardComments').value;
 
       //카드 생성하기 요청
       let listId = 1;
