@@ -61,7 +61,11 @@ export class UserController {
       data,
     };
   }
-
+  /**
+   * 회원탈퇴
+   * @param req
+   * @returns
+   */
   @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))
   @Put('delete')

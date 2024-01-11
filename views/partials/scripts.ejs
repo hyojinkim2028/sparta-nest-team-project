@@ -25,40 +25,8 @@
           })
           .then(function (response) {
             console.log(response);
-            user;
             console.log('로그인 되었습니다.');
-            // location.href = '/api/home';
-          })
-          .catch(function (error) {});
-      } catch (err) {
-        console.error('로그인 에러:', err);
-      }
-    });
-  });
-  // 회원가입 엑시오스
-  document.addEventListener('DOMContentLoaded', function () {
-    let registerFromBody = document.querySelector('#registerFrom');
-    registerFromBody.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('regEmail').value;
-      const password = document.getElementById('regPassword').value;
-      const passwordConfirm = document.getElementById('passwordConfirm').value;
-      let user;
-      try {
-        let response = axios
-          .post('/api/auth/register', {
-            name: name,
-            email: email,
-            password: password,
-            passwordConfirm: passwordConfirm,
-          })
-          .then(function (response) {
-            console.log(response);
-            user;
-            console.log('가입 되었습니다.');
-            // location.href = '/api/home';
+            location.href = '/api/home';
           })
           .catch(function (error) {});
       } catch (err) {
@@ -208,7 +176,7 @@
         // 본인 생성보드 메인
         owner.forEach((data) => {
           let ownerBoard = `
-          <div class="boardOne col-2" data-id=${data.id} style="cursor: pointer">
+          <div class="boardOne col-1" data-id=${data.id} style="cursor: pointer; background: ${data.backgroundColor}99">
             <div class="boardOne-title text-center">${data.boardTitle}</div>
           </div>
           `;

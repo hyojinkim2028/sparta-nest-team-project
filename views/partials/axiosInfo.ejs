@@ -1,0 +1,50 @@
+<script>
+  // 비번 변경 엑시오스
+  document.addEventListener('DOMContentLoaded', function () {
+    let registerFromBody = document.querySelector('#infoUpdateFrom');
+    registerFromBody.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const password = document.getElementById('beforePassword').value;
+      const newPassword = document.getElementById('newPassword').value;
+      const passwordConfirm = document.getElementById('passwordConfirm').value;
+      try {
+        confirm('비밀번호를 변경하시겠어요?');
+        let response = axios
+          .put('/api/auth/info', {
+            password: password,
+            newPassword: newPassword,
+            passwordConfirm: passwordConfirm,
+          })
+          .then(function (response) {
+            alert('비밀번호가 변경되었습니다.');
+            location.href = '/api/user/info';
+          })
+          .catch(function (error) {});
+      } catch (err) {
+        alert('비밀번호 변경에 실패하였습니다.');
+        console.error(err);
+      }
+    });
+  });
+  // 회원탈퇴
+  document.addEventListener('DOMContentLoaded', function () {
+    let deleteUserBtn = document.querySelector('#deleteUserBtn');
+    deleteUserBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      try {
+        confirm('회원정보를 삭제하시겠어요?');
+        let response = axios
+          .put('/api/user/delete', {})
+          .then(function (response) {
+            alert('회원정보가 삭제되었습니다.');
+            location.href = '/api/home';
+          })
+          .catch(function (error) {});
+      } catch (err) {
+        alert('회원정보 삭제에 실패하였습니다.');
+        console.error(err);
+      }
+    });
+  });
+</script>

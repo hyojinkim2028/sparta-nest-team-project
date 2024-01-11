@@ -27,11 +27,9 @@ export class AuthController {
   @Post('/register')
   async register(@Body() registerDto: RegisterDto, @Res() res: Response) {
     const data = await this.authService.register(registerDto);
-    return {
-      statusCode: HttpStatus.CREATED,
-      message: '회원가입에 성공했습니다.',
-      data,
-    };
+    const accessToken = data.accessToken;
+    res.cookie('Authorization', accessToken);
+    return res.status(HttpStatus.CREATED).json({ accessToken });
   }
 
   /**
