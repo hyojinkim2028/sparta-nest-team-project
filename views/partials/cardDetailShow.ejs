@@ -1,346 +1,187 @@
 
-
-<script
-  type="text/javascript"
-  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.1.0/mdb.umd.min.js"
-></script>
-
-<button
-  type="button"
-  class="btn btn-primary"
-  data-bs-toggle="modal"
-  data-bs-target="#exampleModal_cardDetailShow_1"
-  data-bs-whatever="@cardDetailShow"
-  id="showCard_53"
->
-  카드 상세보기
-</button>
-
-<!--//카드 데이터 생성은  +add눌러서 
-//카드 데이터 조회는 카드 눌러서 _ 카드 버튼을 누르면 모달 (저장된거 나옴)
-//카드 번호를 클릭이벤트로 가져옴 그것에 해당하는 데이터 뿌려주기.-->
-<!-- 부모요소에 리스너 걸기-->
-
-
-<div class="modal fade"   id="exampleModal_cardDetailShow_1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog flex">
-    <div class="modal-content round modalSize" id="cardDetailModal">
-      <div class = "cardDetailTop" id="cardColor"></div>
-      
-      <div class="modal-header column eraseLine mainModal" >
-        <h4 class="leftText boled modal-title fs-5j" id="exampleModalLabel">
-          <i class="fa-regular fa-rectangle-list" style="color: #b7bdc8;"></i> 
-          <div class = "cardTitleInput" id="cardTitleInput"></div>
-        </h4>
-        <p class = "inLeftText grey small">list: 속해있는 리스트 이름이 들어갑니다.</p>
-        <div class="dropdown">
-          <!--<label for="message-text" class="col-form-label boled" style="width: 100%;">
-            <i class="fa-solid fa-audio-description" style="color: #b7bdc8;"></i> 
-            카드 색상
-          </label>-->
-          <div style="margin-left: 33px;">
-            <button class="btn btn-outline-secondary dropdown-toggle" id="choiceBackgroundColor" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              choice color
-            </button>
-            <ul class="dropdown-menu">
-              <li id="dc4c64" style="background-color: #dc4c64; height: 40px;"><a class="dropdown-item" style="color: white;">pink</a></li>
-              <li id="e4a11b" style="background-color: #e4a11b; height: 40px;"><a class="dropdown-item" style="color: white;">orange</a></li>
-              <li id="8ac9de" style="background-color: #8ac9de; height: 40px;"><a class="dropdown-item" style="color: white;">sky</a></li>
-              <li id="123f6f" style="background-color: #123f6f; height: 40px;"><a class="dropdown-item" style="color: white;">navy</a></li>
-              <li id="115438" style="background-color: #115438; height: 40px;"><a class="dropdown-item" style="color: white;">green</a></li>
-
-            </ul>
-          </div>
-          <div id="checkChoiceColor" style="margin-left: 20px; margin-top: 3px;width: 30px; height: 30px; border: 1px solid;"></div>
-
-        </div>
-      </div>
-
-      <div class="modal-body mainModal" >
-          <div class="input-group rounded marginTop30" id="serarchmembersInput" data-mdb-input-init>
-            <label for="message-text" class="col-form-label boled" style="width: 100%;">
-              <i class="fa-solid fa-audio-description" style="color: #b7bdc8;"></i> 
-              공개할 멤버
-            </label>
-            <div class="row">
-              <div type="search"
-                class="form-control rounded searchInput"
-                id="availableMembers"
-                style="width: 75%;">
-                
-              </div>
-              
-
-              <span class="input-group-text border-0 searchInput" id="membersSearchBtn" style="width: 20%; color: #6e6e6e; display: flex; text-align: center; align-items: center; justify-content: center; margin-left: auto;">
-                <button type="button" class="btn btn-light" id="availableMemberBtn">
-                  <i class="fas fa-search"> 검색</i>
-                </button>
-              </span>
-            </div>
-            <div id = "findUserName" style="margin-left: 45px;"></div>
-          </div>
-          <div class="input-group rounded marginTop30" id="serarchWorkersInput" data-mdb-input-init>
-            <label for="message-text" class="col-form-label boled" style="width: 100%;">
-              <i class="fa-solid fa-audio-description" style="color: #b7bdc8;"></i> 
-              담당자
-            </label>
-            <div class="row">
-              <div
-                type="search"
-                class="form-control rounded searchInput"
-                id="workers"
-                style="width: 75%;"
-              ></div>
-
-              <span class="input-group-text border-0 searchInput" id="workersSearchBtn" style="width: 20%; color: #6e6e6e; display: flex; text-align: center; align-items: center; justify-content: center; margin-left: auto;">
-                <button type="button" class="btn btn-light">
-                  <i class="fas fa-search"> 검색</i>
-                </button>
-              </span>
-            </div>
-            <div id = "findWorkerName" style="margin-left: 45px;"></div>
-          </div>
-          <div class="input-group rounded marginTop30" id="dateInput" data-mdb-input-init>
-            <label for="message-text" class="col-form-label boled" style="width: 100%;">
-              <i class="fa-solid fa-audio-description" style="color: #b7bdc8;"></i> 
-              기간
-            </label>
-            <div class="row">
-              <div
-                type="search"
-                class="form-control rounded searchInput"
-                id="startDate"
-                style="width: 22.6%;"
-              ></div>
-              <div
-                type="search"
-                class="form-control rounded searchInput"
-                id="endDate"
-                style="width: 22.6%;"
-              ></div>
-              <div
-                type="search"
-                class="form-control rounded searchInput"
-                id="endTime"
-                style="width: 22.6%;"
-              /></div>
-              <span class="input-group-text border-0 searchInput" id="datesSearchBtn" style="width: 20%; color: #6e6e6e; display: flex; text-align: center; align-items: center; justify-content: center; margin-left: auto;">
-                <button type="button" class="btn btn-light" style="font-weight: bolder;" id="dateSaveBtn">
-                  저장
-                </button>
-              </span>
-            </div>
-
-          </div>
-          <div class="col-mb-3 marginTop30">
-            <label for="message-text" class="col-form-label boled">
-              <i class="fa-solid fa-audio-description" style="color: #b7bdc8;"></i> 
-              설명
-            </label>
-            <div class="inLeftTextArea">
-              <div class="form-control descriptionText" id="cardDescription"></div>
-            </div>
-          </div>
-          <div class="col-mb-3 marginTop30">
-            <label for="recipient-name" class="col-form-label boled">
-              <i class="fa-regular fa-comment" style="color: #b7bdc8;"></i> 
-              댓글
-            </label>
-            <div class="inLeftTextArea">
-              <input type="text" class="form-control commentsInput" id="cardComments" placeholder="댓글을 적어주세요.">
-              <div class="comments">
-                <div class="commentsInfo"><b>@유빌리</b> <span>19:18:00</span></div>
-                <div class="commentsAndBtn">
-                  <div style="width: 70%;">트렐로뤨로뤠에에히이일로오오오 </div> 
-                  <button type="button" class="commentsDelete btn btn-light"  style="width: 7%; margin-left: auto;">삭제</button>
-                </div>
-              </div>
-              <div class="comments">
-                <div class="commentsInfo"><b>@김두리</b> <span>21:18:00</span></div>
-                <div class="commentsAndBtn">
-                  <div style="width: 70%;">요들레이히이 트렐로가 아니라 일렐로가 더 좋네요~ </div> 
-                  <button type="button" class="commentsDelete btn btn-light"  style="width: 7%; margin-left: auto;">삭제</button>
-                </div>
-              </div>
-            </div>
-          </div>  
-      </div>
-  
-      <div class="modal-footer eraseLine rightBtn">
-        <button type="button" class="btn btn-light" data-bs-dismiss="modal">취소</button>
-        <button type="button" class="btn btn-secondary">수정</button>
-      </div>
-    </div>
-  </div>
+<!-- 리스트 -->
+<div id="lists">
+  <button class="kanban__add-card" type="button"   data-bs-toggle="modal"    data-bs-target="#exampleModal_cardDetail_1"
+  data-bs-whatever="@cardDetailShow" id="card_52" style="margin-top:30px">카드내용보기</button>
 </div>
+<!-- 보드 끝 -->
+  
 
-<script>
-
-//cardDetail 은지
-document.addEventListener('DOMContentLoaded', function () {
-
-    const showCardDetail = document.getElementById('showCard_53');
+  <script>
     const listsElement = document.getElementById('lists');
-    console.log('리스트2',listsElement);
-    showCardDetail.addEventListener('click', function(e){
-      e.stopPropagation();
-      
-      const cardNum = e.target.id.split('_')[1]
-    })
+      console.log('리스트1', listsElement);
+      listsElement.addEventListener('click', function (e) {
+        e.stopPropagation();
 
-    const saveCardDetail = document.querySelector('#saveCardDetail');
+        const cardNum = e.target.id.split('_')[1];
+        console.log('카드번호 클릭한애', cardNum);
 
-    //공개할 멤버 검색버튼 누르면 유저 찾아서 아래에 표시해주기.
-    const availableMemberBtn = document.getElementById('availableMemberBtn');
-    const workersSearchBtn = document.getElementById('workersSearchBtn');
+        let showModal = document.createElement('div');
+        
+        axios
+          .get(`/api/card/${cardNum}`, {})
+          .then(async (res) => {
+            console.log(res);
+            console.log('카드정보 가져오고있음', res.data.data);
+            const resData = res.data.data;
+         
+            const modalHtml = `
+            <div class="modal fade"   id="exampleModal_cardDetailShow_1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog flex">
+                <div class="modal-content round modalSize" id="cardDetailModal">
+                  <div class = "cardDetailTop" id="cardColor"></div>
 
-    //공개할 멤버 아이디
-    let findAvailableUserIdArr = [];
+                  <div class="modal-header column eraseLine mainModal" >
+                    <h4 class="leftText boled modal-title fs-5j" id="exampleModalLabel">
+                      <i class="fa-regular fa-rectangle-list" style="color: #b7bdc8;"></i>
+                      <div class = "cardTitleInput" id="cardTitleInput">${resData.cardName}</div>
+                    </h4>
+                    <p class = "inLeftText grey small">list: 속해있는 리스트 이름이 들어갑니다.</p>
+                    <div class="dropdown">
+                      <div style="margin-left: 33px;">
+                        <button class="btn btn-outline-secondary dropdown-toggle" id="choiceBackgroundColor" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          choice color
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li id="dc4c64" style="background-color: #dc4c64; height: 40px;"><a class="dropdown-item" style="color: white;">pink</a></li>
+                          <li id="e4a11b" style="background-color: #e4a11b; height: 40px;"><a class="dropdown-item" style="color: white;">orange</a></li>
+                          <li id="8ac9de" style="background-color: #8ac9de; height: 40px;"><a class="dropdown-item" style="color: white;">sky</a></li>
+                          <li id="123f6f" style="background-color: #123f6f; height: 40px;"><a class="dropdown-item" style="color: white;">navy</a></li>
+                          <li id="115438" style="background-color: #115438; height: 40px;"><a class="dropdown-item" style="color: white;">green</a></li>
 
-    //작업자 아이디
-    let findWorkerIdArr = [];
+                        </ul>
+                      </div>
+                      <div id="checkChoiceColor" style="margin-left: 20px; margin-top: 3px;width: 30px; height: 30px; border: 1px solid; background-color: ${resData.cardColor}"></div>
 
-    //공개할 멤버 검색.
-    availableMemberBtn.addEventListener('click', async (e) => {
-      const cardAvailableMembers =
-        document.getElementById('availableMembers').value;
-      console.log('cardAvailableMembers', cardAvailableMembers);
-      const findAvailableUserId = await axios.get('/api/user', {
-        params: { name: cardAvailableMembers },
+                    </div>
+                  </div>
+
+                  <div class="modal-body mainModal" >
+                      <div class="input-group rounded marginTop30" id="serarchmembersInput" data-mdb-input-init>
+                        <label for="message-text" class="col-form-label boled" style="width: 100%;">
+                          <i class="fa-solid fa-audio-description" style="color: #b7bdc8;"></i>
+                          공개할 멤버
+                        </label>
+                        <div class="row">
+                          <div type="search"
+                            class="form-control rounded searchInput"
+                            id="availableMembers"
+                            style="width: 75%;">
+
+                          </div>
+
+
+                          <span class="input-group-text border-0 searchInput" id="membersSearchBtn" style="width: 20%; color: #6e6e6e; display: flex; text-align: center; align-items: center; justify-content: center; margin-left: auto;">
+                            <button type="button" class="btn btn-light" id="availableMemberBtn">
+                              <i class="fas fa-search"> 검색</i>
+                            </button>
+                          </span>
+                        </div>
+                        <div id = "findUserName" style="margin-left: 45px;"></div>
+                      </div>
+                      <div class="input-group rounded marginTop30" id="serarchWorkersInput" data-mdb-input-init>
+                        <label for="message-text" class="col-form-label boled" style="width: 100%;">
+                          <i class="fa-solid fa-audio-description" style="color: #b7bdc8;"></i>
+                          담당자
+                        </label>
+                        <div class="row">
+                          <div
+                            type="search"
+                            class="form-control rounded searchInput"
+                            id="workers"
+                            style="width: 75%;"
+                          ></div>
+
+                          <span class="input-group-text border-0 searchInput" id="workersSearchBtn" style="width: 20%; color: #6e6e6e; display: flex; text-align: center; align-items: center; justify-content: center; margin-left: auto;">
+                            <button type="button" class="btn btn-light">
+                              <i class="fas fa-search"> 검색</i>
+                            </button>
+                          </span>
+                        </div>
+                        <div id = "findWorkerName" style="margin-left: 45px;"></div>
+                      </div>
+                      <div class="input-group rounded marginTop30" id="dateInput" data-mdb-input-init>
+                        <label for="message-text" class="col-form-label boled" style="width: 100%;">
+                          <i class="fa-solid fa-audio-description" style="color: #b7bdc8;"></i>
+                          기간
+                        </label>
+                        <div class="row">
+                          <div
+                            type="search"
+                            class="form-control rounded searchInput"
+                            id="startDate"
+                            style="width: 22.6%;"
+                          >${resData.startDate}</div>
+                          <div
+                            type="search"
+                            class="form-control rounded searchInput"
+                            id="endDate"
+                            style="width: 22.6%;"
+                          >${resData.endDate}</div>
+                          <div
+                            type="search"
+                            class="form-control rounded searchInput"
+                            id="endTime"
+                            style="width: 22.6%;"
+                          />${resData.endTime}</div>
+                          <span class="input-group-text border-0 searchInput" id="datesSearchBtn" style="width: 20%; color: #6e6e6e; display: flex; text-align: center; align-items: center; justify-content: center; margin-left: auto;">
+                            <button type="button" class="btn btn-light" style="font-weight: bolder;" id="dateSaveBtn">
+                              저장
+                            </button>
+                          </span>
+                        </div>
+
+                      </div>
+                      <div class="col-mb-3 marginTop30">
+                        <label for="message-text" class="col-form-label boled">
+                          <i class="fa-solid fa-audio-description" style="color: #b7bdc8;"></i>
+                          설명
+                        </label>
+                        <div class="inLeftTextArea">
+                          <div class="form-control descriptionText" id="cardDescription"></div>
+                        </div>
+                      </div>
+                      <div class="col-mb-3 marginTop30">
+                        <label for="recipient-name" class="col-form-label boled">
+                          <i class="fa-regular fa-comment" style="color: #b7bdc8;"></i>
+                          댓글
+                        </label>
+                        <div class="inLeftTextArea">
+                          <input type="text" class="form-control commentsInput" id="cardComments" placeholder="댓글을 적어주세요.">
+                          <div class="comments">
+                            <div class="commentsInfo"><b>@유빌리</b> <span>19:18:00</span></div>
+                            <div class="commentsAndBtn">
+                              <div style="width: 70%;">트렐로뤨로뤠에에히이일로오오오 </div>
+                              <button type="button" class="commentsDelete btn btn-light"  style="width: 7%; margin-left: auto;">삭제</button>
+                            </div>
+                          </div>
+                          <div class="comments">
+                            <div class="commentsInfo"><b>@김두리</b> <span>21:18:00</span></div>
+                            <div class="commentsAndBtn">
+                              <div style="width: 70%;">요들레이히이 트렐로가 아니라 일렐로가 더 좋네요~ </div>
+                              <button type="button" class="commentsDelete btn btn-light"  style="width: 7%; margin-left: auto;">삭제</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+
+                  <div class="modal-footer eraseLine rightBtn">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-secondary">수정</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+          showModal.innerHTML = modalHtml
+          document.body.appendChild(showModal);
+ㄴ
+          //document.querySelectorAll('')
+          //})
+          .catch((err) => {
+            console.log(err);
+          });
       });
-      console.log('findAvailableUserId', findAvailableUserId.data.data);
-
-      if (findAvailableUserId.data.data) {
-        document.getElementById('findUserName').innerText +=
-          findAvailableUserId.data.data.name + ', ';
-        console.log('findAvailableUserIdArr', findAvailableUserIdArr);
-        return findAvailableUserIdArr.push(findAvailableUserId.data.data.id);
-      } else {
-        alert('없는 멤버를 검색하셧습니다.');
-      }
-    });
-
-    //담당자를 검색.
-    workersSearchBtn.addEventListener('click', async (e) => {
-      const workMembers = document.getElementById('workers').value;
-      console.log('workMembers', workMembers);
-      const findWorkerId = await axios.get('/api/user', {
-        params: { name: workMembers },
-      });
-      console.log('findWorkerId', findWorkerId.data.data);
-
-      if (findWorkerId.data.data) {
-        document.getElementById('findWorkerName').innerText +=
-          findWorkerId.data.data.name + ', ';
-        console.log('findWorkerIdArr', findWorkerIdArr);
-        return findWorkerIdArr.push(findWorkerId.data.data.id);
-      } else {
-        alert('없는 멤버를 검색하셧습니다.');
-      }
-    });
-
-    //카드색깔 보여주기
-    const cardColors = document.querySelectorAll('.dropdown-item');
-    let choiceColor;
-
-    //카드 색깔 클릭이벤트 등록하기
-    cardColors.forEach((color) => {
-      console.log('컬러이벤트등록', color);
-      color.addEventListener('click', function (e) {
-        console.log('당신의 선택은?', e.target.parentNode.id);
-        choiceColor = '';
-        choiceColor = e.target.parentNode.id;
-        return changeColorStatus(choiceColor);
-      });
-    });
-
-    //카드 색깔 선택시 유저에게 보여주기.
-    function changeColorStatus(choiceColor) {
-      if (!choiceColor)
-        alert('색상이 제대로 선택되지 않았습니다. 다시 선택해 주세요.');
-      else {
-        const choiceColorBtn = document.getElementById('choiceBackgroundColor');
-        const checkChoiceColor = document.getElementById('checkChoiceColor');
-
-        return (checkChoiceColor.style.backgroundColor = `#${choiceColor}`);
-      }
-    }
-
-    //기간 데이터 가져오기.
-    let date = {};
-    const dateSaveBtn = document.getElementById('dateSaveBtn');
-    dateSaveBtn.addEventListener('click', (e) => {
-      const cardStartDate = document.getElementById('startDate').value;
-      const cardEndDate = document.getElementById('endDate').value;
-      const cardEndTime = document.getElementById('endTime').value;
-
-      if (
-        isValidDate(cardStartDate) &&
-        isValidDate(cardEndDate) &&
-        isValidTime(cardEndTime)
-      ) {
-        console.log('date', {
-          startDate: cardStartDate,
-          endDate: cardEndDate,
-          endTime: cardEndTime,
-        });
-        return (date = {
-          startDate: cardStartDate,
-          endDate: cardEndDate,
-          endTime: cardEndTime,
-        });
-      } else {
-        alert('유효하지 않은 날짜/시간 을 입력하셨습니다.');
-      }
-    });
-
-    //유효한 날짜인지 검증하는 로직
-    const isValidDate = (date) => {
-      const dateParsing = new Date(date);
-      return dateParsing instanceof Date;
-    };
-
-    //유효한 시간인지 검증하는 로직
-    const isValidTime = (time) => {
-      const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
-      return timeRegex.test(time);
-    };
-
-    //카드 저장하기 버튼 누르면
-    saveCardDetail.addEventListener('click', (e) => {
-      e.preventDefault();
-      console.log('date', date);
-
-      const cardTitle = document.getElementById('cardTitleInput').value;
-      const cardDescription = document.getElementById('cardDescription').value;
-
-      //주완님 코멘트 저장.
-      const cardComments = document.getElementById('cardComments').value;
-
-      //카드 생성하기 요청
-      let listId = 1;
-      axios
-        .post(`/api/card/list/${listId}`, {
-          cardName: cardTitle,
-          cardDescription: cardDescription,
-          allowMembers: findAvailableUserIdArr,
-          workers: findWorkerIdArr,
-          cardColor: choiceColor,
-          startDate: date.startDate,
-          endDate: date.endDate,
-          endTime: date.endTime,
-        })
-        .then(async (response) => {
-          console.log(response);
-          alert('카드 생성이 완료되었습니다.');
-          window.location.href = 'home';
-
-          //window.location.href('api/home')
-          //await axios.get(`/api/home`, {})
-        })
-        .catch((error) => {
-          console.log('err', err);
-        });
-    });
-  });
-</script>
+  </script>
+</div>

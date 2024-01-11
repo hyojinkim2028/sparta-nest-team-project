@@ -162,7 +162,7 @@ export class BoardsController {
 
   /**
    *
-   * @param 해당 보드에서 초대한 유저 조회(초대후 승락 대기중인 유저)
+   * @param 해당 보드에 조인중인 유저
    * @returns
    */
   @ApiBearerAuth()

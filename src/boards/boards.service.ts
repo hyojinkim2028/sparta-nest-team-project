@@ -52,7 +52,7 @@ export class BoardsService {
           id: userId,
         },
       },
-      select: ['id', 'boardTitle','backgroundColor'],
+      select: ['id', 'boardTitle', 'backgroundColor'],
     });
 
     // 초대 승락하여 조인한 보드
@@ -66,8 +66,8 @@ export class BoardsService {
       relations: ['board'],
     });
     return {
-      board : boards,
-      invite : invitedList
+      board: boards,
+      invite: invitedList,
     };
   }
 
@@ -162,7 +162,7 @@ export class BoardsService {
     return invite;
   }
 
-  // 해당 보드에서 초대한 유저(승락대기중) 조회
+  // 해당 보드에 조인중인 유저
   async findAllInvite(userId: number, boardId: number) {
     const board = await this.boardsRepository.findOne({
       where: { id: boardId },
@@ -172,7 +172,7 @@ export class BoardsService {
         board: {
           id: boardId,
         },
-        invitationStatus: InvitationStatus.Pending,
+        invitationStatus: InvitationStatus.Accepted,
       },
       relations: ['user'],
     });
@@ -182,10 +182,10 @@ export class BoardsService {
     if (!invitedIdList.includes(userId) && board.boardOwner !== userId)
       throw new ForbiddenException('접근 권한이 없습니다.');
 
-    const invitedEmailList = invitedList.map((invited) => ({
-      email: invited.user.email,
+    const invitedNameList = invitedList.map((invited) => ({
+      name: invited.user.name,
     }));
 
-    return invitedEmailList;
+    return invitedNameList;
   }
 }
